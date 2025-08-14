@@ -5,7 +5,7 @@ import Categories from "../../shared/components/customer/category/Categories";
 import Gifts from "../../shared/components/customer/gift/Gifts";
 import Look from "../../shared/components/customer/look/Look";
 import BestSellers from "../../shared/components/customer/product/BestSellers";
-import Testimonials from "../../shared/components/customer/testimonial/testimonials";
+import Testimonials from "../../shared/components/customer/testimonial/Testimonials";
 
 const Home = () => {
     return (
