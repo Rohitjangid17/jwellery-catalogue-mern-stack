@@ -10,7 +10,7 @@ import PrivacyPolicy from '../modules/customer/PrivacyPolicy';
 import TermCondition from '../modules/customer/TermCondition';
 import ReturnRefund from '../modules/customer/ReturnRefund';
 import Shipping from '../modules/customer/Shipping';
-import Faq from '../modules/customer/Faq.JSX';
+import Faq from '../modules/customer/Faq';
 
 const customerRoutes = (
     <Route element={<CustomerLayout />}>
