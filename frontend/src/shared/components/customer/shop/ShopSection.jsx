@@ -1,3 +1,4 @@
+import { FiBox } from "react-icons/fi";
 import CustomSelect from "../CustomSelect";
 import ProductCard from "../product/ProductCard";
 import SidebarFilters from "./filters/SidebarFilters";
@@ -50,15 +51,32 @@ const ShopSection = () => {
                                 onChange={(val) => console.log("Selected:", val)}
                             />
                         </div>
-                        <div className="grid grid-cols-3 gap-6">
-                            {isLoader
-                                ? Array.from({ length: 2 }).map((_, index) => (
-                                    <ProductCard key={index} loading />
-                                ))
-                                : products.map((product, index) => (
-                                    <ProductCard key={index} product={product} />
-                                ))}
-                        </div>
+
+                        {products.length > 0 ? (
+                            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                                {isLoader
+                                    ? Array.from({ length: 2 }).map((_, index) => (
+                                        <ProductCard key={index} loading />
+                                    ))
+                                    : products.map((product, index) => (
+                                        <ProductCard key={index} product={product} />
+                                    ))}
+                            </div>
+                        ) : (
+                            <div className="col-span-full flex flex-col items-center justify-center py-20">
+                                <img
+                                    src="/no-products.png"
+                                    alt="No Products"
+                                    className="w-48 h-48 mb-6"
+                                />
+                                <h2 className="text-2xl font-semibold text-black mb-2">
+                                    No Products Available
+                                </h2>
+                                <p className="text-black mb-6 text-center px-4">
+                                    We couldn't find any products at the moment. Please check back later or explore other categories.
+                                </p>
+                            </div>
+                        )}
                     </div>
                 </div>
             </div>
