@@ -38,6 +38,7 @@ const router = express.Router();
  *               - metalType
  *               - colors
  *               - tags
+ *               - dimensions
  *             properties:
  *               title:
  *                 type: string
@@ -48,19 +49,22 @@ const router = express.Router();
  *               basePrice:
  *                 type: number
  *                 example: 5000
+ *               discount:
+ *                 type: object
+ *                 properties:
+ *                   type:
+ *                     type: string
+ *                     enum: [flat, percent]
+ *                     example: "percent"
+ *                   amount:
+ *                     type: number
+ *                     example: 10
  *               sku:
  *                 type: string
  *                 example: "RING123"
  *               category:
  *                 type: string
  *                 example: "64c99e7fcf9cce1223f12aa1"
- *               discount.type:
- *                 type: string
- *                 enum: [flat, percent]
- *                 example: "percent"
- *               discount.amount:
- *                 type: number
- *                 example: 10
  *               weightInGrams:
  *                 type: number
  *                 example: 15
@@ -68,6 +72,34 @@ const router = express.Router();
  *                 type: string
  *                 enum: [Gold, Silver, Platinum, Rose Gold, Other]
  *                 example: "Gold"
+ *               gemstones:
+ *                 type: array
+ *                 items:
+ *                   type: object
+ *                   properties:
+ *                     name:
+ *                       type: string
+ *                       example: "Diamond"
+ *                     caratWeight:
+ *                       type: number
+ *                       example: 0.5
+ *                     clarity:
+ *                       type: string
+ *                       example: "VS1"
+ *               sizes:
+ *                 type: array
+ *                 items:
+ *                   type: object
+ *                   properties:
+ *                     size:
+ *                       type: string
+ *                       example: "M"
+ *                     stockQuantity:
+ *                       type: number
+ *                       example: 10
+ *                     priceModifier:
+ *                       type: number
+ *                       example: 100
  *               colors:
  *                 type: array
  *                 items:
@@ -78,6 +110,35 @@ const router = express.Router();
  *                 items:
  *                   type: string
  *                 example: ["Ring", "Wedding"]
+ *               materials:
+ *                 type: array
+ *                 items:
+ *                   type: object
+ *                   properties:
+ *                     type:
+ *                       type: string
+ *                       example: "Alloy"
+ *                     name:
+ *                       type: string
+ *                       example: "Gold"
+ *                     percentage:
+ *                       type: number
+ *                       example: 75
+ *               dimensions:
+ *                 type: object
+ *                 properties:
+ *                   lengthMm:
+ *                     type: number
+ *                     example: 50
+ *                   widthMm:
+ *                     type: number
+ *                     example: 20
+ *                   heightMm:
+ *                     type: number
+ *                     example: 10
+ *                   diameterMm:
+ *                     type: number
+ *                     example: 18
  *               images:
  *                 type: array
  *                 items:
@@ -107,6 +168,120 @@ router.post("/", upload.array("images", 5), createProduct);
  *     responses:
  *       200:
  *         description: List of products or a single product
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: boolean
+ *                 message:
+ *                   type: string
+ *                 count:
+ *                   type: number
+ *                 products:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       _id:
+ *                         type: string
+ *                       title:
+ *                         type: string
+ *                       description:
+ *                         type: string
+ *                       basePrice:
+ *                         type: number
+ *                       discount:
+ *                         type: object
+ *                         properties:
+ *                           type:
+ *                             type: string
+ *                           amount:
+ *                             type: number
+ *                       sku:
+ *                         type: string
+ *                       category:
+ *                         type: object
+ *                       weightInGrams:
+ *                         type: number
+ *                       metalType:
+ *                         type: string
+ *                       gemstones:
+ *                         type: array
+ *                         items:
+ *                           type: object
+ *                           properties:
+ *                             name:
+ *                               type: string
+ *                             caratWeight:
+ *                               type: number
+ *                             clarity:
+ *                               type: string
+ *                       sizes:
+ *                         type: array
+ *                         items:
+ *                           type: object
+ *                           properties:
+ *                             size:
+ *                               type: string
+ *                             stockQuantity:
+ *                               type: number
+ *                             priceModifier:
+ *                               type: number
+ *                       colors:
+ *                         type: array
+ *                         items:
+ *                           type: string
+ *                       tags:
+ *                         type: array
+ *                         items:
+ *                           type: string
+ *                       materials:
+ *                         type: array
+ *                         items:
+ *                           type: object
+ *                           properties:
+ *                             type:
+ *                               type: string
+ *                             name:
+ *                               type: string
+ *                             percentage:
+ *                               type: number
+ *                       dimensions:
+ *                         type: object
+ *                         properties:
+ *                           lengthMm:
+ *                             type: number
+ *                           widthMm:
+ *                             type: number
+ *                           heightMm:
+ *                             type: number
+ *                           diameterMm:
+ *                             type: number
+ *                       images:
+ *                         type: array
+ *                         items:
+ *                           type: string
+ *                       rating:
+ *                         type: number
+ *                       stockStatus:
+ *                         type: string
+ *                       finalPrice:
+ *                         type: number
+ *                       reviews:
+ *                         type: array
+ *                         items:
+ *                           type: object
+ *                           properties:
+ *                             userId:
+ *                               type: string
+ *                             rating:
+ *                               type: number
+ *                             comment:
+ *                               type: string
+ *                             createdAt:
+ *                               type: string
  *       500:
  *         description: Internal server error
  */
@@ -125,15 +300,21 @@ router.get("/", getProducts);
  *           schema:
  *             type: object
  *             properties:
- *               id:
+ *               product_id:
  *                 type: string
- *                 example: "64c999abcde12345fgh67890"
  *               title:
  *                 type: string
  *               description:
  *                 type: string
  *               basePrice:
  *                 type: number
+ *               discount:
+ *                 type: object
+ *                 properties:
+ *                   type:
+ *                     type: string
+ *                   amount:
+ *                     type: number
  *               sku:
  *                 type: string
  *               category:
@@ -142,6 +323,28 @@ router.get("/", getProducts);
  *                 type: number
  *               metalType:
  *                 type: string
+ *               gemstones:
+ *                 type: array
+ *                 items:
+ *                   type: object
+ *                   properties:
+ *                     name:
+ *                       type: string
+ *                     caratWeight:
+ *                       type: number
+ *                     clarity:
+ *                       type: string
+ *               sizes:
+ *                 type: array
+ *                 items:
+ *                   type: object
+ *                   properties:
+ *                     size:
+ *                       type: string
+ *                     stockQuantity:
+ *                       type: number
+ *                     priceModifier:
+ *                       type: number
  *               colors:
  *                 type: array
  *                 items:
@@ -150,6 +353,28 @@ router.get("/", getProducts);
  *                 type: array
  *                 items:
  *                   type: string
+ *               materials:
+ *                 type: array
+ *                 items:
+ *                   type: object
+ *                   properties:
+ *                     type:
+ *                       type: string
+ *                     name:
+ *                       type: string
+ *                     percentage:
+ *                       type: number
+ *               dimensions:
+ *                 type: object
+ *                 properties:
+ *                   lengthMm:
+ *                     type: number
+ *                   widthMm:
+ *                     type: number
+ *                   heightMm:
+ *                     type: number
+ *                   diameterMm:
+ *                     type: number
  *               images:
  *                 type: array
  *                 items:
@@ -176,11 +401,10 @@ router.put("/", upload.array("images", 5), updateProductById);
  *           schema:
  *             type: object
  *             required:
- *               - id
+ *               - product_id
  *             properties:
- *               id:
+ *               product_id:
  *                 type: string
- *                 example: "64c999abcde12345fgh67890"
  *     responses:
  *       200:
  *         description: Product deleted successfully
