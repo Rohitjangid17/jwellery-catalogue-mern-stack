@@ -19,7 +19,7 @@ const productSchema = new mongoose.Schema({
         ref: "Category",
         required: true,
     },
-    rating: { type: Number, default: 4.5, min: 1, max: 5 },
+    // rating: { type: Number, default: 4.5, min: 1, max: 5 },
     stockStatus: {
         type: String,
         enum: ["in stock", "out of stock", "preorder"],
@@ -60,12 +60,12 @@ const productSchema = new mongoose.Schema({
         heightMm: { type: Number, min: 0, required: true },
         diameterMm: { type: Number, min: 0 },
     },
-    reviews: [{
-        userId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
-        rating: { type: Number, min: 1, max: 5, required: true },
-        comment: { type: String, trim: true },
-        createdAt: { type: Date, default: Date.now },
-    }],
+    // reviews: [{
+    //     userId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
+    //     rating: { type: Number, min: 1, max: 5, required: true },
+    //     comment: { type: String, trim: true },
+    //     createdAt: { type: Date, default: Date.now },
+    // }],
 }, { timestamps: true });
 
 // Auto-update stock status

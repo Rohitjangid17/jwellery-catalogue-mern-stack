@@ -3,10 +3,13 @@ import cloudinary from "../config/cloudinary.config.js";
 import { deleteUploadedFile } from "../utils/deleteFile.js";
 import fs from "fs";
 import path from "path";
+import { parseFormData } from "../utils/parseFormData.js";
 
 // Create Product
 export const createProduct = async (req, res) => {
     try {
+        const parsedBody = parseFormData(req.body);
+
         const {
             title,
             description,
@@ -22,7 +25,7 @@ export const createProduct = async (req, res) => {
             tags,
             materials,
             dimensions
-        } = req.body;
+        } = parsedBody;
 
         // Basic validations
         if (!title || !description || !basePrice || !sku || !category || !weightInGrams || !metalType || !dimensions) {
