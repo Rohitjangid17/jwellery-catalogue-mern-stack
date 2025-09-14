@@ -1,6 +1,6 @@
 import Category from "../models/category.model.js";
 import cloudinary from "../config/cloudinary.config.js";
-import { deleteUploadedFile } from "../utils/deleteFile.js";
+import { deleteUploadedFile } from "../utils/file/deleteFile.js";
 import fs from "fs";
 import path from "path";
 

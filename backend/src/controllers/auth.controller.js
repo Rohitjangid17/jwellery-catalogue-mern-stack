@@ -1,6 +1,6 @@
 import asyncHandler from "express-async-handler";
 import User from "../models/user.model.js";
-import generateToken from "../utils/generateToken.js";
+import generateToken from "../utils/auth/generateToken.js";
 
 // register user with jwt token
 export const registerUser = asyncHandler(async (req, res) => {
