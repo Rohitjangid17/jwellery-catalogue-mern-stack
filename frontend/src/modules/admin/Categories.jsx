@@ -104,7 +104,7 @@ const Categories = () => {
                     allowClear
                 />
 
-                <Button className="!bg-[#ff6f61] !text-white border-none shadow-none font-medium rounded" icon={<PlusOutlined />} onClick={() => console.log('Add Category')}>
+                <Button className="!bg-[#ff6f61] hover:!bg-[#e55d51] !text-white border-none shadow-none font-medium rounded" icon={<PlusOutlined />} onClick={() => console.log('Add Category')}>
                     Add Category
                 </Button>
 

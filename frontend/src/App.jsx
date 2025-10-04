@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes } from 'react-router-dom';
 import customerRoutes from './routes/CustomerRoutes';
 import adminRoutes from './routes/AdminRoutes';
+import authRoutes from './routes/AuthRoutes';
 
 const App = () => {
   return (
@@ -8,6 +9,7 @@ const App = () => {
       <Routes>
         {customerRoutes}
         {adminRoutes}
+        {authRoutes}
       </Routes>
     </BrowserRouter>
   );
