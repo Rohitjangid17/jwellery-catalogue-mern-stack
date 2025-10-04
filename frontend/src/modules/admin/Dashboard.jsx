@@ -1,7 +1,11 @@
+import PageHeader from "../../shared/components/admin/PageHeader";
+
 const Dashboard = () => {
     return (
-        <div>Dashboard</div>
+        <>
+            <PageHeader />
+        </>
     )
 }
 
-export default Dashboard
+export default Dashboard;

@@ -16,9 +16,9 @@ const AdminSidebar = ({ onItemClick }) => {
 
     const menuItems = [
         { key: 'dashboard', icon: <DashboardOutlined />, label: 'Dashboard' },
-        { key: 'category', icon: <TagsOutlined />, label: 'Category' },
+        { key: 'categories', icon: <TagsOutlined />, label: 'Categories' },
         { key: 'products', icon: <ShoppingOutlined />, label: 'Products' },
-        { key: 'users', icon: <UsergroupAddOutlined />, label: 'Users' },
+        // { key: 'users', icon: <UsergroupAddOutlined />, label: 'Users' },
         { key: 'contact-queries', icon: <MessageOutlined />, label: 'Contacted Queries' },
         { key: 'settings', icon: <SettingOutlined />, label: 'Settings' },
     ];

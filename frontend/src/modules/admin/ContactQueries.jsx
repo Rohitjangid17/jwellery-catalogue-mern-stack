@@ -1,6 +1,6 @@
 import AdminPageHeader from "../../shared/components/admin/PageHeader"
 
-const Products = () => {
+const ContactQueries = () => {
     return (
         <>
             <AdminPageHeader />
@@ -8,4 +8,4 @@ const Products = () => {
     )
 }
 
-export default Products
+export default ContactQueries;
