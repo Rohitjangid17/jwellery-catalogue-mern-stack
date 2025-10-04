@@ -222,3 +222,18 @@ body {
 .custom-select-dropdown {
   border-radius: 12px;
 }
+
+/* Custom active menu color for AntD dark menu */
+.custom-ant-menu .ant-menu-item-selected {
+  background: #ff6f61 !important;
+  color: #fff !important;
+}
+
+.custom-ant-menu .ant-menu-item-selected:hover {
+  background: #ff6f61 !important;
+  color: #fff !important;
+}
+
+.custom-ant-menu .ant-menu-item-selected .anticon {
+  color: #fff !important;
+}

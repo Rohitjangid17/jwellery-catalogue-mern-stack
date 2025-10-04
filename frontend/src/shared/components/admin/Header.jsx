@@ -1,9 +1,20 @@
 import { Layout, Avatar, Dropdown, Menu, Badge } from 'antd';
-import { UserOutlined, BellOutlined, LogoutOutlined } from '@ant-design/icons';
+import {
+    UserOutlined,
+    BellOutlined,
+    LogoutOutlined,
+    MenuOutlined,
+} from '@ant-design/icons';
 
 const { Header } = Layout;
 
-const AdminHeader = () => {
+const AdminHeader = ({
+    collapsed,
+    setCollapsed,
+    isMobile,
+    drawerVisible,
+    setDrawerVisible,
+}) => {
     const dropdownMenu = (
         <Menu>
             <Menu.Item key="logout" icon={<LogoutOutlined />}>
@@ -14,7 +25,20 @@ const AdminHeader = () => {
 
     return (
         <Header className="bg-white shadow-sm px-6 flex items-center justify-between sticky top-0 z-50">
-            <div className="text-xl font-semibold">Admin Panel</div>
+            {/* Left: Hamburger + Title */}
+            <div className="flex items-center gap-4">
+                <MenuOutlined
+                    onClick={() =>
+                        isMobile
+                            ? setDrawerVisible(!drawerVisible)
+                            : setCollapsed(!collapsed)
+                    }
+                    style={{ fontSize: 20, cursor: 'pointer' }}
+                />
+                <div className="text-xl font-semibold">Admin Panel</div>
+            </div>
+
+            {/* Right: Notifications + Avatar */}
             <div className="flex items-center gap-6">
                 <Badge count={5}>
                     <BellOutlined style={{ fontSize: 20 }} />
