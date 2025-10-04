@@ -4,8 +4,10 @@ const { Footer } = Layout;
 
 const AdminFooter = () => {
     return (
-        <Footer className="text-center text-gray-400">
-            © {new Date().getFullYear()} E-Commerce Admin Panel. Built with ❤️
+        <Footer className="text-center !px-4 !py-2">
+            <p className="text-sm">
+                © {new Date().getFullYear()} Vineta. All rights reserved.
+            </p>
         </Footer>
     );
 };

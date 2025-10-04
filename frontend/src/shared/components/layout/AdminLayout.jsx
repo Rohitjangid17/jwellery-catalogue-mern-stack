@@ -17,7 +17,7 @@ const AdminLayout = () => {
     const isMobile = !screens.md;
 
     return (
-        <Layout style={{ minHeight: '100vh' }}>
+        <Layout style={{ minHeight: '100vh', overflow: 'hidden' }}>
             {!isMobile ? (
                 // ----- Desktop Sidebar -----
                 <Sider
@@ -43,13 +43,13 @@ const AdminLayout = () => {
                     closable={false}
                     onClose={() => setDrawerVisible(false)}
                     open={drawerVisible}
-                    styles={{ body: { padding: 0, background: '#000' } }}
+                    styles={{ body: { padding: 0, background: '#000', height: '100%' } }}
                 >
                     <AdminSidebar />
                 </Drawer>
             )}
 
-            <Layout>
+            <Layout style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
                 <AdminHeader
                     collapsed={collapsed}
                     setCollapsed={setCollapsed}
@@ -57,10 +57,10 @@ const AdminLayout = () => {
                     drawerVisible={drawerVisible}
                     setDrawerVisible={setDrawerVisible}
                 />
-                <Content className="m-4">
-                    <div className="bg-white p-6 rounded-lg shadow-sm min-h-[80vh]">
+                <Content style={{ overflowY: 'auto', height: 'calc(100vh - 64px - 68px)' }}>
+                    <main className="bg-white p-6 rounded-lg shadow-sm min-h-full">
                         <Outlet />
-                    </div>
+                    </main>
                 </Content>
                 <AdminFooter />
             </Layout>
