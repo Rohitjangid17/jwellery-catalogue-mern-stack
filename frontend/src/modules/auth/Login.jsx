@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Form, Input, Button } from "antd";
 import { MailOutlined, LockOutlined } from "@ant-design/icons";
+import { Link } from "react-router-dom";
 
 const Login = () => {
     const [loading, setLoading] = useState(false);
@@ -15,7 +16,7 @@ const Login = () => {
 
     return (
         <div className="flex items-center justify-center min-h-screen bg-gray-100">
-            <div className="w-full max-w-sm bg-white rounded-xl shadow-lg p-6">
+            <div className="w-full max-w-sm bg-white rounded-xl shadow-md p-6">
                 {/* Logo */}
                 <div className="flex justify-center mb-4">
                     <img
@@ -86,9 +87,9 @@ const Login = () => {
 
                 {/* Extra Links */}
                 <div className="mt-4 text-center text-sm">
-                    <a href="#" className="text-[#ff6f61] hover:underline">
+                    <Link href="#" className="text-[#ff6f61] hover:underline">
                         Forgot Password?
-                    </a>
+                    </Link>
                 </div>
             </div>
         </div>
