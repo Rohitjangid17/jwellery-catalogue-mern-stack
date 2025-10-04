@@ -58,7 +58,7 @@ const AdminLayout = () => {
                     setDrawerVisible={setDrawerVisible}
                 />
                 <Content style={{ overflowY: 'auto', height: 'calc(100vh - 64px - 68px)' }}>
-                    <main className="bg-white p-6 rounded-lg shadow-sm min-h-full">
+                    <main className="bg-white px-6 pt-6 rounded-lg shadow-sm min-h-full">
                         <Outlet />
                     </main>
                 </Content>

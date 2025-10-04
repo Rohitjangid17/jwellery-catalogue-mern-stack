@@ -237,3 +237,10 @@ body {
 .custom-ant-menu .ant-menu-item-selected .anticon {
   color: #fff !important;
 }
+
+.ant-input:focus,
+.ant-input-focused,
+.ant-input:active {
+  border-color: #ff6f61 !important;
+  box-shadow: none !important;
+}
