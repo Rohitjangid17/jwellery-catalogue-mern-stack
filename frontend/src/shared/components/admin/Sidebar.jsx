@@ -7,6 +7,8 @@ import {
     ShoppingOutlined,
     TagsOutlined,
     UsergroupAddOutlined,
+    StarOutlined,
+    HeartOutlined,
 } from '@ant-design/icons';
 import { useNavigate, useLocation } from 'react-router-dom';
 
@@ -18,10 +20,13 @@ const AdminSidebar = ({ onItemClick }) => {
         { key: 'dashboard', icon: <DashboardOutlined />, label: 'Dashboard' },
         { key: 'categories', icon: <TagsOutlined />, label: 'Categories' },
         { key: 'products', icon: <ShoppingOutlined />, label: 'Products' },
+        { key: 'product-reviews', icon: <StarOutlined />, label: 'Product Reviews' },
+        { key: "wishlist", icon: <HeartOutlined />, label: "Wishlist" },
         // { key: 'users', icon: <UsergroupAddOutlined />, label: 'Users' },
         { key: 'contact-queries', icon: <MessageOutlined />, label: 'Contacted Queries' },
         { key: 'settings', icon: <SettingOutlined />, label: 'Settings' },
     ];
+
     return (
         <div className="flex flex-col h-full bg-black text-white">
             <div className="flex justify-center items-center py-6 sticky top-0 bg-black z-20">
