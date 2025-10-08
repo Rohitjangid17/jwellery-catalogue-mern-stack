@@ -6,9 +6,11 @@ import {
     MessageOutlined,
     ShoppingOutlined,
     TagsOutlined,
-    UsergroupAddOutlined,
     StarOutlined,
     HeartOutlined,
+    AppstoreOutlined,
+    ShareAltOutlined,
+    WhatsAppOutlined,
 } from '@ant-design/icons';
 import { useNavigate, useLocation } from 'react-router-dom';
 
@@ -19,12 +21,28 @@ const AdminSidebar = ({ onItemClick }) => {
     const menuItems = [
         { key: 'dashboard', icon: <DashboardOutlined />, label: 'Dashboard' },
         { key: 'categories', icon: <TagsOutlined />, label: 'Categories' },
-        { key: 'products', icon: <ShoppingOutlined />, label: 'Products' },
-        { key: 'product-reviews', icon: <StarOutlined />, label: 'Product Reviews' },
-        { key: "wishlist", icon: <HeartOutlined />, label: "Wishlist" },
+        {
+            key: 'product-management',
+            icon: <ShoppingOutlined />,
+            label: 'Product Management',
+            children: [
+                { key: 'products', icon: <ShoppingOutlined />, label: 'Products' },
+                { key: 'product-reviews', icon: <StarOutlined />, label: 'Product Reviews' },
+                { key: 'wishlist', icon: <HeartOutlined />, label: 'Wishlist' },
+            ]
+        },
         // { key: 'users', icon: <UsergroupAddOutlined />, label: 'Users' },
         { key: 'contact-queries', icon: <MessageOutlined />, label: 'Contacted Queries' },
-        { key: 'settings', icon: <SettingOutlined />, label: 'Settings' },
+        {
+            key: 'settings',
+            icon: <SettingOutlined />,
+            label: 'Settings',
+            children: [
+                { key: 'general', icon: <AppstoreOutlined />, label: 'General Settings' },
+                { key: 'whatsapp', icon: <WhatsAppOutlined />, label: 'WhatsApp Settings' },
+                { key: 'social-media', icon: <ShareAltOutlined />, label: 'Social Media Settings' },
+            ]
+        },
     ];
 
     return (
@@ -37,8 +55,9 @@ const AdminSidebar = ({ onItemClick }) => {
                     mode="inline"
                     theme="dark"
                     selectedKeys={[location.pathname.split('/')[2] || 'dashboard']}
-                    onClick={({ key }) => {
-                        navigate(`/admin/${key}`);
+                    onClick={({ key, keyPath }) => {
+                        const url = keyPath.length > 1 ? `/admin/${keyPath[1]}/${key}` : `/admin/${key}`;
+                        navigate(url);
                         onItemClick && onItemClick();
                     }}
                     items={menuItems}

@@ -230,7 +230,7 @@ body {
 }
 
 .custom-ant-menu .ant-menu-item-selected:hover {
-  background: #ff6f61 !important;
+  background: #111 !important;
   color: #fff !important;
 }
 
@@ -243,4 +243,19 @@ body {
 .ant-input:active {
   border-color: #ff6f61 !important;
   box-shadow: none !important;
+}
+
+/* Submenu ul background black */
+.custom-ant-menu .ant-menu-submenu > .ant-menu-sub {
+    background-color: #000 !important;
+}
+
+/* Submenu item hover */
+.custom-ant-menu .ant-menu-submenu .ant-menu-item:hover {
+    background-color: #111 !important; 
+}
+
+.custom-ant-menu .ant-menu-submenu .ant-menu-item-selected {
+    background-color: #222 !important;
+    color: #fff !important;
 }

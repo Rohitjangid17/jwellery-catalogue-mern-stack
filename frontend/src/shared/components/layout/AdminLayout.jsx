@@ -25,7 +25,7 @@ const AdminLayout = () => {
                     collapsible
                     collapsed={collapsed}
                     collapsedWidth={0}
-                    width={240}
+                    width={260}
                     style={{
                         background: '#000',
                         position: 'sticky',
