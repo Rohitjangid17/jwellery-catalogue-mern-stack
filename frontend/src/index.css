@@ -225,7 +225,7 @@ body {
 
 /* Custom active menu color for AntD dark menu */
 .custom-ant-menu .ant-menu-item-selected {
-  background: #ff6f61 !important;
+  background: #111 !important;
   color: #fff !important;
 }
 
@@ -241,7 +241,7 @@ body {
 .ant-input:focus,
 .ant-input-focused,
 .ant-input:active {
-  border-color: #ff6f61 !important;
+  border-color: #111 !important;
   box-shadow: none !important;
 }
 
