@@ -1,7 +1,11 @@
+import AdminPageHeader from "../../../shared/components/admin/PageHeader"
+
 const GeneralSettings = () => {
   return (
-    <div>GeneralSettings</div>
+    <>
+      <AdminPageHeader />
+    </>
   )
 }
 
-export default GeneralSettings
+export default GeneralSettings;

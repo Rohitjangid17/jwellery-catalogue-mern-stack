@@ -1,7 +1,11 @@
+import AdminPageHeader from "../../../shared/components/admin/PageHeader"
+
 const WhatsAppSettings = () => {
   return (
-    <div>WhatsAppSettings</div>
+    <>
+      <AdminPageHeader />
+    </>
   )
 }
 
-export default WhatsAppSettings
+export default WhatsAppSettings;

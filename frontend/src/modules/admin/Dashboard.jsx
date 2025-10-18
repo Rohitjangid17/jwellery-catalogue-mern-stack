@@ -1,9 +1,9 @@
-import PageHeader from "../../shared/components/admin/PageHeader";
+import AdminPageHeader from "../../shared/components/admin/PageHeader";
 
 const Dashboard = () => {
     return (
         <>
-            <PageHeader />
+            <AdminPageHeader />
         </>
     )
 }

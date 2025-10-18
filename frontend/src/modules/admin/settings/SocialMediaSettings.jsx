@@ -1,7 +1,11 @@
+import AdminPageHeader from "../../../shared/components/admin/PageHeader"
+
 const SocialMediaSettings = () => {
   return (
-    <div>SocialMediaSettings</div>
+    <>
+      <AdminPageHeader />
+    </>
   )
 }
 
-export default SocialMediaSettings
+export default SocialMediaSettings;

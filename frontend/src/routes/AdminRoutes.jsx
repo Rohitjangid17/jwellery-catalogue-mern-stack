@@ -5,6 +5,9 @@ import Categories from '../modules/admin/catalogue/Categories';
 import Products from '../modules/admin/catalogue/Products';
 import ContactQueries from '../modules/admin/ContactQueries';
 import ProductReview from '../modules/admin/catalogue/ProductReview';
+import GeneralSettings from '../modules/admin/settings/GeneralSettings';
+import WhatsAppSettings from '../modules/admin/settings/WhatsAppSettings';
+import SocialMediaSettings from '../modules/admin/settings/SocialMediaSettings';
 
 const adminRoutes = (
     <Route path="/admin" element={<AdminLayout />}>
@@ -19,6 +22,12 @@ const adminRoutes = (
         </Route>
 
         <Route path="contact-queries" element={<ContactQueries />} />
+
+        <Route path="settings">
+            <Route path="general" element={<GeneralSettings />} />
+            <Route path="whatsapp" element={<WhatsAppSettings />} />
+            <Route path="social-media" element={<SocialMediaSettings />} />
+        </Route>
     </Route>
 );
 
