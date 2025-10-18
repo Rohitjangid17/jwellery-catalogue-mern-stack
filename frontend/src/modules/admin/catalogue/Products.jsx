@@ -1,4 +1,4 @@
-import AdminPageHeader from "../../shared/components/admin/PageHeader"
+import AdminPageHeader from "../../../shared/components/admin/PageHeader";
 
 const Products = () => {
     return (
@@ -8,4 +8,4 @@ const Products = () => {
     )
 }
 
-export default Products
+export default Products;

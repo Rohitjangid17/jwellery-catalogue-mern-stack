@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import AdminPageHeader from "../../shared/components/admin/PageHeader"
-import { Table, Dropdown, Menu, Button, Input } from 'antd';
+import AdminPageHeader from "../../../shared/components/admin/PageHeader"
+import { Table, Dropdown, Button, Input } from 'antd';
 import { EllipsisOutlined, EditOutlined, DeleteOutlined, PlusOutlined, SearchOutlined } from '@ant-design/icons';
-import { categoryService } from "../../services/categoryService";
+import { categoryService } from "../../../services/categoryService";
 
 const ActionsColumn = ({ record }) => {
     const menu = {
