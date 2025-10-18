@@ -2,7 +2,7 @@ import { Navigate, Route } from 'react-router-dom';
 import AdminLayout from '../shared/components/layout/AdminLayout';
 import Dashboard from '../modules/admin/Dashboard';
 import Categories from '../modules/admin/catalogue/Categories';
-import Products from '../modules/admin/catalogue/Products';
+import Products from '../modules/admin/catalogue/products/Products';
 import ContactQueries from '../modules/admin/ContactQueries';
 import ProductReview from '../modules/admin/catalogue/ProductReview';
 import GeneralSettings from '../modules/admin/settings/GeneralSettings';

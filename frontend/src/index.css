@@ -240,7 +240,10 @@ body {
 
 .ant-input:focus,
 .ant-input-focused,
-.ant-input:active {
+.ant-input:active,
+.ant-select-selection-search-input:focus,
+.ant-select-selection-search-input-focused,
+.ant-select-selection-search-input:active {
   border-color: #111 !important;
   box-shadow: none !important;
 }
