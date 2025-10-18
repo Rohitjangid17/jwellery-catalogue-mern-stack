@@ -3,6 +3,7 @@ import AdminPageHeader from "../../../shared/components/admin/PageHeader"
 import { Table, Dropdown, Button, Input } from 'antd';
 import { EllipsisOutlined, EditOutlined, DeleteOutlined, PlusOutlined, SearchOutlined } from '@ant-design/icons';
 import { categoryService } from "../../../services/categoryService";
+import CategoryModel from "../../../shared/components/admin/modals/CategoryModel";
 
 const ActionsColumn = ({ record }) => {
     const menu = {
@@ -63,6 +64,7 @@ const Categories = () => {
     const [selectedRowKeys, setSelectedRowKeys] = useState([]);
     const [categories, setCategories] = useState([]);
     const [searchText, setSearchText] = useState('');
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     useEffect(() => {
         getCategories();
@@ -104,10 +106,9 @@ const Categories = () => {
                     allowClear
                 />
 
-                <Button className="!bg-[#ff6f61] hover:!bg-[#e55d51] !text-white border-none shadow-none font-medium rounded" icon={<PlusOutlined />} onClick={() => console.log('Add Category')}>
+                <Button className="!bg-[#ff6f61] hover:!bg-[#e55d51] !text-white border-none shadow-none font-medium rounded" icon={<PlusOutlined />} onClick={() => setIsModalOpen(true)}>
                     Add Category
                 </Button>
-
             </div>
 
             <Table
@@ -117,6 +118,8 @@ const Categories = () => {
                 pagination={{ pageSize: 50 }}
                 scroll={{ y: 49 * 5 }}
             />
+
+            <CategoryModel open={isModalOpen} onCancel={() => setIsModalOpen(false)} onOk={() => setIsModalOpen(false)} />
         </>
     )
 }
