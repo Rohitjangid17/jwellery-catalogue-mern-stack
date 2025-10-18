@@ -20,19 +20,21 @@ const AdminSidebar = ({ onItemClick }) => {
 
     const menuItems = [
         { key: 'dashboard', icon: <DashboardOutlined />, label: 'Dashboard' },
-        { key: 'categories', icon: <TagsOutlined />, label: 'Categories' },
+
         {
-            key: 'product-management',
-            icon: <ShoppingOutlined />,
-            label: 'Product Management',
+            key: 'catalogue',
+            icon: <AppstoreOutlined />,
+            label: 'Catalogue',
             children: [
+                { key: 'categories', icon: <TagsOutlined />, label: 'Categories' },
                 { key: 'products', icon: <ShoppingOutlined />, label: 'Products' },
                 { key: 'product-reviews', icon: <StarOutlined />, label: 'Product Reviews' },
                 { key: 'wishlist', icon: <HeartOutlined />, label: 'Wishlist' },
-            ]
+            ],
         },
-        // { key: 'users', icon: <UsergroupAddOutlined />, label: 'Users' },
+
         { key: 'contact-queries', icon: <MessageOutlined />, label: 'Contacted Queries' },
+
         {
             key: 'settings',
             icon: <SettingOutlined />,
@@ -41,7 +43,7 @@ const AdminSidebar = ({ onItemClick }) => {
                 { key: 'general', icon: <AppstoreOutlined />, label: 'General Settings' },
                 { key: 'whatsapp', icon: <WhatsAppOutlined />, label: 'WhatsApp Settings' },
                 { key: 'social-media', icon: <ShareAltOutlined />, label: 'Social Media Settings' },
-            ]
+            ],
         },
     ];
 
