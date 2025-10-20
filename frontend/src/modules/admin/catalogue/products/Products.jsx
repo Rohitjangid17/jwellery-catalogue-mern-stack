@@ -1,7 +1,7 @@
 import { useState } from "react";
 import AdminPageHeader from "../../../../shared/components/admin/PageHeader";
 import { DeleteOutlined, EditOutlined, EllipsisOutlined, PlusOutlined, SearchOutlined } from "@ant-design/icons";
-import { Button, Dropdown, Input, Select, Table } from "antd";
+import { Button, Dropdown, Input, Table } from "antd";
 
 const products = [
     {
