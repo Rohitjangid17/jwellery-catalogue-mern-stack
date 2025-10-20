@@ -5,6 +5,7 @@ import Categories from '../modules/admin/catalogue/Categories';
 import Products from '../modules/admin/catalogue/products/Products';
 import ContactQueries from '../modules/admin/ContactQueries';
 import ProductReview from '../modules/admin/catalogue/ProductReview';
+import Wishlist from '../modules/admin/catalogue/Wishlist';
 import GeneralSettings from '../modules/admin/settings/GeneralSettings';
 import WhatsAppSettings from '../modules/admin/settings/WhatsAppSettings';
 import SocialMediaSettings from '../modules/admin/settings/SocialMediaSettings';
@@ -18,7 +19,7 @@ const adminRoutes = (
             <Route path="categories" element={<Categories />} />
             <Route path="products" element={<Products />} />
             <Route path="product-reviews" element={<ProductReview />} />
-            <Route path="wishlist" element={<ProductReview />} />
+            <Route path="wishlist" element={<Wishlist />} />
         </Route>
 
         <Route path="contact-queries" element={<ContactQueries />} />
