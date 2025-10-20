@@ -1,7 +1,13 @@
 import { SearchOutlined } from "@ant-design/icons";
 import AdminPageHeader from "../../shared/components/admin/PageHeader"
-import { Table, Input } from 'antd';
+import { Table, Input, Button } from 'antd';
 import { useState } from "react";
+import { RiFileExcel2Line } from "react-icons/ri";
+import { DatePicker } from 'antd';
+import dayjs from 'dayjs';
+const { RangePicker } = DatePicker;
+
+const dateFormat = 'YYYY/MM/DD';
 
 const contactQueries = [
     {
@@ -96,6 +102,22 @@ const ContactQueries = () => {
                     style={{ width: 250 }}
                     allowClear
                 />
+
+                <div className="flex items-center gap-2">
+                    <RangePicker
+                        defaultValue={[dayjs(), dayjs()]}
+                        format={dateFormat}
+                    />
+
+                    <Button
+                        className="!bg-emerald-500 hover:!bg-emerald-600 !text-white border-none flex items-center gap-2 rounded !shadow-none"
+                        icon={<RiFileExcel2Line size={16} />}
+                        onClick={() => {/* Export to Excel functionality */ }}
+                    >
+                        Export Excel
+                    </Button>
+                </div>
+
             </div>
 
             <Table
