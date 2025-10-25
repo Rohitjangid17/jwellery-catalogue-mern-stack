@@ -37,36 +37,40 @@ const CustomerHeader = () => {
                 {/* Desktop Header */}
                 <nav className="hidden md:flex items-center justify-between py-6 bg-white">
                     {/* Left: Menu Links */}
-                    <ul className="flex gap-8">
-                        {navLinks.map((link) => (
-                            <li key={link.label}>
-                                <Link to={link.path} className={`text-sm font-medium hover:text-[#ff6f61] transition ${location.pathname === link.path ? "text-[#ff6f61]" : ""}`}>
-                                    {link.label}
-                                </Link>
-                            </li>
-                        ))}
-                    </ul>
+                    <div className="grow">
+                        <ul className="flex gap-8">
+                            {navLinks.map((link) => (
+                                <li key={link.label}>
+                                    <Link to={link.path} className={`text-sm font-medium hover:text-[#ff6f61] transition ${location.pathname === link.path ? "text-[#ff6f61]" : ""}`}>
+                                        {link.label}
+                                    </Link>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
 
                     {/* Center: Logo */}
-                    <div>
+                    <div className="grow">
                         <img src="/assets/images/logo.svg" className="object-cover" alt="logo" />
                     </div>
 
                     {/* Right: Icons */}
-                    <div className="flex gap-4 items-center">
-                        <FiSearch size={20} />
-                        <FiUser size={20} />
-                        <div className="relative">
-                            <FiHeart size={20} />
-                            <span className="absolute -top-2 -right-2 bg-rose-500 text-white text-xs rounded-full px-1">
-                                3
-                            </span>
-                        </div>
-                        <div className="relative">
-                            <FiShoppingBag size={20} />
-                            <span className="absolute -top-2 -right-2 bg-rose-500 text-white text-xs rounded-full px-1">
-                                1
-                            </span>
+                    <div className="grow">
+                        <div className="flex gap-4 items-center justify-end">
+                            <FiSearch size={20} />
+                            <FiUser size={20} />
+                            <div className="relative">
+                                <FiHeart size={20} />
+                                <span className="absolute -top-2 -right-2 bg-rose-500 text-white text-xs rounded-full px-1">
+                                    3
+                                </span>
+                            </div>
+                            <div className="relative">
+                                <FiShoppingBag size={20} />
+                                <span className="absolute -top-2 -right-2 bg-rose-500 text-white text-xs rounded-full px-1">
+                                    1
+                                </span>
+                            </div>
                         </div>
                     </div>
                 </nav>
