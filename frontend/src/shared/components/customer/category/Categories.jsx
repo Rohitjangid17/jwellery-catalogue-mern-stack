@@ -1,78 +1,82 @@
-import CategoryCard from "./CategoryCard"
-import { Swiper, SwiperSlide } from "swiper/react"
-import "swiper/css"
-import "swiper/css/pagination"
-import { Autoplay, Pagination } from "swiper/modules"
-
-const categories = [
-    {
-        id: 1,
-        image: "/assets/images/category/product-5.jpg",
-        title: "Necklace",
-        count: 12,
-    },
-    {
-        id: 2,
-        image: "/assets/images/category/product-5.jpg",
-        title: "Rings",
-        count: 18,
-    },
-    {
-        id: 3,
-        image: "/assets/images/category/product-5.jpg",
-        title: "Earrings",
-        count: 9,
-    },
-    {
-        id: 4,
-        image: "/assets/images/category/product-5.jpg",
-        title: "Ring",
-        count: 10,
-    },
-];
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/pagination";
+import { Autoplay, Pagination } from "swiper/modules";
+import { useEffect, useState } from "react";
+import { categoryService } from "../../../../services/categoryService";
+import CategoryCard from "./CategoryCard";
+import "react-loading-skeleton/dist/skeleton.css";
 
 const Categories = () => {
-    return (
-        <section className="py-16 px-4 bg-white">
-            <div className="container mx-auto">
-                <Swiper
-                    spaceBetween={20}
-                    modules={[Autoplay, Pagination]}
-                    pagination={{ clickable: true }}
-                    breakpoints={{
-                        0: {
-                            slidesPerView: 1,
-                            loop: true,
-                            autoplay: {
-                                delay: 3000,
-                                disableOnInteraction: false,
-                            },
-                        },
-                        640: {
-                            slidesPerView: 2,
-                        },
-                        768: {
-                            slidesPerView: 3,
-                        },
-                        1024: {
-                            slidesPerView: 4,
-                            loop: false,
-                            autoplay: false,
-                        },
-                    }}>
-                    {categories.map((category) => (
-                        <SwiperSlide key={category.id}>
-                            <CategoryCard
-                                image={category.image}
-                                title={category.title}
-                                count={category.count}
-                            />
-                        </SwiperSlide>
-                    ))}
-                </Swiper>
-            </div>
-        </section>
-    )
-}
+    const [categories, setCategories] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
 
-export default Categories
+    useEffect(() => {
+        getCategoryList();
+    }, []);
+
+    // Fetch category list
+    const getCategoryList = async () => {
+        setIsLoading(true);
+        try {
+            const response = await categoryService.getCategories();
+            setCategories(response.categories);
+            console.log("response category ", response);
+        } catch (error) {
+            console.error("Error fetching categories:", error);
+            setCategories([]);
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+    return (
+        <>
+            <section className="py-16 px-4 bg-white">
+                <div className="container mx-auto">
+                    <Swiper
+                        spaceBetween={20}
+                        modules={[Autoplay, Pagination]}
+                        pagination={{ clickable: true }}
+                        breakpoints={{
+                            0: {
+                                slidesPerView: 1,
+                                loop: true,
+                                autoplay: {
+                                    delay: 3000,
+                                    disableOnInteraction: false,
+                                },
+                            },
+                            640: {
+                                slidesPerView: 2,
+                            },
+                            768: {
+                                slidesPerView: 3,
+                            },
+                            1024: {
+                                slidesPerView: 4,
+                                loop: false,
+                                autoplay: false,
+                            },
+                        }}>
+                        {isLoading
+                            ?
+                            Array.from({ length: 4 }).map((_, index) => (
+                                <SwiperSlide key={index}>
+                                    <CategoryCard loading />
+                                </SwiperSlide>
+                            ))
+                            :
+                            categories.map((category) => (
+                                <SwiperSlide key={category._id}>
+                                    <CategoryCard category={category} />
+                                </SwiperSlide>
+                            ))}
+                    </Swiper>
+                </div>
+            </section>
+        </>
+    );
+};
+
+export default Categories;
