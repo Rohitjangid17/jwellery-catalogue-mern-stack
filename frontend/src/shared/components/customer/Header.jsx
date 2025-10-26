@@ -16,17 +16,18 @@ const navLinks = [
 
 // mobile bottom menu
 const mobileMenuItems = [
-    { label: "Home", path: "/home", icon: <AiOutlineHome /> },
-    { label: "Account", path: "/account", icon: <FiUser /> },
-    { label: "Shop", path: "/shop", icon: <MdOutlineStorefront /> },
-    { label: "Wishlist", path: "/wishlist", icon: <FiHeart />, badge: 3 },
-    { label: "Cart", path: "/cart", icon: <FiShoppingBag />, badge: 1 },
+    { label: "Home", path: "/home", icon: <AiOutlineHome size={20} /> },
+    { label: "Account", path: "/account", icon: <FiUser size={20} />, openModal: true },
+    { label: "Shop", path: "/shop", icon: <MdOutlineStorefront size={20} /> },
+    { label: "Wishlist", path: "/wishlist", icon: <FiHeart size={20} />, badge: 3 },
+    { label: "Cart", path: "/cart", icon: <FiShoppingBag size={20} />, badge: 1 },
 ];
 
 const CustomerHeader = () => {
     const [menuOpen, setMenuOpen] = useState(false);
     const [userDrawerOpen, setUserDrawerOpen] = useState(false);
     const [isLogin, setIsLogin] = useState(true);
+    const [searchOpen, setSearchOpen] = useState(false);
 
     const location = useLocation();
     const [form] = Form.useForm();
@@ -68,7 +69,7 @@ const CustomerHeader = () => {
                     {/* Right: Icons */}
                     <div className="grow">
                         <div className="flex gap-4 items-center justify-end">
-                            <FiSearch size={20} />
+                            <FiSearch size={20} className="cursor-pointer" onClick={() => setSearchOpen(true)} />
 
                             <FiUser size={20} className="cursor-pointer hidden md:block" onClick={() => setUserDrawerOpen(true)} />
 
@@ -103,7 +104,7 @@ const CustomerHeader = () => {
                     </div>
                 </nav>
 
-                {/* Mobile Drawer menu left side */}
+                {/* mobile Drawer menu left side start here */}
                 <Drawer placement="left" onClose={() => setMenuOpen(false)} open={menuOpen}
                     width={320} closable={false}>
                     <div className="flex items-center justify-between">
@@ -149,25 +150,39 @@ const CustomerHeader = () => {
                         </div>
                     </div>
                 </Drawer>
+                {/* mobile Drawer menu left side end here */}
 
-                {/* Mobile Bottom Nav */}
+                {/* mobile bottom nav start here */}
                 <div className="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t shadow z-40">
-                    <ul className="flex justify-around text-xs py-2">
+                    <ul className="flex justify-around text-xs px-[15px] py-[11px]">
                         {mobileMenuItems.map((item) => (
-                            <li key={item.label} className="flex flex-col items-center relative">
-                                <Link to={item.path} className="flex flex-col items-center">
-                                    <div className="text-xl">{item.icon}</div>
-                                    <span>{item.label}</span>
-                                    {item.badge && (
-                                        <span className="absolute top-0 right-2 text-[10px] bg-[#ff6f61] text-white rounded-full px-1">
-                                            {item.badge}
-                                        </span>
-                                    )}
-                                </Link>
+                            <li key={item.label} className="relative">
+                                {item.openModal ? (
+                                    <Link onClick={() => setUserDrawerOpen(true)} className="flex flex-col items-center gap-y-[5px] text-black">
+                                        {item.icon}
+                                        <span className="text-[13px] font-medium text-black">{item.label}</span>
+                                        {item.badge && (
+                                            <span className="absolute top-0 right-2 text-[10px] bg-[#ff6f61] text-white rounded-full px-1">
+                                                {item.badge}
+                                            </span>
+                                        )}
+                                    </Link>
+                                ) : (
+                                    <Link to={item.path} className="flex flex-col items-center gap-y-[5px] text-black">
+                                        {item.icon}
+                                        <span className="text-[13px] font-medium text-black">{item.label}</span>
+                                        {item.badge && (
+                                            <span className="absolute top-0 right-2 text-[10px] bg-[#ff6f61] text-white rounded-full px-1">
+                                                {item.badge}
+                                            </span>
+                                        )}
+                                    </Link>
+                                )}
                             </li>
                         ))}
                     </ul>
                 </div>
+                {/* mobile bottom nav end here */}
 
                 {/* login & register model start here */}
                 <Drawer placement="right" onClose={() => setUserDrawerOpen(false)} open={userDrawerOpen}
@@ -302,7 +317,22 @@ const CustomerHeader = () => {
                         )}
                     </div>
                 </Drawer>
-                {/* login & register model endF here */}
+                {/* login & register model end here */}
+
+                {/* search model start here */}
+                <Drawer placement="top" onClose={() => setSearchOpen(false)} open={searchOpen}
+                    className="!h-screen" closable={false}>
+                    <div className="flex items-center justify-end">
+                        <Button type="default" icon={<FiX size={24} />}
+                            onClick={() => setSearchOpen(false)}
+                            className="!border-none text-black hover:!text-[#ff6f61]"
+                        />
+                    </div>
+                    <div className="py-6">
+                        <h2 className="text-[32px] text-center mb-[42px] font-medium">What are you looking for?</h2>
+                    </div>
+                </Drawer>
+                {/* search model end here */}
             </div >
         </header >
     );
