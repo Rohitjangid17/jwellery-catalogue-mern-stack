@@ -61,7 +61,12 @@ const CustomerHeader = () => {
                             <FiUser size={20} />
                             <div className="relative">
                                 <Link to="/wishlist">
-                                    <FiHeart size={20} />
+                                    <FiHeart size={20}
+                                        className={`cursor-pointer transition ${location.pathname === "/wishlist"
+                                            ? "text-[#ff6f61]"
+                                            : "text-gray-800 hover:text-[#ff6f61]"
+                                            }`}
+                                    />
                                     <span className="absolute -top-2 -right-2 bg-rose-500 text-white text-xs rounded-full px-1">
                                         3
                                     </span>
@@ -69,7 +74,13 @@ const CustomerHeader = () => {
                             </div>
                             <div className="relative">
                                 <Link to="/cart">
-                                    <FiShoppingBag size={20} />
+                                    <FiShoppingBag
+                                        size={20}
+                                        className={`cursor-pointer transition ${location.pathname === "/cart"
+                                            ? "text-[#ff6f61]"
+                                            : "text-gray-800 hover:text-[#ff6f61]"
+                                            }`}
+                                    />
                                     <span className="absolute -top-2 -right-2 bg-rose-500 text-white text-xs rounded-full px-1">
                                         1
                                     </span>
