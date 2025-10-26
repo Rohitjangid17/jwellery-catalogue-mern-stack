@@ -60,16 +60,20 @@ const CustomerHeader = () => {
                             <FiSearch size={20} />
                             <FiUser size={20} />
                             <div className="relative">
-                                <FiHeart size={20} />
-                                <span className="absolute -top-2 -right-2 bg-rose-500 text-white text-xs rounded-full px-1">
-                                    3
-                                </span>
+                                <Link to="/wishlist">
+                                    <FiHeart size={20} />
+                                    <span className="absolute -top-2 -right-2 bg-rose-500 text-white text-xs rounded-full px-1">
+                                        3
+                                    </span>
+                                </Link>
                             </div>
                             <div className="relative">
-                                <FiShoppingBag size={20} />
-                                <span className="absolute -top-2 -right-2 bg-rose-500 text-white text-xs rounded-full px-1">
-                                    1
-                                </span>
+                                <Link to="/cart">
+                                    <FiShoppingBag size={20} />
+                                    <span className="absolute -top-2 -right-2 bg-rose-500 text-white text-xs rounded-full px-1">
+                                        1
+                                    </span>
+                                </Link>
                             </div>
                         </div>
                     </div>

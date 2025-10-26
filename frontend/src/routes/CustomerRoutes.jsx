@@ -11,6 +11,8 @@ import TermCondition from '../modules/customer/TermCondition';
 import ReturnRefund from '../modules/customer/ReturnRefund';
 import Shipping from '../modules/customer/Shipping';
 import Faq from '../modules/customer/Faq';
+import Wishlist from '../modules/customer/Wishlist';
+import Cart from '../modules/customer/Cart';
 
 const customerRoutes = (
     <Route element={<CustomerLayout />}>
@@ -26,6 +28,8 @@ const customerRoutes = (
         <Route path="/return-and-refund" element={<ReturnRefund />} />
         <Route path="/shipping" element={<Shipping />} />
         <Route path="/faq" element={<Faq />} />
+        <Route path="/wishlist" element={<Wishlist />} />
+        <Route path="/cart" element={<Cart />} />
     </Route>
 );
 

@@ -1,11 +1,11 @@
 import CommonBanner from "../../shared/components/customer/banner/CommonBanner";
 
-const Cart = () => {
+const Wishlist = () => {
     return (
         <>
-            <CommonBanner title="Cart" />
+            <CommonBanner title="Wishlist" />
         </>
     )
 }
 
-export default Cart;
+export default Wishlist;
