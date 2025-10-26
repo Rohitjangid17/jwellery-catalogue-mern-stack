@@ -1,20 +1,17 @@
-import {
-    MdOutlineCurrencyRupee,
-    MdCompareArrows,
-} from "react-icons/md";
-import { FiHeart, FiEye } from "react-icons/fi";
-import { HiOutlineShoppingBag } from "react-icons/hi2";
+import { FiHeart, FiEye, FiShoppingBag, FiTrash, FiShuffle, FiDollarSign } from "react-icons/fi";
 import { Tooltip } from "antd";
 import { Link } from "react-router-dom";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 
-const ProductCard = ({ product = {}, loading = false }) => {
-    const actions = [
-        { icon: <HiOutlineShoppingBag size={18} />, label: "Add to Cart" },
+const ProductCard = ({ product = {}, loading = false, isWishlist = false }) => {
+    const actions = isWishlist ? [
+        { icon: <FiTrash size={18} />, label: "Remove from Wishlist", },
+    ] : [
+        { icon: <FiShoppingBag size={18} />, label: "Add to Cart" },
         { icon: <FiHeart size={18} />, label: "Add to Wishlist" },
         { icon: <FiEye size={18} />, label: "Quick View" },
-        { icon: <MdCompareArrows size={18} />, label: "Add to Compare" },
+        { icon: <FiShuffle mpareArrows size={18} />, label: "Add to Compare" },
     ];
 
     const title = product?.title || "Untitled Product";
@@ -95,13 +92,13 @@ const ProductCard = ({ product = {}, loading = false }) => {
                         </Link>
                         <div className="flex items-center gap-1">
                             <p className="flex items-center text-[#ff6f61] text-base leading-[24px] font-medium">
-                                <MdOutlineCurrencyRupee />
-                                {Math.max(finalPrice, 0)}
+                                <FiDollarSign />
+                                <span>{Math.max(finalPrice, 0)}</span>
                             </p>
                             {discountType !== "none" && (
                                 <p className="flex items-center text-[#1f1f1f] text-base leading-[24px] font-medium line-through">
-                                    <MdOutlineCurrencyRupee />
-                                    {basePrice}
+                                    <FiDollarSign />
+                                    <span>{basePrice}</span>
                                 </p>
                             )}
                         </div>
