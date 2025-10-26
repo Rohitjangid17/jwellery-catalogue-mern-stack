@@ -249,16 +249,16 @@ body {
 }
 
 /* Submenu ul background black */
-.custom-ant-menu .ant-menu-submenu > .ant-menu-sub {
-    background-color: #000 !important;
+.custom-ant-menu .ant-menu-submenu>.ant-menu-sub {
+  background-color: #000 !important;
 }
 
 /* Submenu item hover */
 .custom-ant-menu .ant-menu-submenu .ant-menu-item:hover {
-    background-color: #111 !important; 
+  background-color: #111 !important;
 }
 
 .custom-ant-menu .ant-menu-submenu .ant-menu-item-selected {
-    background-color: #222 !important;
-    color: #fff !important;
+  background-color: #222 !important;
+  color: #fff !important;
 }

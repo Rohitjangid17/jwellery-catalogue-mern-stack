@@ -1,15 +1,9 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import {
-    FiSearch,
-    FiUser,
-    FiHeart,
-    FiShoppingBag,
-    FiMenu,
-    FiX,
-} from "react-icons/fi";
+import { FiSearch, FiUser, FiHeart, FiShoppingBag, FiMenu, FiX, } from "react-icons/fi";
 import { AiOutlineHome } from "react-icons/ai";
 import { MdOutlineStorefront } from "react-icons/md";
+import { Drawer, Button, Form, Input } from "antd";
 
 const navLinks = [
     { label: "Home", path: "/home" },
@@ -29,7 +23,14 @@ const mobileMenuItems = [
 
 const CustomerHeader = () => {
     const [menuOpen, setMenuOpen] = useState(false);
+    const [userDrawerOpen, setUserDrawerOpen] = useState(false);
     const location = useLocation();
+
+    const [form] = Form.useForm();
+
+    const handleLogin = () => {
+        console.log("handle login")
+    }
 
     return (
         <header className="relative z-50 px-4">
@@ -58,7 +59,9 @@ const CustomerHeader = () => {
                     <div className="grow">
                         <div className="flex gap-4 items-center justify-end">
                             <FiSearch size={20} />
-                            <FiUser size={20} />
+
+                            <FiUser size={20} className="cursor-pointer" onClick={() => setUserDrawerOpen(true)} />
+
                             <div className="relative">
                                 <Link to="/wishlist">
                                     <FiHeart size={20}
@@ -151,8 +154,71 @@ const CustomerHeader = () => {
                         ))}
                     </ul>
                 </div>
-            </div>
-        </header>
+
+                <Drawer placement="right" onClose={() => setUserDrawerOpen(false)} open={userDrawerOpen}
+                    width={520} closable={false}>
+                    <div className="flex items-center justify-between border-b pb-3">
+                        <h2 className="text-xl font-semibold text-black">Log in</h2>
+                        <Button type="default" icon={<FiX size={16} />}
+                            onClick={() => setUserDrawerOpen(false)}
+                            className="!border-none !text-black"
+                        />
+                    </div>
+                    <div className="py-6">
+                        <Form
+                            form={form}
+                            layout="vertical"
+                            onFinish={handleLogin}
+                            className="flex flex-col gap-4"
+                        >
+                            <Form.Item
+                                name="email"
+                                rules={[
+                                    { required: true, message: "Please enter your email" },
+                                    { type: "email", message: "Please enter a valid email" },
+                                ]}
+                                className="mb-0"
+                            >
+                                <Input
+                                    placeholder="Email*"
+                                    size="large"
+                                    className="rounded !border border-[#ebebeb] w-full px-4 py-2 text-base font-normal !shadow-none !placeholder-[#6b7280] placeholder:text-sm hover:!border-[#000c] focus-within:!border-[#000c] [&>input]:!placeholder-[#6b7280] [&>input]:!text-sm"
+                                />
+                            </Form.Item>
+
+                            <Form.Item
+                                name="password"
+                                rules={[{ required: true, message: "Please enter your password" }]}
+                                className="mb-0"
+                            >
+                                <Input.Password
+                                    placeholder="Password*"
+                                    size="large"
+                                    className="rounded !border border-[#ebebeb] w-full px-4 py-2 text-base font-normal !shadow-none !placeholder-[#6b7280] placeholder:text-sm hover:!border-[#000c] focus-within:!border-[#000c] [&>input]:!placeholder-[#6b7280] [&>input]:!text-sm"
+                                />
+                            </Form.Item>
+
+                            <Form.Item>
+                                <Link href="/forgot-password" className="text-[#393939] underline text-sm hover:text-[#ff6f61] hover:underline transition-colors duration-300 ease-in">
+                                    Forgot Password?
+                                </Link>
+                            </Form.Item>
+
+                            <div className="flex items-center gap-3">
+                                <Button type="primary" htmlType="submit" block size="large"
+                                    className="text-base font-medium !bg-black text-white rounded-full">
+                                    Sign in
+                                </Button>
+                                <Button type="primary" htmlType="submit" block size="large"
+                                    className="text-base font-medium !bg-white border border-black text-black hover:!bg-black hover:!text-white rounded-full transition duration-300 ease-in-out">
+                                    Create an account
+                                </Button>
+                            </div>
+                        </Form>
+                    </div>
+                </Drawer>
+            </div >
+        </header >
     );
 };
 
