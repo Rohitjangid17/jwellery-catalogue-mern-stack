@@ -1,9 +1,17 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import Input from "antd/es/input/Input";
+
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Thumbs } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/thumbs";
+import { Button } from "antd";
+import { MinusOutlined, PlusOutlined, ShoppingCartOutlined } from "@ant-design/icons";
+import { FiHeart, FiMessageCircle, FiShare2, FiShuffle } from "react-icons/fi";
+import SwiperSectionLayout from "../swiper/SwiperSectionLayout";
+import { productService } from "../../../../services/productService";
+import ProductCard from "./ProductCard";
 
 const product = {
     title: "Elegant Gold Necklace",
@@ -12,76 +20,247 @@ const product = {
         "This handcrafted gold-plated necklace features a traditional design perfect for festive occasions and gifting.",
     rating: 4.5,
     stock: true,
+    category: "koton"
 };
 
 const productImages = [
-    "http://localhost:5000/uploads/products/il_794xN.1863509152_n1p0-1753697140406.webp",
-    "http://localhost:5000/uploads/products/il_794xN.1863509152_n1p0-1753697140406.webp",
-    "http://localhost:5000/uploads/products/il_794xN.1863509152_n1p0-1753697140406.webp",
-    "http://localhost:5000/uploads/products/il_794xN.1863509152_n1p0-1753697140406.webp",
-    "http://localhost:5000/uploads/products/il_794xN.1863509152_n1p0-1753697140406.webp",
+    "http://localhost:5000/uploads/products/il_1140xN.3873329088_g9o6-1757833873747.webp",
+    "http://localhost:5000/uploads/products/il_1140xN.3873329088_g9o6-1757833873747.webp",
+    "http://localhost:5000/uploads/products/il_1140xN.3873329088_g9o6-1757833873747.webp",
+    "http://localhost:5000/uploads/products/il_1140xN.3873329088_g9o6-1757833873747.webp",
+    "http://localhost:5000/uploads/products/il_1140xN.3873329088_g9o6-1757833873747.webp",
 ];
 
 const ProductInfo = () => {
     const [thumbsSwiper, setThumbsSwiper] = useState(null);
     const [activeIndex, setActiveIndex] = useState(0);
+    const [bestSellingProducts, setBestSellingProducts] = useState([]);
+    const [isLoader, setIsLoader] = useState(true);
+
+    useEffect(() => {
+        getBestSellingProducts();
+    }, []);
+
+
+    // get best selling product
+    const getBestSellingProducts = async () => {
+        setIsLoader(true);
+        try {
+            const response = await productService.getAllProducts();
+            console.log("Best Selling Products:", response.products);
+            setBestSellingProducts(response.products);
+        } catch (error) {
+            console.error("Error fetching best selling products:", error);
+            setBestSellingProducts([]);
+        } finally {
+            setIsLoader(false);
+        }
+    };
 
     return (
-        <section className="py-16 px-4">
-            <div className="container mx-auto">
-                <div className="grid grid-cols-2 gap-14">
-                    {/* Left Side */}
-                    <div className="grid grid-cols-4 gap-7">
-                        {/* Thumbnail List */}
-                        <div className="flex flex-col gap-2 col-span-1">
-                            {productImages.map((src, index) => (
-                                <img key={index} src={src} alt={`Thumbnail ${index + 1}`} onClick={() => thumbsSwiper?.slideTo(index)} className={`w-full h-20 object-contain cursor-pointer border rounded-lg ${activeIndex === index
-                                    ? "border-[#ff6f61]" : "border-gray-300"}`} />
-                            ))}
+        <>
+            <section className="py-16 px-4">
+                <div className="container mx-auto">
+                    <div className="grid grid-cols-12 gap-6">
+                        <div className="col-span-12 md:col-span-6">
+                            <div className="grid grid-cols-12 gap-3">
+                                {/* Thumbnail List */}
+                                <div className="col-span-2">
+                                    <div className="flex flex-col gap-3">
+                                        {productImages.map((src, index) => (
+                                            <img key={index} src={src} alt={`Thumbnail ${index + 1}`} onClick={() => thumbsSwiper?.slideTo(index)} className={`w-full h-full object-cover cursor-pointer border rounded-lg ${activeIndex === index
+                                                ? "border-[#ff6f61]" : "border-gray-300"}`} />
+                                        ))}
+                                    </div>
+                                </div>
+
+                                {/* Swiper Carousel */}
+                                <div className="col-span-10">
+                                    <div className="relative">
+                                        <Swiper spaceBetween={10} slidesPerView={1} navigation={true} onSwiper={setThumbsSwiper} onSlideChange={(swiper) => setActiveIndex(swiper.activeIndex)}
+                                            modules={[Navigation, Thumbs]}>
+                                            {productImages.map((src, index) => (
+                                                <SwiperSlide key={index}>
+                                                    <img src={src} alt={`Product Image ${index + 1}`} className="w-full h-full object-cover rounded-xl" />
+                                                </SwiperSlide>
+                                            ))}
+                                        </Swiper>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
-                        {/* Swiper Carousel */}
-                        <div className="col-span-3 relative">
-                            <Swiper spaceBetween={10} slidesPerView={1} navigation={true} onSwiper={setThumbsSwiper} onSlideChange={(swiper) => setActiveIndex(swiper.activeIndex)}
-                                modules={[Navigation, Thumbs]}>
-                                {productImages.map((src, index) => (
-                                    <SwiperSlide key={index}>
-                                        <img src={src} alt={`Product Image ${index + 1}`} className="w-full h-[400px] object-contain rounded" />
-                                    </SwiperSlide>
-                                ))}
-                            </Swiper>
-                        </div>
-                    </div>
+                        <div className="col-span-12 md:col-span-6">
+                            <div className="flex flex-col gap-y-6">
+                                <div className="flex flex-col gap-3 border-b last:border-b-0 border-[#ebebeb] pb-8">
+                                    <span className="text-[#545454] text-sm font-medium uppercase">{product.category}</span>
+                                    <h2 className="text-3xl text-black font-medium">{product.title}</h2>
+                                    <div className="flex items-center gap-3">
+                                        <p className="text-[#ff6f61] text-3xl font-medium">$60.00</p>
+                                        <p className="text-[#0009] text-3xl font-medium">
+                                            <del>$80.00</del>
+                                        </p>
+                                        <span className="bg-[#ff6f61] text-sm font-normal text-white px-2.5 py-[5px] rounded-full">20% Off</span>
+                                    </div>
+                                    <div className="flex items-center gap-3">
+                                        <span className="text-[#1d770b] bg-[#2ca3151a] rounded-[5px] px-2.5 py-[5px] font-medium">In Stock</span>
+                                        <p>30 sold in last 24 hours</p>
+                                    </div>
+                                </div>
 
-                    {/* Right Side */}
-                    <div className="space-y-4">
-                        <h2 className="text-3xl text-black font-medium">{product.title}</h2>
-                        <p className="text-xl text-green-600 font-semibold">₹{product.price}</p>
+                                <div className="border-b last:border-b-0 border-[#ebebeb] pb-8 flex flex-col gap-y-6">
+                                    <div className="flex flex-col gap-y-2">
+                                        <p className="text-black font-normal text-base">Colors:
+                                            <span className="font-medium ml-1">Grey</span>
+                                        </p>
+                                        <div className="flex gap-3">
+                                            <div className="w-[38px] h-[38px] flex items-center justify-center cursor-pointer border rounded-full border-[#101828] transition-all duration-300 ease-in-out">
+                                                <div className="w-8 h-8 rounded-full bg-[#292929] border border-[#dcdcdc]"> </div>
+                                            </div>
+                                            <div className="w-[38px] h-[38px] flex items-center justify-center cursor-pointer border rounded-full border-transparent transition-all duration-300 ease-in-out">
+                                                <div className="w-8 h-8 rounded-full bg-[#bbb355] border border-[#dcdcdc]"> </div>
+                                            </div>
+                                            <div className="w-[38px] h-[38px] flex items-center justify-center cursor-pointer border rounded-full border-transparent transition-all duration-300 ease-in-out">
+                                                <div className="w-8 h-8 rounded-full bg-[#f2f4f7] border border-[#dcdcdc]"> </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="flex flex-col gap-y-2">
+                                        <p className="text-black font-normal text-base">Size:
+                                            <span className="font-medium ml-1">Small</span>
+                                        </p>
+                                        <div className="flex gap-3">
+                                            <div className="w-12 h-12 rounded-full border border-black text-xl font-medium cursor-pointer transition-all duration-300 ease-in-out uppercase flex items-center justify-center">
+                                                s
+                                            </div>
+                                            <div className="w-12 h-12 rounded-full border border-[#ebebeb] text-xl font-medium cursor-pointer transition-all duration-300 ease-in-out uppercase flex items-center justify-center">
+                                                m
+                                            </div>
+                                            <div className="w-12 h-12 rounded-full border border-[#ebebeb] text-xl font-medium cursor-pointer transition-all duration-300 ease-in-out uppercase flex items-center justify-center">
+                                                l
+                                            </div>
+                                            <div className="w-12 h-12 rounded-full border border-[#ebebeb] text-xl font-medium cursor-pointer transition-all duration-300 ease-in-out uppercase flex items-center justify-center">
+                                                xl
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
 
-                        <div className="flex items-center gap-2 text-yellow-500">
-                            {"★".repeat(Math.floor(product.rating))}
-                            {"☆".repeat(5 - Math.floor(product.rating))}
-                            <span className="text-gray-600 text-sm">({product.rating})</span>
-                        </div>
+                                <div className="border-b last:border-b-0 border-[#ebebeb] pb-8">
+                                    <div className="flex items-center gap-3 mb-3">
+                                        <div className="flex items-center justify-between bg-[#f1f1f1] rounded-full">
+                                            <Button
+                                                type="default"
+                                                icon={<MinusOutlined className="text-[22px]" />}
+                                                size="small"
+                                                onClick={() => console.log("minus cliked")}
+                                                className="!bg-transparent !w-[42px] h-12 border-none rounded-sm !shadow-none !text-black hover:!text-[#ff6f61] transition-all duration-300 ease-in-out"
+                                            />
+                                            <Input className="w-[42px] h-12 !bg-transparent border-none pointer-events-none !text-black font-medium text-[22px]" value={6} />
+                                            <Button
+                                                type="default"
+                                                icon={<PlusOutlined className="text-[22px]" />}
+                                                size="small"
+                                                onClick={() => console.log("plus cliked")}
+                                                className="!bg-transparent !w-[42px] h-12 border-none rounded-sm !shadow-none !text-black hover:!text-[#ff6f61] transition-all duration-300 ease-in-out"
+                                            />
+                                        </div>
+                                        <Button type="button" size="large" className="grow !font-medium bg-black text-white rounded-full hover:!bg-[#ff6f61] transition-all duration-300 ease-in-out">Add to cart</Button>
+                                    </div>
+                                    <Button type="button" size="large" className="w-full !bg-[#ff6f61] !font-medium text-white rounded-full">Buy it now</Button>
 
-                        <p className="text-gray-700">{product.description}</p>
+                                    <div className="flex items-center flex-wrap gap-6 mt-4">
+                                        <Button
+                                            type="default"
+                                            size="small"
+                                            icon={<FiHeart size={14} className="!font-medium" />}
+                                            className="!border-none !px-0 text-sm !font-medium !shadow-none !text-black hover:!text-[#ff6f61] transition-all duration-300 ease-in-out"
+                                        >
+                                            Add to wishlist
+                                        </Button>
+                                        <Button
+                                            type="default"
+                                            size="small"
+                                            icon={<FiShuffle size={14} className="!font-medium" />}
+                                            className="!border-none !px-0 text-sm !font-medium !shadow-none !text-black hover:!text-[#ff6f61] transition-all duration-300 ease-in-out"
+                                        >
+                                            Add to Compare
+                                        </Button>
+                                        <Button
+                                            type="default"
+                                            size="small"
+                                            icon={<FiMessageCircle size={14} className="!font-medium" />}
+                                            className="!border-none !px-0 text-sm !font-medium !shadow-none !text-black hover:!text-[#ff6f61] transition-all duration-300 ease-in-out"
+                                        >
+                                            Ask a Question
+                                        </Button>
+                                        <Button
+                                            type="default"
+                                            size="small"
+                                            icon={<FiShare2 size={14} className="!font-medium" />}
+                                            className="!border-none !px-0 text-sm !font-medium !shadow-none !text-black hover:!text-[#ff6f61] transition-all duration-300 ease-in-out"
+                                        >
+                                            Share
+                                        </Button>
+                                    </div>
 
-                        <p className={`font-medium ${product.stock ? "text-green-600" : "text-red-600"}`}>
-                            {product.stock ? "In Stock" : "Out of Stock"}
-                        </p>
-
-                        <div className="flex gap-4 mt-4">
-                            <button className="px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg">
-                                Add to Cart
-                            </button>
-                            <button className="px-6 py-2 bg-gray-200 hover:bg-gray-300 rounded-lg">
-                                Buy Now
-                            </button>
+                                    <div className="mt-4 flex flex-col gap-y-3">
+                                        <p className="text-black font-normal text-base">SKU:
+                                            <span className="font-medium ml-1">AD1FSSE0YR</span>
+                                        </p>
+                                        <p className="text-black font-normal text-base">Categories:
+                                            <span className="font-medium ml-1">Ring, Neckless</span>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
+
+            <SwiperSectionLayout
+                title="People Also Bought"
+                breakpoints={{
+                    768: { slidesPerView: 2 },
+                    1024: { slidesPerView: 4 },
+                }}
+                bgColor="bg-[#ffffff]"
+            >
+                {isLoader
+                    ? Array.from({ length: 4 }).map((_, index) => (
+                        <SwiperSlide key={index}>
+                            <ProductCard loading />
+                        </SwiperSlide>
+                    ))
+                    : bestSellingProducts.map((product) => (
+                        <SwiperSlide key={product._id}>
+                            <ProductCard product={product} />
+                        </SwiperSlide>
+                    ))}
+            </SwiperSectionLayout>
+
+            <SwiperSectionLayout
+                title="Recently Viewed"
+                breakpoints={{
+                    768: { slidesPerView: 2 },
+                    1024: { slidesPerView: 4 },
+                }}
+                bgColor="bg-[#ffffff]"
+            >
+                {isLoader
+                    ? Array.from({ length: 4 }).map((_, index) => (
+                        <SwiperSlide key={index}>
+                            <ProductCard loading />
+                        </SwiperSlide>
+                    ))
+                    : bestSellingProducts.map((product) => (
+                        <SwiperSlide key={product._id}>
+                            <ProductCard product={product} />
+                        </SwiperSlide>
+                    ))}
+            </SwiperSectionLayout>
+        </>
     );
 };
 
