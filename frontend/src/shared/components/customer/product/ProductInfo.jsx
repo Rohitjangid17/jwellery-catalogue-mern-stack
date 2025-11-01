@@ -94,29 +94,27 @@ const ProductInfo = () => {
                                         <Button
                                             type="default"
                                             shape="circle"
-                                            icon={<FiChevronLeft size={20} />}
                                             disabled={activeIndex === 0}
-                                            className={`custom-swiper-button-prev !absolute !top-1/2 !left-3 -translate-y-1/2 z-10 !min-w-11 !min-h-11 !w-11 !h-11 
-                    !border !text-base !flex !items-center !justify-center transition-all duration-300
-                    ${activeIndex === 0
-                                                    ? "!bg-gray-100 !border-[#E5E5E5] !text-gray-400 cursor-not-allowed"
-                                                    : "bg-white !border-[#EBEBEE] !text-black hover:!bg-black hover:!text-white hover:!border-none"
-                                                }`}
-                                        />
+                                            className={`custom-swiper-button-prev !absolute !top-1/2 !left-3 -translate-y-1/2 z-10 !w-11 !h-11 !border !text-base transition-all duration-300 flex items-center justify-center !p-0 ${activeIndex === 0 ? "!bg-gray-100 !border-[#E5E5E5] !text-gray-400 cursor-not-allowed"
+                                                : "bg-white !border-[#EBEBEE] !text-black hover:!bg-black hover:!text-white hover:!border-none"
+                                                }`}>
+                                            <div className="flex items-center justify-center w-full h-full">
+                                                <FiChevronLeft size={20} />
+                                            </div>
+                                        </Button>
 
-                                        {/* Next Button */}
                                         <Button
                                             type="default"
                                             shape="circle"
-                                            icon={<FiChevronRight size={20} />}
                                             disabled={activeIndex === productImages.length - 1}
-                                            className={`custom-swiper-button-next !absolute !top-1/2 !right-3 -translate-y-1/2 z-10 !min-w-11 !min-h-11 !w-11 !h-11 
-                    !border !text-base !flex !items-center !justify-center transition-all duration-300
-                    ${activeIndex === productImages.length - 1
-                                                    ? "!bg-gray-100 !border-[#E5E5E5] !text-gray-400 cursor-not-allowed"
-                                                    : "bg-white !border-[#EBEBEE] !text-black hover:!bg-black hover:!text-white hover:!border-none"
-                                                }`}
-                                        />
+                                            className={`custom-swiper-button-next !absolute !top-1/2 !right-3 -translate-y-1/2 z-10 !w-11 !h-11 !border !text-base transition-all duration-300 flex items-center justify-center !p-0 ${activeIndex === productImages.length - 1 ? "!bg-gray-100 !border-[#E5E5E5] !text-gray-400 cursor-not-allowed"
+                                                : "bg-white !border-[#EBEBEE] !text-black hover:!bg-black hover:!text-white hover:!border-none"
+                                                }`}>
+                                            <div className="flex items-center justify-center w-full h-full">
+                                                <FiChevronRight size={20} />
+                                            </div>
+                                        </Button>
+
                                     </div>
                                 </div>
                             </div>
