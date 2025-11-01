@@ -8,7 +8,7 @@ import "swiper/css/navigation";
 import "swiper/css/thumbs";
 import { Button } from "antd";
 import { MinusOutlined, PlusOutlined } from "@ant-design/icons";
-import { FiHeart, FiMessageCircle, FiShare2, FiShuffle } from "react-icons/fi";
+import { FiChevronLeft, FiChevronRight, FiHeart, FiMessageCircle, FiShare2, FiShuffle } from "react-icons/fi";
 import SwiperSectionLayout from "../swiper/SwiperSectionLayout";
 import { productService } from "../../../../services/productService";
 import ProductCard from "./ProductCard";
@@ -78,7 +78,10 @@ const ProductInfo = () => {
                                 {/* Swiper Carousel */}
                                 <div className="col-span-10">
                                     <div className="relative">
-                                        <Swiper spaceBetween={10} slidesPerView={1} navigation={true} onSwiper={setThumbsSwiper} onSlideChange={(swiper) => setActiveIndex(swiper.activeIndex)}
+                                        <Swiper spaceBetween={10} slidesPerView={1} navigation={{
+                                            nextEl: ".custom-swiper-button-next",
+                                            prevEl: ".custom-swiper-button-prev",
+                                        }} onSwiper={setThumbsSwiper} onSlideChange={(swiper) => setActiveIndex(swiper.activeIndex)}
                                             modules={[Navigation, Thumbs]}>
                                             {productImages.map((src, index) => (
                                                 <SwiperSlide key={index}>
@@ -86,6 +89,34 @@ const ProductInfo = () => {
                                                 </SwiperSlide>
                                             ))}
                                         </Swiper>
+
+                                        {/* Prev Button */}
+                                        <Button
+                                            type="default"
+                                            shape="circle"
+                                            icon={<FiChevronLeft size={20} />}
+                                            disabled={activeIndex === 0}
+                                            className={`custom-swiper-button-prev !absolute !top-1/2 !left-3 -translate-y-1/2 z-10 !min-w-11 !min-h-11 !w-11 !h-11 
+                    !border !text-base !flex !items-center !justify-center transition-all duration-300
+                    ${activeIndex === 0
+                                                    ? "!bg-gray-100 !border-[#E5E5E5] !text-gray-400 cursor-not-allowed"
+                                                    : "bg-white !border-[#EBEBEE] !text-black hover:!bg-black hover:!text-white hover:!border-none"
+                                                }`}
+                                        />
+
+                                        {/* Next Button */}
+                                        <Button
+                                            type="default"
+                                            shape="circle"
+                                            icon={<FiChevronRight size={20} />}
+                                            disabled={activeIndex === productImages.length - 1}
+                                            className={`custom-swiper-button-next !absolute !top-1/2 !right-3 -translate-y-1/2 z-10 !min-w-11 !min-h-11 !w-11 !h-11 
+                    !border !text-base !flex !items-center !justify-center transition-all duration-300
+                    ${activeIndex === productImages.length - 1
+                                                    ? "!bg-gray-100 !border-[#E5E5E5] !text-gray-400 cursor-not-allowed"
+                                                    : "bg-white !border-[#EBEBEE] !text-black hover:!bg-black hover:!text-white hover:!border-none"
+                                                }`}
+                                        />
                                     </div>
                                 </div>
                             </div>
