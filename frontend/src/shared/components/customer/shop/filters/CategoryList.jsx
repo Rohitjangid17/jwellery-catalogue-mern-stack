@@ -36,7 +36,7 @@ const CategoryList = () => {
                 ))
                 : categories.map((category, index) => (
                     <li key={index} className="cursor-pointer capitalize text-sm text-black hover:text-[#ff6f61] transition duration-300 ease-in-out">
-                        {category?.title} (20)
+                        {category?.title} ({category?.product_count})
                     </li>
                 ))}
         </ul>

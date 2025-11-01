@@ -1,4 +1,5 @@
 import Category from "../models/category.model.js";
+import Product from "../models/product.model.js";
 import cloudinary from "../config/cloudinary.config.js";
 import { deleteUploadedFile } from "../utils/file/deleteFile.js";
 import fs from "fs";
@@ -96,16 +97,33 @@ export const getCategories = async (req, res) => {
                 return res.status(404).json({ status: false, message: "Category not found" });
             }
 
-            return res.status(200).json({ status: true, message: "Category fetched successfully", category });
+            const productCount = await Product.countDocuments({ category: category_id });
+
+            return res.status(200).json({
+                status: true, message: "Category fetched successfully", category: {
+                    ...category._doc, product_count: productCount,
+                }
+            });
         }
 
         const categories = await Category.find();
 
+        const categoriesWithCount = await Promise.all(
+            categories.map(async (category) => {
+                const productCount = await Product.countDocuments({ category: category._id });
+
+                return {
+                    ...category._doc,
+                    product_count: productCount,
+                };
+            })
+        );
+
         res.status(200).json({
             status: true,
-            message: categories.length > 0 ? "Categories fetched successfully." : "No categories found.",
-            count: categories.length,
-            categories
+            message: categoriesWithCount.length > 0 ? "Categories fetched successfully." : "No categories found.",
+            count: categoriesWithCount.length,
+            categories: categoriesWithCount,
         });
     } catch (error) {
         console.error("Error fetching categories:", error);
