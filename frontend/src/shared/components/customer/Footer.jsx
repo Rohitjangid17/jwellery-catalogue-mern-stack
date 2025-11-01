@@ -12,7 +12,7 @@ const CustomerFooter = () => {
             <div className="px-4">
                 <div className="container mx-auto">
                     <div className="grid grid-cols-12 gap-10">
-                        <div className="col-span-12 md:col-span-4">
+                        <div className="col-span-12 md:col-span-4 lg:col-span-4">
                             <img src="/assets/images/logo.svg" className="object-cover" alt="logo" />
 
                             <ul className="mt-8 flex flex-col gap-4">
@@ -50,7 +50,7 @@ const CustomerFooter = () => {
                             </ul>
                         </div>
 
-                        <div className="col-span-6 md:col-span-2">
+                        <div className="col-span-12 md:col-span-4 lg:col-span-2">
                             <h2 className="mb-6 text-[#0d0d0d] text-xl leading-[30px] font-medium">About Us</h2>
                             <ul className="flex flex-col gap-4">
                                 <li>
@@ -68,7 +68,7 @@ const CustomerFooter = () => {
                             </ul>
                         </div>
 
-                        <div className="col-span-6 md:col-span-2">
+                        <div className="col-span-12 md:col-span-4 lg:col-span-2">
                             <h2 className="mb-6 text-[#0d0d0d] text-xl leading-[30px] font-medium">Resource</h2>
                             <ul className="flex flex-col gap-4">
                                 <li>
@@ -88,7 +88,7 @@ const CustomerFooter = () => {
                                 </li>
                             </ul>
                         </div>
-                        <div className="col-span-12 md:col-span-4">
+                        <div className="col-span-12 lg:col-span-4">
                             <h2 className="mb-6 text-[#0d0d0d] text-xl leading-[30px] font-medium">Subscribe Newsletter</h2>
                             <p className="text-[#545454] text-base font-normal mb-6">Subscribe to our newsletter to get the latest updates and offers.</p>
                             <form className="flex items-center gap-4">
