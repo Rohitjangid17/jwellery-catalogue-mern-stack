@@ -1,20 +1,13 @@
-import { Pagination } from "antd";
-import CustomSelect from "../CustomSelect";
+import { Pagination, Select } from "antd";
 import ProductCard from "../product/ProductCard";
 import SidebarFilters from "./filters/SidebarFilters";
 import axios from 'axios';
 import React, { useEffect, useState } from "react";
 
-const sortOptions = [
-    { value: "default", label: "Sort By (Default)" },
-    { value: "priceLowHigh", label: "Price: Low to High" },
-    { value: "priceHighLow", label: "Price: High to Low" },
-    { value: "latest", label: "Latest First" },
-]
-
 const ShopSection = () => {
     const [products, setProducts] = useState([]);
-    const [isLoader, setIsLoader] = useState(false);
+    const [isLoader, setIsLoader] = useState(true);
+    const [selectedOption, setSelectedOption] = useState("default");
 
     const total = 50;
     const pageSize = 9;
@@ -22,7 +15,7 @@ const ShopSection = () => {
 
     useEffect(() => {
         // getProducts();
-        const timer = setTimeout(() => getProducts(), 2000);
+        const timer = setTimeout(() => getProducts(), 5000);
         return () => clearTimeout(timer);
     }, []);
 
@@ -66,17 +59,22 @@ const ShopSection = () => {
                     </div>
 
                     <div className="col-span-9">
-                        <div className="flex items-center justify-between mb-6">
-                            <CustomSelect
-                                options={sortOptions}
-                                value={"default"}
-                                onChange={(val) => console.log("Selected:", val)}
-                            />
+                        <div className="max-w-[244px] mb-10">
+                            <Select value={selectedOption} onChange={(value) => setSelectedOption(value)} size="large"
+                                className="w-full !shadow-none [&_.ant-select-selector]:!shadow-none rounded-full [&_.ant-select-selector]:!rounded-full [&_.ant-select-selector]:!border-[#EBEBEE] hover:[&_.ant-select-selector]:!border-black focus:[&_.ant-select-selector]:!border-black focus:[&_.ant-select-selector]:!shadow-none transition-all duration-300 ease-in-out">
+                                <Option value="default" disabled>
+                                    Sort By (Default)
+                                </Option>
+                                <Option value="title-ascending">Title Ascending</Option>
+                                <Option value="title-descending">Title Descending</Option>
+                                <Option value="price-ascending">Price Ascending</Option>
+                                <Option value="price-descending">Price Descending</Option>
+                            </Select>
                         </div>
 
                         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
                             {isLoader
-                                ? Array.from({ length: 2 }).map((_, index) => (
+                                ? Array.from({ length: 9 }).map((_, index) => (
                                     <ProductCard key={index} loading />
                                 ))
                                 : products.map((product, index) => (
