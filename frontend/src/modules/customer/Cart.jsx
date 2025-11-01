@@ -121,7 +121,7 @@ const Cart = () => {
 
     return (
         <>
-            <CommonBanner title="Cart" />
+            <CommonBanner title="Shopping Cart" />
 
             <section className="py-16 px-4">
                 <div className="container mx-auto">

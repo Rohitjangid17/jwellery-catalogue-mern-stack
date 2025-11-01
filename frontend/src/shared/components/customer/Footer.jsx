@@ -54,16 +54,13 @@ const CustomerFooter = () => {
                             <h2 className="mb-6 text-[#0d0d0d] text-xl leading-[30px] font-medium">About Us</h2>
                             <ul className="flex flex-col gap-4">
                                 <li>
-                                    <a href="#" className="text-[#545454] hover:text-[#ff6f61] text-base font-normal transition-all duration-300 ease-in-out">About Us</a>
+                                    <Link to="/about" className="text-[#545454] hover:text-[#ff6f61] text-base font-normal transition-all duration-300 ease-in-out">About Us</Link>
                                 </li>
                                 <li>
-                                    <a href="#" className="text-[#545454] hover:text-[#ff6f61] text-base font-normal transition-all duration-300 ease-in-out">Contact Us</a>
+                                    <Link to="/contact" className="text-[#545454] hover:text-[#ff6f61] text-base font-normal transition-all duration-300 ease-in-out">Contact Us</Link>
                                 </li>
                                 <li>
-                                    <a href="#" className="text-[#545454] hover:text-[#ff6f61] text-base font-normal transition-all duration-300 ease-in-out">Our Store</a>
-                                </li>
-                                <li>
-                                    <a href="#" className="text-[#545454] hover:text-[#ff6f61] text-base font-normal transition-all duration-300 ease-in-out">Our Story</a>
+                                    <Link to="/about" className="text-[#545454] hover:text-[#ff6f61] text-base font-normal transition-all duration-300 ease-in-out">Our Story</Link>
                                 </li>
                             </ul>
                         </div>

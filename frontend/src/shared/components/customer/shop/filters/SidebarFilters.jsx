@@ -14,51 +14,63 @@ const SidebarFilters = () => {
 
     return (
         <div className="space-y-4 sticky top-0">
-            <FilterDropdown title="Categories" defaultActive>
-                <CategoryList />
-            </FilterDropdown>
+            <div className="border-b border-[#ebebeb] pb-4">
+                <FilterDropdown title="Categories" defaultActive>
+                    <CategoryList />
+                </FilterDropdown>
+            </div>
 
-            <FilterDropdown title="Availability" defaultActive>
-                <CheckboxGroup
-                    options={[
-                        { label: "In Stock", count: 20 },
-                        { label: "Out of Stock", count: 3 },
-                    ]}
-                />
-            </FilterDropdown>
+            <div className="border-b border-[#ebebeb] pb-4">
+                <FilterDropdown title="Availability" defaultActive>
+                    <CheckboxGroup
+                        options={[
+                            { label: "In Stock", count: 20 },
+                            { label: "Out of Stock", count: 3 },
+                        ]}
+                    />
+                </FilterDropdown>
+            </div>
 
-            <FilterDropdown title="Price" defaultActive>
-                <Slider
-                    range
-                    min={0}
-                    max={1200}
-                    value={priceRange}
-                    onChange={(value) => setPriceRange(value)}
-                    trackStyle={{ backgroundColor: "#ff6f61" }}
-                    handleStyle={{ borderColor: "#ff6f61" }}
-                />
-                <div className="flex items-center gap-1">
-                    <span className="!font-semibold text-black text-sm">Price:</span> <span className="text-sm text-[#ff6f61]">₹{priceRange[0]} - ₹{priceRange[1]}</span>
-                </div>
-            </FilterDropdown>
+            <div className="border-b border-[#ebebeb] pb-4">
+                <FilterDropdown title="Price" defaultActive>
+                    <Slider
+                        range
+                        min={0}
+                        max={1200}
+                        value={priceRange}
+                        onChange={(value) => setPriceRange(value)}
+                        trackStyle={{ backgroundColor: "#ff6f61" }}
+                        handleStyle={{ borderColor: "#ff6f61" }}
+                    />
+                    <div className="flex items-center gap-1">
+                        <span className="!font-semibold text-black text-sm">Price:</span> <span className="text-sm text-[#ff6f61]">₹{priceRange[0]} - ₹{priceRange[1]}</span>
+                    </div>
+                </FilterDropdown>
+            </div>
 
-            <FilterDropdown title="Color" defaultActive>
-                <ColorSelector colors={colors} />
-            </FilterDropdown>
+            <div className="border-b border-[#ebebeb] pb-4">
+                <FilterDropdown title="Color" defaultActive>
+                    <ColorSelector colors={colors} />
+                </FilterDropdown>
+            </div>
 
-            <FilterDropdown title="Size" defaultActive>
-                <SizeSelector sizes={sizes} />
-            </FilterDropdown>
-
-            <FilterDropdown title="Brand" defaultActive>
-                <CheckboxGroup
-                    options={[
-                        { label: "Vikasa", count: 20 },
-                        { label: "Zisace", count: 23 },
-                    ]}
-                />
-            </FilterDropdown>
-        </div>
+            <div className="border-b border-[#ebebeb] pb-4">
+                <FilterDropdown title="Size" defaultActive>
+                    <SizeSelector sizes={sizes} />
+                </FilterDropdown>
+            </div>
+            
+            <div className="border-b border-[#ebebeb] pb-4">
+                <FilterDropdown title="Brand" defaultActive>
+                    <CheckboxGroup
+                        options={[
+                            { label: "Vikasa", count: 20 },
+                            { label: "Zisace", count: 23 },
+                        ]}
+                    />
+                </FilterDropdown>
+            </div>
+        </div >
     );
 };
 
