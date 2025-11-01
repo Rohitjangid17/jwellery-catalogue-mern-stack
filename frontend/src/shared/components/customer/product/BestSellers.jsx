@@ -9,7 +9,9 @@ const BestSellers = () => {
     const [isLoader, setIsLoader] = useState(true);
 
     useEffect(() => {
-        getBestSellingProducts();
+        // getBestSellingProducts();
+        const timer = setTimeout(() => getBestSellingProducts(), 2000);
+        return () => clearTimeout(timer);
     }, []);
 
 
@@ -19,7 +21,7 @@ const BestSellers = () => {
         try {
             const response = await productService.getAllProducts();
             console.log("Best Selling Products:", response.products);
-            setBestSellingProducts(response.products);
+            setBestSellingProducts(response.products || []);
         } catch (error) {
             console.error("Error fetching best selling products:", error);
             setBestSellingProducts([]);
@@ -27,6 +29,10 @@ const BestSellers = () => {
             setIsLoader(false);
         }
     };
+
+    if (!isLoader && bestSellingProducts.length === 0) {
+        return null;
+    }
 
     return (
         <>
