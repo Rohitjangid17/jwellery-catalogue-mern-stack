@@ -9,11 +9,11 @@ import { Slider } from "antd";
 const SidebarFilters = () => {
     const [priceRange, setPriceRange] = useState([20, 1200]);
 
-    const colors = ["#c9a97c", "#000000", "#ffffff", "#d16e6c", "#dda1dc", "#f8aaa3", "#4a8123", "#8bb29c"];
+    const colors = ["#e2d2ab", "#dcc8ba", "#d6d6d6"];
     const sizes = ["XS", "S", "M", "L", "XL"];
 
     return (
-        <div className="space-y-4">
+        <div className="space-y-4 sticky top-0">
             <FilterDropdown title="Categories" defaultActive>
                 <CategoryList />
             </FilterDropdown>

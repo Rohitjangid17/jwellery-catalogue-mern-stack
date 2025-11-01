@@ -39,7 +39,6 @@ const ShopSection = () => {
     }
 
     const itemRender = (page, type, originalElement) => {
-        // Preserve AntD behavior; just add our classes
         if (type === "page") {
             return React.cloneElement(originalElement, {
                 className: `${originalElement.props.className || ""} circle-page`,
@@ -50,7 +49,6 @@ const ShopSection = () => {
                 className: `${originalElement.props.className || ""} circle-nav`,
             });
         }
-        // jump-prev / jump-next etc.
         return originalElement;
     };
 
@@ -58,13 +56,13 @@ const ShopSection = () => {
         <section className="py-16 px-4">
             <div className="container mx-auto">
                 <div className="grid grid-cols-12 gap-10">
-                    <div className="col-span-3 hidden sm:block">
+                    <div className="col-span-3 hidden lg:block">
                         <SidebarFilters />
                     </div>
 
                     <div className="col-span-12 sm:col-span-9">
                         <div className="flex items-center gap-1.5 mb-10">
-                            <Button type="default" size="large" onClick={() => setIsDrawerOpen(true)} className="sm:hidden flex items-center gap-2 transition-all duration-300 ease-in-out !text-black rounded-full !border !border-[#EBEBEE] hover:!border-black">
+                            <Button type="default" size="large" onClick={() => setIsDrawerOpen(true)} className="lg:hidden flex items-center gap-2 transition-all duration-300 ease-in-out !text-black rounded-full !border !border-[#EBEBEE] hover:!border-black">
                                 <FiList size={18} />
                                 Filter
                             </Button>
