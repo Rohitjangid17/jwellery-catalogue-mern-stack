@@ -30,7 +30,7 @@ const Product = () => {
     return (
         <section className="py-16 px-4">
             <div className="container mx-auto">
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
                     {isLoader
                         ? Array.from({ length: 4 }).map((_, index) => (
                             <ProductCard key={index} loading />
