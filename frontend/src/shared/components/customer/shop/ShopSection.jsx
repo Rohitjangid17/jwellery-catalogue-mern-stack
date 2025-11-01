@@ -60,7 +60,7 @@ const ShopSection = () => {
                         <SidebarFilters />
                     </div>
 
-                    <div className="col-span-12 sm:col-span-9">
+                    <div className="col-span-12 lg:col-span-9">
                         <div className="flex items-center gap-1.5 mb-10">
                             <Button type="default" size="large" onClick={() => setIsDrawerOpen(true)} className="lg:hidden flex items-center gap-2 transition-all duration-300 ease-in-out !text-black rounded-full !border !border-[#EBEBEE] hover:!border-black">
                                 <FiList size={18} />
