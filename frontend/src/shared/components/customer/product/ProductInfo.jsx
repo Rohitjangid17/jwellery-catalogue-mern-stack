@@ -7,11 +7,12 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/thumbs";
 import { Button } from "antd";
-import { MinusOutlined, PlusOutlined, ShoppingCartOutlined } from "@ant-design/icons";
+import { MinusOutlined, PlusOutlined } from "@ant-design/icons";
 import { FiHeart, FiMessageCircle, FiShare2, FiShuffle } from "react-icons/fi";
 import SwiperSectionLayout from "../swiper/SwiperSectionLayout";
 import { productService } from "../../../../services/productService";
 import ProductCard from "./ProductCard";
+import ProductBottomBar from "./ProductBottomBar";
 
 const product = {
     title: "Elegant Gold Necklace",
@@ -260,6 +261,8 @@ const ProductInfo = () => {
                         </SwiperSlide>
                     ))}
             </SwiperSectionLayout>
+
+            <ProductBottomBar />
         </>
     );
 };
