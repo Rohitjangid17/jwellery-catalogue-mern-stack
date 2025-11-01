@@ -34,7 +34,7 @@ const ProductBottomBar = () => {
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-[5px]">
                     <div className="hidden sm:flex gap-4 items-center justify-center sm:justify-start">
                         <div className="w-[72px] h-[72px]">
-                            <img src="http://localhost:5000/uploads/products/il_1140xN.3873329088_g9o6-1757833873747.webp" className="w-full h-full object-cover rounded-full" alt="Product image" />
+                            <img src="http://localhost:5000/uploads/products/5-1761994829551.webp" className="w-full h-full object-cover rounded-full" alt="Product image" />
                         </div>
                         <p className="text-base text-black font-normal">Elegant Gold Necklace</p>
                     </div>

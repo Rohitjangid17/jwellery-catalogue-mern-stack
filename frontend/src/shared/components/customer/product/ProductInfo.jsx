@@ -25,11 +25,11 @@ const product = {
 };
 
 const productImages = [
-    "http://localhost:5000/uploads/products/il_1140xN.3873329088_g9o6-1757833873747.webp",
-    "http://localhost:5000/uploads/products/il_1140xN.3873329088_g9o6-1757833873747.webp",
-    "http://localhost:5000/uploads/products/il_1140xN.3873329088_g9o6-1757833873747.webp",
-    "http://localhost:5000/uploads/products/il_1140xN.3873329088_g9o6-1757833873747.webp",
-    "http://localhost:5000/uploads/products/il_1140xN.3873329088_g9o6-1757833873747.webp",
+    "http://localhost:5000/uploads/products/5-1761994829551.webp",
+    "http://localhost:5000/uploads/products/5-1761994829551.webp",
+    "http://localhost:5000/uploads/products/5-1761994829551.webp",
+    "http://localhost:5000/uploads/products/5-1761994829551.webp",
+    "http://localhost:5000/uploads/products/5-1761994829551.webp",
 ];
 
 const ProductInfo = () => {
@@ -99,7 +99,6 @@ const ProductInfo = () => {
                                     className="!min-w-4 !w-auto !text-black !inline-block !bg-transparent !shadow-none !border-none transition-all duration-300 ease-in-out"
                                 />
                             </Tooltip>
-
                         </div>
                     </div>
                 </div>
