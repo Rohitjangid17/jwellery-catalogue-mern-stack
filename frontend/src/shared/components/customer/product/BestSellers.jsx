@@ -21,7 +21,12 @@ const BestSellers = () => {
         try {
             const response = await productService.getAllProducts();
             console.log("Best Selling Products:", response.products);
-            setBestSellingProducts(response.products || []);
+
+            if (response && Array.isArray(response.products)) {
+                setBestSellingProducts(response.products);
+            } else {
+                setBestSellingProducts([]);
+            }
         } catch (error) {
             console.error("Error fetching best selling products:", error);
             setBestSellingProducts([]);
