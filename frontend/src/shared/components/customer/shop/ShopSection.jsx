@@ -1,13 +1,17 @@
-import { Pagination, Select } from "antd";
+import { Button, Pagination, Select, Drawer } from "antd";
 import ProductCard from "../product/ProductCard";
 import SidebarFilters from "./filters/SidebarFilters";
 import axios from 'axios';
 import React, { useEffect, useState } from "react";
+import { FiList } from "react-icons/fi";
+
+const { Option } = Select;
 
 const ShopSection = () => {
     const [products, setProducts] = useState([]);
     const [isLoader, setIsLoader] = useState(true);
     const [selectedOption, setSelectedOption] = useState("default");
+    const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
     const total = 50;
     const pageSize = 9;
@@ -54,22 +58,28 @@ const ShopSection = () => {
         <section className="py-16 px-4">
             <div className="container mx-auto">
                 <div className="grid grid-cols-12 gap-10">
-                    <div className="col-span-3 ">
+                    <div className="col-span-3 hidden sm:block">
                         <SidebarFilters />
                     </div>
 
-                    <div className="col-span-9">
-                        <div className="max-w-[244px] mb-10">
-                            <Select value={selectedOption} onChange={(value) => setSelectedOption(value)} size="large"
-                                className="w-full !shadow-none [&_.ant-select-selector]:!shadow-none rounded-full [&_.ant-select-selector]:!rounded-full [&_.ant-select-selector]:!border-[#EBEBEE] hover:[&_.ant-select-selector]:!border-black focus:[&_.ant-select-selector]:!border-black focus:[&_.ant-select-selector]:!shadow-none transition-all duration-300 ease-in-out">
-                                <Option value="default" disabled>
-                                    Sort By (Default)
-                                </Option>
-                                <Option value="title-ascending">Title Ascending</Option>
-                                <Option value="title-descending">Title Descending</Option>
-                                <Option value="price-ascending">Price Ascending</Option>
-                                <Option value="price-descending">Price Descending</Option>
-                            </Select>
+                    <div className="col-span-12 sm:col-span-9">
+                        <div className="flex items-center gap-1.5 mb-10">
+                            <Button type="default" size="large" onClick={() => setIsDrawerOpen(true)} className="sm:hidden flex items-center gap-2 transition-all duration-300 ease-in-out !text-black rounded-full !border !border-[#EBEBEE] hover:!border-black">
+                                <FiList size={18} />
+                                Filter
+                            </Button>
+                            <div className="max-w-[244px]">
+                                <Select value={selectedOption} onChange={(value) => setSelectedOption(value)} size="large"
+                                    className="w-full !shadow-none [&_.ant-select-selector]:!shadow-none rounded-full [&_.ant-select-selector]:!rounded-full [&_.ant-select-selector]:!border-[#EBEBEE] hover:[&_.ant-select-selector]:!border-black focus:[&_.ant-select-selector]:!border-black focus:[&_.ant-select-selector]:!shadow-none transition-all duration-300 ease-in-out">
+                                    <Option value="default" disabled>
+                                        Sort By (Default)
+                                    </Option>
+                                    <Option value="title-ascending">Title Ascending</Option>
+                                    <Option value="title-descending">Title Descending</Option>
+                                    <Option value="price-ascending">Price Ascending</Option>
+                                    <Option value="price-descending">Price Descending</Option>
+                                </Select>
+                            </div>
                         </div>
 
                         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
@@ -111,7 +121,18 @@ const ShopSection = () => {
                     </div>
                 </div>
             </div>
-        </section>
+
+            <Drawer
+                title="Filter"
+                placement="left"
+                open={isDrawerOpen}
+                onClose={() => setIsDrawerOpen(false)}
+                width={300}
+                bodyStyle={{ padding: "16px" }}
+            >
+                <SidebarFilters />
+            </Drawer>
+        </section >
     )
 }
 
