@@ -1,18 +1,18 @@
 import { useEffect, useState } from "react";
 import Input from "antd/es/input/Input";
-
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Thumbs } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/thumbs";
-import { Button } from "antd";
+import { Button, Tooltip } from "antd";
 import { MinusOutlined, PlusOutlined } from "@ant-design/icons";
-import { FiChevronLeft, FiChevronRight, FiHeart, FiMessageCircle, FiShare2, FiShuffle } from "react-icons/fi";
+import { FiChevronLeft, FiChevronRight, FiGrid, FiHeart, FiMessageCircle, FiShare2, FiShuffle } from "react-icons/fi";
 import SwiperSectionLayout from "../swiper/SwiperSectionLayout";
 import { productService } from "../../../../services/productService";
 import ProductCard from "./ProductCard";
 import ProductBottomBar from "./ProductBottomBar";
+import { Link } from "react-router-dom";
 
 const product = {
     title: "Elegant Gold Necklace",
@@ -60,7 +60,51 @@ const ProductInfo = () => {
 
     return (
         <>
-            <section className="py-16 px-4">
+            <section className="px-4 py-8">
+                <div className="container mx-auto">
+                    <div className="flex items-center justify-between gap-4">
+                        <div className="flex items-center gap-2">
+                            <Link to="/home" className="text-[#757575]">Home</Link>
+                            <div className="w-4 h-4 flex items-center justify-center">
+                                <span className="w-1 h-1 bg-[#757575] rounded-full"></span>
+                            </div>
+                            <p className="text-black text-sm font-normal">Oval Yellow Diamond Double Halo Engagement Ring</p>
+                        </div>
+                        <div className="flex items-center gap-2.5">
+                            <Tooltip title="Previous Product" placement="bottom">
+                                <Button
+                                    type="default"
+                                    shape="circle"
+                                    icon={<FiChevronLeft size={18} />}
+                                    className="!min-w-4 !w-auto !text-black !inline-block !bg-transparent !shadow-none !border-none transition-all duration-300 ease-in-out"
+                                />
+                            </Tooltip>
+
+                            {/* View All Products */}
+                            <Tooltip title="View All Products" placement="bottom">
+                                <Button
+                                    type="default"
+                                    shape="circle"
+                                    icon={<FiGrid size={20} />}
+                                    className="!min-w-4 !w-auto !text-black !inline-block !bg-transparent !shadow-none !border-none transition-all duration-300 ease-in-out"
+                                />
+                            </Tooltip>
+
+                            {/* Next Product */}
+                            <Tooltip title="Next Product" placement="bottom">
+                                <Button
+                                    type="default"
+                                    shape="circle"
+                                    icon={<FiChevronRight size={18} />}
+                                    className="!min-w-4 !w-auto !text-black !inline-block !bg-transparent !shadow-none !border-none transition-all duration-300 ease-in-out"
+                                />
+                            </Tooltip>
+
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section className="px-4">
                 <div className="container mx-auto">
                     <div className="grid grid-cols-12 gap-6">
                         <div className="col-span-12 md:col-span-6">
