@@ -4,13 +4,14 @@ import SidebarFilters from "./filters/SidebarFilters";
 import axios from 'axios';
 import React, { useEffect, useState } from "react";
 import { FiList } from "react-icons/fi";
+import { productService } from "../../../../services/productService";
 
 const { Option } = Select;
 
 const ShopSection = () => {
     const [products, setProducts] = useState([]);
     const [isLoader, setIsLoader] = useState(true);
-    const [selectedOption, setSelectedOption] = useState("default");
+    const [selectedSortBy, setSelectedSortBy] = useState("default")
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
     const total = 50;
@@ -18,13 +19,18 @@ const ShopSection = () => {
     const current = 1;
 
     useEffect(() => {
-        // getProducts();
-        const timer = setTimeout(() => getProducts(), 5000);
+        const timer = setTimeout(() => {
+            if (selectedSortBy === "default") {
+                getAllProducts();
+            } else {
+                getSortedProducts(selectedSortBy);
+            }
+        }, 2000);
         return () => clearTimeout(timer);
-    }, []);
+    }, [selectedSortBy]);
 
-    // get product
-    const getProducts = async () => {
+    // get all products
+    const getAllProducts = async () => {
         setIsLoader(true);
         try {
             const response = await axios.get("http://localhost:5000/api/v1/product");
@@ -37,6 +43,21 @@ const ShopSection = () => {
             setIsLoader(false);
         }
     }
+
+    // get sorted product
+    const getSortedProducts = async (sort_by) => {
+        setIsLoader(true);
+        try {
+            const response = await productService.getSortedProducts(sort_by);
+            setProducts(response.products || []);
+            console.log("Sorted Products:", response.products);
+        } catch (error) {
+            console.error("API Error:", error.message);
+            setProducts([]);
+        } finally {
+            setIsLoader(false);
+        }
+    };
 
     const itemRender = (page, type, originalElement) => {
         if (type === "page") {
@@ -67,15 +88,15 @@ const ShopSection = () => {
                                 Filter
                             </Button>
                             <div className="max-w-[244px]">
-                                <Select value={selectedOption} onChange={(value) => setSelectedOption(value)} size="large"
+                                <Select value={selectedSortBy} onChange={(value) => setSelectedSortBy(value)} size="large"
                                     className="w-full !shadow-none [&_.ant-select-selector]:!shadow-none rounded-full [&_.ant-select-selector]:!rounded-full [&_.ant-select-selector]:!border-[#EBEBEE] hover:[&_.ant-select-selector]:!border-black focus:[&_.ant-select-selector]:!border-black focus:[&_.ant-select-selector]:!shadow-none transition-all duration-300 ease-in-out">
                                     <Option value="default" disabled>
                                         Sort By (Default)
                                     </Option>
-                                    <Option value="title-ascending">Title Ascending</Option>
-                                    <Option value="title-descending">Title Descending</Option>
-                                    <Option value="price-ascending">Price Ascending</Option>
-                                    <Option value="price-descending">Price Descending</Option>
+                                    <Option value="title_asc">Title Ascending</Option>
+                                    <Option value="title_desc">Title Descending</Option>
+                                    <Option value="price_asc">Price Ascending</Option>
+                                    <Option value="price_desc">Price Descending</Option>
                                 </Select>
                             </div>
                         </div>
