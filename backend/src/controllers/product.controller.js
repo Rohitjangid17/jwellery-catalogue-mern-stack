@@ -91,11 +91,41 @@ export const createProduct = async (req, res) => {
 // Get all or single product
 export const getProducts = async (req, res) => {
     try {
-        const { product_id } = req.query;
+        const { product_id, sort_by } = req.query;
         if (product_id) {
             const product = await Product.findById(product_id).populate("category");
             if (!product) return res.status(404).json({ status: false, message: "Product not found" });
             return res.status(200).json({ status: true, product });
+        }
+
+        if (sort_by) {
+            let sortQuery = {};
+            switch (sort_by) {
+                case "title_asc":
+                    sortQuery = { title: 1 };
+                    break;
+                case "title_desc":
+                    sortQuery = { title: -1 };
+                    break;
+                case "price_asc":
+                    sortQuery = { price: 1 };
+                    break;
+                case "price_desc":
+                    sortQuery = { price: -1 };
+                    break;
+                default:
+                    sortQuery = {};
+            }
+            const products = await Product.find()
+                .populate("category")
+                .sort(sortQuery);
+
+            return res.status(200).json({
+                status: true,
+                message: "Sorted products fetched successfully.",
+                count: products.length,
+                products,
+            });
         }
 
         const products = await Product.find().populate("category");
