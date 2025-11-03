@@ -22,14 +22,14 @@ const banners = [
     image: "/assets/images/banner/slider-image-2.jpg",
     heading: "Golden Moments",
     buttonText: "New Arrivals",
-    buttonLink: "/trending",
+    buttonLink: "/shop",
   },
   {
     id: 3,
     image: "/assets/images/banner/slider-image-3.jpg",
     heading: "Simply Stunning",
     buttonText: "New Arrivals",
-    buttonLink: "/products",
+    buttonLink: "/shop",
   },
 ];
 
