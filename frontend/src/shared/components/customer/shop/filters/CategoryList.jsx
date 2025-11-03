@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import Skeleton from "react-loading-skeleton";
 import { API_BASE_URL } from "../../../../constants";
 
-const CategoryList = () => {
+const CategoryList = ({ onCategorySelect }) => {
     const [categories, setCategories] = useState([]);
     const [isLoader, setIsLoader] = useState(false);
 
@@ -35,7 +35,7 @@ const CategoryList = () => {
                     </li>
                 ))
                 : categories.map((category, index) => (
-                    <li key={index} className="cursor-pointer capitalize text-sm text-black hover:text-[#ff6f61] transition duration-300 ease-in-out">
+                    <li key={index} onClick={() => onCategorySelect(category._id)} className="cursor-pointer capitalize text-sm text-black hover:text-[#ff6f61] transition duration-300 ease-in-out">
                         {category?.title} ({category?.product_count})
                     </li>
                 ))}

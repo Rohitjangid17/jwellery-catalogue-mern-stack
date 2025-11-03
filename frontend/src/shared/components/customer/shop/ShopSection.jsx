@@ -3,7 +3,7 @@ import ProductCard from "../product/ProductCard";
 import SidebarFilters from "./filters/SidebarFilters";
 import axios from 'axios';
 import React, { useEffect, useState } from "react";
-import { FiList } from "react-icons/fi";
+import { FiList, FiPackage } from "react-icons/fi";
 import { productService } from "../../../../services/productService";
 
 const { Option } = Select;
@@ -13,6 +13,7 @@ const ShopSection = () => {
     const [isLoader, setIsLoader] = useState(true);
     const [selectedSortBy, setSelectedSortBy] = useState("default")
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+    const [categoryId, setCategoryId] = useState(null);
 
     const total = 50;
     const pageSize = 9;
@@ -20,14 +21,16 @@ const ShopSection = () => {
 
     useEffect(() => {
         const timer = setTimeout(() => {
-            if (selectedSortBy === "default") {
+            if (categoryId) {
+                getProductsByCategory(categoryId);
+            } else if (selectedSortBy === "default") {
                 getAllProducts();
             } else {
                 getSortedProducts(selectedSortBy);
             }
         }, 2000);
         return () => clearTimeout(timer);
-    }, [selectedSortBy]);
+    }, [selectedSortBy, categoryId]);
 
     // get all products
     const getAllProducts = async () => {
@@ -59,6 +62,21 @@ const ShopSection = () => {
         }
     };
 
+    // get products by category
+    const getProductsByCategory = async (category_id) => {
+        setIsLoader(true);
+        try {
+            const response = await productService.getProductsByCategory(category_id);
+            setProducts(response.products || []);
+            console.log("Category Products:", response.products);
+        } catch (error) {
+            console.error("API Error:", error.message);
+            setProducts([]);
+        } finally {
+            setIsLoader(false);
+        }
+    }
+
     const itemRender = (page, type, originalElement) => {
         if (type === "page") {
             return React.cloneElement(originalElement, {
@@ -78,7 +96,7 @@ const ShopSection = () => {
             <div className="container mx-auto">
                 <div className="grid grid-cols-12 gap-10">
                     <div className="col-span-3 hidden lg:block">
-                        <SidebarFilters />
+                        <SidebarFilters onCategorySelect={(id) => setCategoryId(id)} />
                     </div>
 
                     <div className="col-span-12 lg:col-span-9">
@@ -87,10 +105,10 @@ const ShopSection = () => {
                                 <FiList size={18} />
                                 Filter
                             </Button>
-                            <div className="max-w-[244px]">
+                            <div className="max-w-[220px] min-w-[244px]">
                                 <Select value={selectedSortBy} onChange={(value) => setSelectedSortBy(value)} size="large"
                                     className="w-full !shadow-none [&_.ant-select-selector]:!shadow-none rounded-full [&_.ant-select-selector]:!rounded-full [&_.ant-select-selector]:!border-[#EBEBEE] hover:[&_.ant-select-selector]:!border-black focus:[&_.ant-select-selector]:!border-black focus:[&_.ant-select-selector]:!shadow-none transition-all duration-300 ease-in-out">
-                                    <Option value="default" disabled>
+                                    <Option value="default">
                                         Sort By (Default)
                                     </Option>
                                     <Option value="title_asc">Title Ascending</Option>
@@ -101,15 +119,31 @@ const ShopSection = () => {
                             </div>
                         </div>
 
-                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-                            {isLoader
-                                ? Array.from({ length: 9 }).map((_, index) => (
+                        {isLoader ? (
+                            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+                                {Array.from({ length: 9 }).map((_, index) => (
                                     <ProductCard key={index} loading />
-                                ))
-                                : products.map((product, index) => (
+                                ))}
+                            </div>
+                        ) : products.length > 0 ? (
+                            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+                                {products.map((product, index) => (
                                     <ProductCard key={index} product={product} />
                                 ))}
-                        </div>
+                            </div>
+                        ) : (
+                            <div className="flex flex-col items-center justify-center py-20 text-center">
+                                <div className="w-20 h-20 flex items-center justify-center rounded-full bg-[#f5f5f5] mb-4">
+                                    <FiPackage size={40} className="text-[#ff6f61]" />
+                                </div>
+                                <h2 className="text-2xl font-semibold text-black mb-2">
+                                    No Products Found
+                                </h2>
+                                <p className="text-[#0009] max-w-sm">
+                                    We couldn’t find any products matching your filter or search. Try clearing filters or explore another category.
+                                </p>
+                            </div>
+                        )}
 
                         <div className="flex items-center justify-center gap-2">
                             <Pagination
@@ -120,23 +154,6 @@ const ShopSection = () => {
                                 itemRender={itemRender}
                             />
                         </div>
-                        {/* {products.length > 0 ? (
-                            
-                        ) : (
-                            <div className="col-span-full flex flex-col items-center justify-center py-20">
-                                <img
-                                    src="/no-products.png"
-                                    alt="No Products"
-                                    className="w-48 h-48 mb-6"
-                                />
-                                <h2 className="text-2xl font-semibold text-black mb-2">
-                                    No Products Available
-                                </h2>
-                                <p className="text-black mb-6 text-center px-4">
-                                    We couldn't find any products at the moment. Please check back later or explore other categories.
-                                </p>
-                            </div>
-                        )} */}
                     </div>
                 </div>
             </div>

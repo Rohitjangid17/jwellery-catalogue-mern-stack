@@ -16,7 +16,7 @@ const ProductCard = ({ product = {}, loading = false, isWishlist = false }) => {
 
     const title = product?.title || "Untitled Product";
     const images = product?.images || [];
-    const defaultImage = images[0] || "/assets/images/product/ring.jpg";
+    const defaultImage = images[0] || "/assets/images/default-image.png";
     const hoverImage = images[4] || images[1] || defaultImage;
     const basePrice = product?.basePrice || 0;
     const discount = product?.discount || {};

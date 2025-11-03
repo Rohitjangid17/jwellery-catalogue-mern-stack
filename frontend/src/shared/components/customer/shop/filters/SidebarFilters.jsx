@@ -6,7 +6,7 @@ import ColorSelector from "./ColorSelector";
 import SizeSelector from "./SizeSelector";
 import { Slider } from "antd";
 
-const SidebarFilters = () => {
+const SidebarFilters = ({ onCategorySelect }) => {
     const [priceRange, setPriceRange] = useState([20, 1200]);
 
     const colors = ["#e2d2ab", "#dcc8ba", "#d6d6d6"];
@@ -16,7 +16,7 @@ const SidebarFilters = () => {
         <div className="space-y-4 sticky top-0">
             <div className="border-b border-[#ebebeb] pb-4">
                 <FilterDropdown title="Categories" defaultActive>
-                    <CategoryList />
+                    <CategoryList onCategorySelect={onCategorySelect} />
                 </FilterDropdown>
             </div>
 
@@ -59,7 +59,7 @@ const SidebarFilters = () => {
                     <SizeSelector sizes={sizes} />
                 </FilterDropdown>
             </div>
-            
+
             <div className="border-b border-[#ebebeb] pb-4">
                 <FilterDropdown title="Brand" defaultActive>
                     <CheckboxGroup

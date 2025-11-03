@@ -18,5 +18,11 @@ export const productService = {
     getSortedProducts: async (sort_by) => {
         const response = await api.get(`/product?sort_by=${sort_by}`);
         return response.data;
+    },
+
+    // get product by category
+    getProductsByCategory: async (category_id) => {
+        const response = await api.get(`/product?category_id=${category_id}`);
+        return response.data;
     }
 }
