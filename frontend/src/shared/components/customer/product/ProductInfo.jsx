@@ -12,25 +12,7 @@ import SwiperSectionLayout from "../swiper/SwiperSectionLayout";
 import { productService } from "../../../../services/productService";
 import ProductCard from "./ProductCard";
 import ProductBottomBar from "./ProductBottomBar";
-import { Link } from "react-router-dom";
-
-const product = {
-    title: "Elegant Gold Necklace",
-    price: 5499,
-    description:
-        "This handcrafted gold-plated necklace features a traditional design perfect for festive occasions and gifting.",
-    rating: 4.5,
-    stock: true,
-    category: "koton"
-};
-
-const productImages = [
-    "http://localhost:5000/uploads/products/5-1761994829551.webp",
-    "http://localhost:5000/uploads/products/5-1761994829551.webp",
-    "http://localhost:5000/uploads/products/5-1761994829551.webp",
-    "http://localhost:5000/uploads/products/5-1761994829551.webp",
-    "http://localhost:5000/uploads/products/5-1761994829551.webp",
-];
+import { Link, useParams, useNavigate } from "react-router-dom";
 
 const ProductInfo = () => {
     const [thumbsSwiper, setThumbsSwiper] = useState(null);
@@ -38,10 +20,20 @@ const ProductInfo = () => {
     const [bestSellingProducts, setBestSellingProducts] = useState([]);
     const [isLoader, setIsLoader] = useState(true);
 
+    const [product, setProduct] = useState(null);
+    const [chosenColor, setChosenColor] = useState("Yellow Gold");
+
+    const { id } = useParams();
+    const navigate = useNavigate();
+
     useEffect(() => {
         getBestSellingProducts();
     }, []);
 
+
+    useEffect(() => {
+        getProductById(id);
+    }, [id])
 
     // get best selling product
     const getBestSellingProducts = async () => {
@@ -58,6 +50,19 @@ const ProductInfo = () => {
         }
     };
 
+    // get product by id
+    const getProductById = async (product_id) => {
+        console.log("product id", product_id)
+        try {
+            const response = await productService.getProductById(product_id);
+            console.log("product data", response.product);
+            setProduct(response.product);
+        } catch (error) {
+            console.error("Error fetching product by id:", error);
+            setProduct(null);
+        }
+    }
+
     return (
         <>
             <section className="px-4 py-8">
@@ -68,7 +73,7 @@ const ProductInfo = () => {
                             <div className="w-4 h-4 flex items-center justify-center">
                                 <span className="w-1 h-1 bg-[#757575] rounded-full"></span>
                             </div>
-                            <p className="text-black text-sm font-normal">Oval Yellow Diamond Double Halo Engagement Ring</p>
+                            <p className="text-black text-sm font-normal">{product?.title}</p>
                         </div>
                         <div className="flex items-center gap-2.5">
                             <Tooltip title="Previous Product" placement="bottom">
@@ -86,6 +91,7 @@ const ProductInfo = () => {
                                     type="default"
                                     shape="circle"
                                     icon={<FiGrid size={20} />}
+                                    onClick={() => navigate("/products")}
                                     className="!min-w-4 !w-auto !text-black !inline-block !bg-transparent !shadow-none !border-none transition-all duration-300 ease-in-out"
                                 />
                             </Tooltip>
@@ -111,9 +117,11 @@ const ProductInfo = () => {
                                 {/* Thumbnail List */}
                                 <div className="col-span-2">
                                     <div className="flex flex-col gap-3">
-                                        {productImages.map((src, index) => (
-                                            <img key={index} src={src} alt={`Thumbnail ${index + 1}`} onClick={() => thumbsSwiper?.slideTo(index)} className={`w-full h-full object-cover cursor-pointer border rounded-lg ${activeIndex === index
-                                                ? "border-[#ff6f61]" : "border-gray-300"}`} />
+                                        {product?.images?.map((image, index) => (
+                                            <div className="w-full h-[93px] overflow-hidden" key={index}>
+                                                <img src={image} alt={product?.title} onClick={() => thumbsSwiper?.slideTo(index)} className={`w-full h-full object-cover cursor-pointer border rounded-lg ${activeIndex === index
+                                                    ? "border-[#ff6f61]" : "border-gray-300"}`} />
+                                            </div>
                                         ))}
                                     </div>
                                 </div>
@@ -126,9 +134,11 @@ const ProductInfo = () => {
                                             prevEl: ".custom-swiper-button-prev",
                                         }} onSwiper={setThumbsSwiper} onSlideChange={(swiper) => setActiveIndex(swiper.activeIndex)}
                                             modules={[Navigation, Thumbs]}>
-                                            {productImages.map((src, index) => (
+                                            {product?.images?.map((src, index) => (
                                                 <SwiperSlide key={index}>
-                                                    <img src={src} alt={`Product Image ${index + 1}`} className="w-full h-full object-cover rounded-xl" />
+                                                    <div className="w-full h-[475px] rounded-xl overflow-hidden">
+                                                        <img src={src} alt={product?.title} className="w-full h-full object-cover" />
+                                                    </div>
                                                 </SwiperSlide>
                                             ))}
                                         </Swiper>
@@ -149,15 +159,14 @@ const ProductInfo = () => {
                                         <Button
                                             type="default"
                                             shape="circle"
-                                            disabled={activeIndex === productImages.length - 1}
-                                            className={`custom-swiper-button-next !absolute !top-1/2 !right-3 -translate-y-1/2 z-10 !w-11 !h-11 !border !text-base transition-all duration-300 flex items-center justify-center !p-0 ${activeIndex === productImages.length - 1 ? "!bg-gray-100 !border-[#E5E5E5] !text-gray-400 cursor-not-allowed"
+                                            disabled={activeIndex === product?.images.length - 1}
+                                            className={`custom-swiper-button-next !absolute !top-1/2 !right-3 -translate-y-1/2 z-10 !w-11 !h-11 !border !text-base transition-all duration-300 flex items-center justify-center !p-0 ${activeIndex === product?.images.length - 1 ? "!bg-gray-100 !border-[#E5E5E5] !text-gray-400 cursor-not-allowed"
                                                 : "bg-white !border-[#EBEBEE] !text-black hover:!bg-black hover:!text-white hover:!border-none"
                                                 }`}>
                                             <div className="flex items-center justify-center w-full h-full">
                                                 <FiChevronRight size={20} />
                                             </div>
                                         </Button>
-
                                     </div>
                                 </div>
                             </div>
@@ -166,17 +175,23 @@ const ProductInfo = () => {
                         <div className="col-span-12 md:col-span-6">
                             <div className="flex flex-col gap-y-6">
                                 <div className="flex flex-col gap-3 border-b last:border-b-0 border-[#ebebeb] pb-8">
-                                    <span className="text-[#545454] text-sm font-medium uppercase">{product.category}</span>
-                                    <h2 className="text-3xl text-black font-medium">{product.title}</h2>
+                                    <span className="text-[#545454] text-sm font-medium uppercase">{product?.category?.title}</span>
+                                    <h2 className="text-3xl text-black font-medium">{product?.title}</h2>
                                     <div className="flex items-center gap-3">
-                                        <p className="text-[#ff6f61] text-3xl font-medium">$60.00</p>
+                                        <p className="text-[#ff6f61] text-3xl font-medium">${(product?.basePrice - (product?.basePrice * product?.discount?.amount) / 100).toFixed(2)}</p>
                                         <p className="text-[#0009] text-3xl font-medium">
-                                            <del>$80.00</del>
+                                            <del>${product?.basePrice}</del>
                                         </p>
-                                        <span className="bg-[#ff6f61] text-sm font-normal text-white px-2.5 py-[5px] rounded-full">20% Off</span>
+                                        {product?.discount?.type === "percent" ? (
+                                            <span className="bg-[#ff6f61] text-sm font-normal text-white px-2.5 py-[5px] rounded-full">{product?.discount?.amount}% Off</span>
+                                        ) : (
+                                            <span className="bg-[#ff6f61] text-sm font-normal text-white px-2.5 py-[5px] rounded-full">${product?.discount?.amount} Off</span>
+                                        )}
                                     </div>
                                     <div className="flex items-center gap-3">
-                                        <span className="text-[#1d770b] bg-[#2ca3151a] rounded-[5px] px-2.5 py-[5px] font-medium">In Stock</span>
+                                        {product?.stockStatus === "in stock" ? (
+                                            <span className="text-[#1d770b] bg-[#2ca3151a] rounded-[5px] px-2.5 py-[5px] font-medium">{product?.stockStatus}</span>
+                                        ) : <span className="text-[#1d770b] bg-[#2ca3151a] rounded-[5px] px-2.5 py-[5px] font-medium">{product?.stockStatus}</span>}
                                         <p>30 sold in last 24 hours</p>
                                     </div>
                                 </div>
@@ -184,18 +199,21 @@ const ProductInfo = () => {
                                 <div className="border-b last:border-b-0 border-[#ebebeb] pb-8 flex flex-col gap-y-6">
                                     <div className="flex flex-col gap-y-2">
                                         <p className="text-black font-normal text-base">Colors:
-                                            <span className="font-medium ml-1">Grey</span>
+                                            <span className="font-medium ml-1">{chosenColor}</span>
                                         </p>
                                         <div className="flex gap-3">
-                                            <div className="w-[38px] h-[38px] flex items-center justify-center cursor-pointer border rounded-full border-[#101828] transition-all duration-300 ease-in-out">
-                                                <div className="w-8 h-8 rounded-full bg-[#292929] border border-[#dcdcdc]"> </div>
-                                            </div>
-                                            <div className="w-[38px] h-[38px] flex items-center justify-center cursor-pointer border rounded-full border-transparent transition-all duration-300 ease-in-out">
-                                                <div className="w-8 h-8 rounded-full bg-[#bbb355] border border-[#dcdcdc]"> </div>
-                                            </div>
-                                            <div className="w-[38px] h-[38px] flex items-center justify-center cursor-pointer border rounded-full border-transparent transition-all duration-300 ease-in-out">
-                                                <div className="w-8 h-8 rounded-full bg-[#f2f4f7] border border-[#dcdcdc]"> </div>
-                                            </div>
+                                            {product?.colors?.map((color, index) => (
+                                                <div
+                                                    key={index}
+                                                    onClick={() => setChosenColor(color)}
+                                                    className={`w-[38px] h-[38px] flex items-center justify-center cursor-pointer rounded-full border transition-all duration-300 ease-in-out ${chosenColor === color ? "border-[#101828]" : "border-transparent"
+                                                        }`}
+                                                >
+                                                    <div className={`w-8 h-8 rounded-full border border-[#dcdcdc] ${color === "Yellow Gold" && "bg-[#e2d2ab]"
+                                                        } ${color === "Rose Gold" && "bg-[#dcc8ba]"} ${color === "White Gold" && "bg-[#d6d6d6]"
+                                                        }`} />
+                                                </div>
+                                            ))}
                                         </div>
                                     </div>
                                     <div className="flex flex-col gap-y-2">
@@ -203,18 +221,11 @@ const ProductInfo = () => {
                                             <span className="font-medium ml-1">Small</span>
                                         </p>
                                         <div className="flex gap-3">
-                                            <div className="w-12 h-12 rounded-full border border-black text-xl font-medium cursor-pointer transition-all duration-300 ease-in-out uppercase flex items-center justify-center">
-                                                s
-                                            </div>
-                                            <div className="w-12 h-12 rounded-full border border-[#ebebeb] text-xl font-medium cursor-pointer transition-all duration-300 ease-in-out uppercase flex items-center justify-center">
-                                                m
-                                            </div>
-                                            <div className="w-12 h-12 rounded-full border border-[#ebebeb] text-xl font-medium cursor-pointer transition-all duration-300 ease-in-out uppercase flex items-center justify-center">
-                                                l
-                                            </div>
-                                            <div className="w-12 h-12 rounded-full border border-[#ebebeb] text-xl font-medium cursor-pointer transition-all duration-300 ease-in-out uppercase flex items-center justify-center">
-                                                xl
-                                            </div>
+                                            {product?.sizes?.map(size => (
+                                                <div key={size?.id} className="w-12 h-12 rounded-full border border-black text-xl font-medium cursor-pointer transition-all duration-300 ease-in-out uppercase flex items-center justify-center">
+                                                    {size?.size}
+                                                </div>
+                                            ))}
                                         </div>
                                     </div>
                                 </div>
@@ -229,7 +240,7 @@ const ProductInfo = () => {
                                                 onClick={() => console.log("minus cliked")}
                                                 className="!bg-transparent !w-[42px] h-12 border-none rounded-sm !shadow-none !text-black hover:!text-[#ff6f61] transition-all duration-300 ease-in-out"
                                             />
-                                            <Input className="w-[42px] h-12 !bg-transparent border-none pointer-events-none !text-black font-medium text-[22px]" value={6} />
+                                            <Input className="w-[42px] h-12 !bg-transparent border-none pointer-events-none !text-black font-medium text-[22px]" value={1} />
                                             <Button
                                                 type="default"
                                                 icon={<PlusOutlined className="text-[22px]" />}
@@ -279,10 +290,10 @@ const ProductInfo = () => {
 
                                     <div className="mt-4 flex flex-col gap-y-3">
                                         <p className="text-black font-normal text-base">SKU:
-                                            <span className="font-medium ml-1">AD1FSSE0YR</span>
+                                            <span className="font-medium ml-1">{product?.sku}</span>
                                         </p>
-                                        <p className="text-black font-normal text-base">Categories:
-                                            <span className="font-medium ml-1">Ring, Neckless</span>
+                                        <p className="text-black font-normal text-base">Category:
+                                            <span className="font-medium ml-1 capitalize">{product?.category?.title}</span>
                                         </p>
                                     </div>
                                 </div>

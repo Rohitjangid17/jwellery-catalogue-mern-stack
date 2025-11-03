@@ -5,7 +5,12 @@ export const productService = {
         const response = await api.get('/product');
         return response.data;
     },
-    getPaginatedProducts: async () =>{
-        const response = await api.get("")
+    // getPaginatedProducts: async () =>{
+    //     const response = await api.get("")
+    // }
+
+    getProductById: async (product_id) => {
+        const response = await api.get(`/product?product_id=${product_id}`);
+        return response.data;
     }
 }
