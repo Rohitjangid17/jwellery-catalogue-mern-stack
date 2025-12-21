@@ -5,6 +5,17 @@ import connectDatabase from "./src/config/database.config.js";
 
 const PORT = process.env.PORT || 5000;
 
-connectDatabase();
+const startServer = async () => {
+  try {
+    await connectDatabase();
 
-export default app;
+    app.listen(PORT, () => {
+      console.log(`Server running on port ${PORT}`);
+    });
+  } catch (error) {
+    console.error("Server not started because DB failed");
+    process.exit(1);
+  }
+};
+
+startServer();

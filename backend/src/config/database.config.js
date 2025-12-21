@@ -1,23 +1,17 @@
 import mongoose from "mongoose";
 
-let isConnected = false;
+// // disable buffering (VERY IMPORTANT)
+// mongoose.set("bufferCommands", false);
 
 const connectDatabase = async () => {
-  if (isConnected) {
-    return;
-  }
-
   try {
     await mongoose.connect(process.env.DATABASE_URL);
 
-    isConnected = true;
-    console.log("✅ Database connected");
+    console.log("Database connected");
   } catch (error) {
-    console.error("❌ Database connection failed:", error.message);
-    // DO NOT exit process in serverless
+    console.error("Database connection failed:", error.message);
     throw error;
   }
 };
 
 export default connectDatabase;
-    
