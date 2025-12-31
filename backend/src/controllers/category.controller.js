@@ -2,7 +2,7 @@ import Category from "../models/category.model.js";
 import Product from "../models/product.model.js";
 import cloudinary from "../config/cloudinary.config.js";
 import { deleteUploadedFile } from "../utils/file/deleteFile.js";
-// import connectDatabase from "../config";
+import connectDatabase from "../config/database.config.js";
 import fs from "fs";
 import path from "path";
 
