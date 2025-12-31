@@ -1,10 +1,8 @@
 import axios from 'axios';
-
-// const BASE_URL = 'https://jwellery-catalogue-api.vercel.app/api/v1';
-const BASE_URL = 'http://localhost:5000/api/v1';
+import { API_BASE_URL } from '../shared/constants';
 
 const api = axios.create({
-    baseURL: BASE_URL,
+    baseURL: API_BASE_URL,
     // withCredentials: true
 });
 
