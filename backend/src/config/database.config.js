@@ -47,66 +47,37 @@
 // export default connectDatabase;
 
 
-// import mongoose from "mongoose";
-
-// // Variable to cache the connection state
-// let isConnected = false;
-
-// const connectDatabase = async () => {
-//   if (isConnected) {
-//     console.log("=> Using existing database connection");
-//     return;
-//   }
-
-//   if (!process.env.DATABASE_URL) {
-//     throw new Error("DATABASE_URL is missing in environment variables");
-//   }
-
-//   try {
-//     console.log("=> Connecting to new database instance...");
-//     const db = await mongoose.connect(process.env.DATABASE_URL, {
-//       // These options are recommended for stable serverless connections
-//       serverSelectionTimeoutMS: 5000, 
-//     });
-
-//     isConnected = db.connections[0].readyState;
-//     console.log("Database connected successfully");
-//   } catch (error) {
-//     console.error("Database connection failed:", error.message);
-//     // Don't use process.exit(1) in serverless; let the function handle the error
-//     throw error;
-//   }
-// };
-
-// export default connectDatabase;
-
-
 import mongoose from "mongoose";
 
+// Variable to cache the connection state
 let isConnected = false;
 
 const connectDatabase = async () => {
-    // If already connected, don't do anything
-    if (mongoose.connection.readyState === 1) {
-        return;
-    }
+  if (isConnected) {
+    console.log("=> Using existing database connection");
+    return;
+  }
 
-    try {
-        // Disable buffering so we get immediate errors instead of 10s timeouts
-        mongoose.set('bufferCommands', false);
+  if (!process.env.DATABASE_URL) {
+    throw new Error("DATABASE_URL is missing in environment variables");
+  }
 
-        const opts = {
-            serverSelectionTimeoutMS: 5000, // Timeout after 5s
-            family: 4 // Force IPv4 (important for Atlas + Vercel)
-        };
+  try {
+    console.log("=> Connecting to new database instance...");
+    const db = await mongoose.connect(process.env.DATABASE_URL, {
+      // These options are recommended for stable serverless connections
+      serverSelectionTimeoutMS: 5000, 
+    });
 
-        const db = await mongoose.connect(process.env.DATABASE_URL, opts);
-        isConnected = db.connections[0].readyState;
-        console.log("MongoDB Connected Successfully");
-    } catch (error) {
-        console.error("MongoDB Connection Error:", error.message);
-        throw error;
-    }
+    isConnected = db.connections[0].readyState;
+    console.log("Database connected successfully");
+  } catch (error) {
+    console.error("Database connection failed:", error.message);
+    // Don't use process.exit(1) in serverless; let the function handle the error
+    throw error;
+  }
 };
 
 export default connectDatabase;
+
+
