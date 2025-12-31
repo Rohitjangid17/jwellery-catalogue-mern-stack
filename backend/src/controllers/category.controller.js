@@ -2,12 +2,14 @@ import Category from "../models/category.model.js";
 import Product from "../models/product.model.js";
 import cloudinary from "../config/cloudinary.config.js";
 import { deleteUploadedFile } from "../utils/file/deleteFile.js";
+// import connectDatabase from "../config";
 import fs from "fs";
 import path from "path";
 
 // create category
 export const createCategory = async (req, res) => {
     try {
+        await connectDatabase();
         const { title, description } = req.body;
 
         // check title
@@ -88,6 +90,7 @@ export const createCategory = async (req, res) => {
 // get category list or single category
 export const getCategories = async (req, res) => {
     try {
+        // await connectDatabase();
         const { category_id } = req.query;
 
         if (category_id) {
@@ -134,6 +137,7 @@ export const getCategories = async (req, res) => {
 // delete category by id
 export const deleteCategoryById = async (req, res) => {
     try {
+        await connectDatabase();
         const { category_id } = req.query;
 
         if (!category_id) {
@@ -168,6 +172,7 @@ export const deleteCategoryById = async (req, res) => {
 // update category by id
 export const updateCategoryById = async (req, res) => {
     try {
+        await connectDatabase();
         const { category_id } = req.query;
         const { title, description } = req.body;
 
