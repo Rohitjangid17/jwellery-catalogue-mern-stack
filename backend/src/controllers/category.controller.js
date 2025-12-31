@@ -2,14 +2,27 @@ import Category from "../models/category.model.js";
 import Product from "../models/product.model.js";
 import cloudinary from "../config/cloudinary.config.js";
 import { deleteUploadedFile } from "../utils/file/deleteFile.js";
-import connectDatabase from "../config/database.config.js";
+// import connectDatabase from "../config/database.config.js";
 import fs from "fs";
 import path from "path";
+
+const streamUpload = (fileBuffer) => {
+    return new Promise((resolve, reject) => {
+        const stream = cloudinary.uploader.upload_stream(
+            { folder: "categories" },
+            (error, result) => {
+                if (result) resolve(result);
+                else reject(error);
+            }
+        );
+        stream.end(fileBuffer);
+    });
+};
 
 // create category
 export const createCategory = async (req, res) => {
     try {
-        await connectDatabase();
+        // await connectDatabase();
         const { title, description } = req.body;
 
         // check title
@@ -60,14 +73,14 @@ export const createCategory = async (req, res) => {
 
         let imagePath = "";
 
-        if (process.env.NODE_ENV === "development") {
+        if (process.env.NODE_ENV === "production") {
+            // PRODUCTION: Use Cloudinary Buffer Stream
+            const result = await streamUpload(req.file.buffer);
+            imagePath = result.secure_url;
+        } else {
+            // DEVELOPMENT: Use Local File System path
             const baseUrl = `${req.protocol}://${req.get("host")}`;
             imagePath = `${baseUrl}/uploads/categories/${req.file.filename}`;
-        } else {
-            const result = await cloudinary.uploader.upload(req.file.path, {
-                folder: "categories",
-            });
-            imagePath = result.secure_url;
         }
 
         const category = new Category({ title, description, image: imagePath });
@@ -90,7 +103,7 @@ export const createCategory = async (req, res) => {
 // get category list or single category
 export const getCategories = async (req, res) => {
     try {
-        await connectDatabase();
+        // await connectDatabase();
         const { category_id } = req.query;
 
         if (category_id) {
@@ -137,7 +150,7 @@ export const getCategories = async (req, res) => {
 // delete category by id
 export const deleteCategoryById = async (req, res) => {
     try {
-        await connectDatabase();
+        // await connectDatabase();
         const { category_id } = req.query;
 
         if (!category_id) {
@@ -172,7 +185,7 @@ export const deleteCategoryById = async (req, res) => {
 // update category by id
 export const updateCategoryById = async (req, res) => {
     try {
-        await connectDatabase();
+        // await connectDatabase();
         const { category_id } = req.query;
         const { title, description } = req.body;
 
