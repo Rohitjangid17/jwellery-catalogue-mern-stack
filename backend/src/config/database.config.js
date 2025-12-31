@@ -64,7 +64,10 @@ const connectDatabase = async () => {
 
   try {
     console.log("=> Connecting to new database instance...");
-    const db = await mongoose.connect(process.env.DATABASE_URL);
+    const db = await mongoose.connect(process.env.DATABASE_URL, {
+      // These options are recommended for stable serverless connections
+      serverSelectionTimeoutMS: 5000, 
+    });
 
     isConnected = db.connections[0].readyState;
     console.log("Database connected successfully");
