@@ -189,97 +189,64 @@ export const updateCategoryById = async (req, res) => {
         const { category_id } = req.query;
         const { title, description } = req.body;
 
-        // Validate category_id
-        if (!category_id) {
-            if (req.file) deleteUploadedFile(req.file.path);
-            return res.status(400).json({ status: false, message: "Category ID is required" });
-        }
-
-        // Check if category exists
         const category = await Category.findById(category_id);
         if (!category) {
-            if (req.file) deleteUploadedFile(req.file.path);
+            // If user uploaded a file but category doesn't exist, clean up
+            if (process.env.NODE_ENV !== "production" && req.file) {
+                fs.unlinkSync(req.file.path);
+            }
             return res.status(404).json({ status: false, message: "Category not found" });
         }
 
-        // Validate title
-        if (!title || title.trim() === "") {
-            if (req.file) deleteUploadedFile(req.file.path);
-            return res.status(400).json({ status: false, message: "Title is required." });
-        }
+        if (title) category.title = title.trim();
+        if (description) category.description = description.trim();
 
-        if (title.length > 50) {
-            if (req.file) deleteUploadedFile(req.file.path);
-            return res.status(400).json({ status: false, message: "Title must not exceed 50 characters." });
-        }
+        if (req.file) {
+            let newImagePath = "";
 
-        // Validate description
-        if (!description || description.trim() === "") {
-            if (req.file) deleteUploadedFile(req.file.path);
-            return res.status(400).json({ status: false, message: "Description is required." });
-        }
+            if (process.env.NODE_ENV === "production") {
+                if (category.image && category.image.includes("cloudinary")) {
+                    const publicId = category.image.split("/").slice(-2).join("/").split(".")[0];
+                    await cloudinary.uploader.destroy(publicId);
+                }
 
-        if (description.length > 150) {
-            if (req.file) deleteUploadedFile(req.file.path);
-            return res.status(400).json({ status: false, message: "Description must not exceed 150 characters." });
-        }
-
-        // Validate image
-        if (!req.file) {
-            return res.status(400).json({ status: false, message: "Image is required." });
-        }
-
-        // Check for duplicate title
-        const existingCategory = await Category.findOne({
-            title: title.trim().toLowerCase(),
-        });
-
-        if (existingCategory && existingCategory._id.toString() !== category_id) {
-            if (req.file) deleteUploadedFile(req.file.path);
-            return res.status(400).json({ status: false, message: "This category already exists. Please try a different title." });
-        }
-
-        // Set updated values
-        category.title = title.trim();
-        category.description = description.trim();
-
-        // Handle image update
-        let newImagePath = "";
-
-        if (process.env.NODE_ENV === "development") {
-            const baseUrl = `${req.protocol}://${req.get("host")}`;
-            newImagePath = `${baseUrl}/uploads/categories/${req.file.filename}`;
-
-            // Delete old image from uploads
-            const oldPath = path.join("uploads", "categories", path.basename(category.image));
-            if (fs.existsSync(oldPath)) {
-                fs.unlinkSync(oldPath);
+                const result = await streamUpload(req.file.buffer);
+                newImagePath = result.secure_url;
+            } else {
+                const oldFileName = path.basename(category.image);
+                const oldPath = path.join("uploads", "categories", oldFileName);
+                if (fs.existsSync(oldPath)) {
+                    fs.unlinkSync(oldPath);
+                }
+                const baseUrl = `${req.protocol}://${req.get("host")}`;
+                newImagePath = `${baseUrl}/uploads/categories/${req.file.filename}`;
             }
 
-        } else {
-            // Upload new image to cloudinary
-            const result = await cloudinary.uploader.upload(req.file.path, {
-                folder: "categories",
-            });
-            newImagePath = result.secure_url;
-
-            // Delete old cloudinary image
-            const oldImageUrlParts = category.image.split("/");
-            const publicId = oldImageUrlParts.slice(-2).join("/").split(".")[0];
-            await cloudinary.uploader.destroy(publicId);
-
-            deleteUploadedFile(req.file.path);
+            category.image = newImagePath;
         }
 
-        category.image = newImagePath;
+        const duplicate = await Category.findOne({
+            title: category.title.toLowerCase(),
+            _id: { $ne: category_id }
+        });
+
+        if (duplicate) {
+            return res.status(400).json({ status: false, message: "Another category already has this title." });
+        }
+
         await category.save();
 
-        res.status(200).json({ status: true, message: "Category updated successfully." });
+        res.status(200).json({
+            status: true,
+            message: "Category updated successfully!",
+            category
+        });
+
     } catch (error) {
-        console.error("Error updating category:", error);
-        if (req.file && fs.existsSync(req.file.path)) {
+        console.error("Update Error:", error);
+        if (process.env.NODE_ENV !== "production" && req.file && fs.existsSync(req.file.path)) {
             fs.unlinkSync(req.file.path);
         }
         res.status(500).json({ status: false, message: "Internal Server Error", error: error.message });
     }
-}
+};
