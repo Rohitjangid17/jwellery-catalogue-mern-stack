@@ -10,7 +10,7 @@ export const COMPANY_GSTIN = "08ABCDE1234F1Z5";
 
 // API base URL
 // export const API_BASE_URL = "https://jwellery-catalogue-api.vercel.app/api/v1";
-export const API_BASE_URL = "http://localhost:5000/api/v1";
+export const API_BASE_URL = "https://rjs-api.vercel.app/api/v1";
 
 // Route Paths
 export const ROUTES = {

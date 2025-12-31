@@ -5,6 +5,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from "react";
 import { FiList, FiPackage } from "react-icons/fi";
 import { productService } from "../../../../services/productService";
+import { API_BASE_URL } from "../../../constants";
 
 const { Option } = Select;
 
@@ -36,7 +37,7 @@ const ShopSection = () => {
     const getAllProducts = async () => {
         setIsLoader(true);
         try {
-            const response = await axios.get("http://localhost:5000/api/v1/product");
+            const response = await axios.get(`${API_BASE_URL}/product`);
             setProducts(response.data.products || []);
             console.log("product data ", response.data.products);
         } catch (error) {
