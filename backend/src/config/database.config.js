@@ -1,83 +1,38 @@
-// import mongoose from "mongoose";
-
-// // // disable buffering (VERY IMPORTANT)
-// // mongoose.set("bufferCommands", false);
-
-// const connectDatabase = async () => {
-//   try {
-//     console.log("db url ", process.env.DATABASE_URL)
-//     await mongoose.connect(process.env.DATABASE_URL);
-
-//     console.log("Database connected");
-//   } catch (error) {
-//     console.error("Database connection failed:", error.message);
-//     throw error;
-//   }
-// };
-
-// export default connectDatabase;
-// import mongoose from "mongoose";
-
-// let cached = global.mongoose;
-
-// if (!cached) {
-//   cached = global.mongoose = { conn: null, promise: null };
-// }
-
-// const connectDatabase = async () => {
-//   if (cached.conn) return cached.conn;
-
-//   if (!process.env.DATABASE_URL) {
-//     throw new Error("DATABASE_URL is missing");
-//   }
-
-//   console.log("db url ", process.env.DATABASE_URL)
-//   cached.promise =
-//     cached.promise ||
-//     mongoose.connect(process.env.DATABASE_URL, {
-//       bufferCommands: false,
-//     });
-
-//   cached.conn = await cached.promise;
-//   console.log("Database connected");
-
-//   return cached.conn;
-// };
-
-// export default connectDatabase;
-
-
 import mongoose from "mongoose";
 
-// Variable to cache the connection state
 let isConnected = false;
 
 const connectDatabase = async () => {
-  if (isConnected) {
-    console.log("=> Using existing database connection");
-    return;
-  }
+    // 1. If already connected, return immediately
+    if (mongoose.connection.readyState === 1) {
+        return mongoose.connection;
+    }
 
-  if (!process.env.DATABASE_URL) {
-    throw new Error("DATABASE_URL is missing in environment variables");
-  }
+    // 2. If currently connecting, wait for it to finish
+    if (mongoose.connection.readyState === 2) {
+        console.log("Waiting for existing connection attempt...");
+        return new Promise((resolve, reject) => {
+            mongoose.connection.once("connected", () => resolve(mongoose.connection));
+            mongoose.connection.once("error", (err) => reject(err));
+        });
+    }
 
-  try {
-    console.log("=> Connecting to new database instance...");
-    const db = await mongoose.connect(process.env.DATABASE_URL, {
-      // These options are recommended for stable serverless connections
-      serverSelectionTimeoutMS: 5000, 
-    });
+    try {
+        // Disable buffering to prevent the 10s hang
+        mongoose.set('bufferCommands', false);
 
-    isConnected = db.connections[0].readyState;
-    console.log("Database connected successfully");
-  } catch (error) {
-    console.error("Database connection failed:", error.message);
-    // Don't use process.exit(1) in serverless; let the function handle the error
-    throw error;
-  }
+        console.log("Starting new database connection...");
+        const db = await mongoose.connect(process.env.DATABASE_URL, {
+            serverSelectionTimeoutMS: 5000,
+            family: 4 // Forces IPv4, which is more stable on Vercel
+        });
+
+        isConnected = !!db.connections[0].readyState;
+        return db;
+    } catch (error) {
+        console.error("MongoDB Connection Error:", error.message);
+        throw error;
+    }
 };
 
 export default connectDatabase;
-
-

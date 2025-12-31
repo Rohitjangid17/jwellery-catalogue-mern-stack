@@ -90,7 +90,7 @@ export const createCategory = async (req, res) => {
 // get category list or single category
 export const getCategories = async (req, res) => {
     try {
-        // await connectDatabase();
+        await connectDatabase();
         const { category_id } = req.query;
 
         if (category_id) {
