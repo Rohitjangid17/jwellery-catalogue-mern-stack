@@ -114,7 +114,9 @@ app.get("/", (req, res) => {
   const now = new Date();
   res.json({
     status: true,
-    message: "Welcome to the API",
+    message: "Welcome to the Jeweller Catalogue API!",
+    api: "Jeweller Catalogue",
+    version: "1.0.0",
     date: now.toLocaleDateString(),
     time: now.toLocaleTimeString(),
   });
