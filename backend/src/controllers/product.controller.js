@@ -40,7 +40,6 @@ export const createProduct = async (req, res) => {
             dimensions
         } = parsedBody;
 
-        // Basic validations
         if (!title || !description || !basePrice || !sku || !category || !weightInGrams || !metalType || !dimensions) {
             req.files?.forEach(f => deleteUploadedFile(f.path));
             return res.status(400).json({ status: false, message: "Required fields are missing." });
@@ -50,14 +49,12 @@ export const createProduct = async (req, res) => {
             return res.status(400).json({ status: false, message: "At least one product image is required." });
         }
 
-        // Duplicate SKU check
         const existing = await Product.findOne({ sku: sku.trim().toLowerCase() });
         if (existing) {
             req.files.forEach(f => deleteUploadedFile(f.path));
             return res.status(400).json({ status: false, message: "This SKU already exists." });
         }
 
-        // Upload images
         const imageUrls = [];
         if (process.env.NODE_ENV === "production") {
             for (const file of req.files) {
@@ -174,7 +171,6 @@ export const getProducts = async (req, res) => {
 export const updateProductById = async (req, res) => {
     try {
         const { product_id } = req.query;
-        // Important: Parse body if you are sending multipart/form-data
         const parsedBody = parseFormData ? parseFormData(req.body) : req.body;
         
         const { sku } = parsedBody;
@@ -184,11 +180,9 @@ export const updateProductById = async (req, res) => {
         const product = await Product.findById(product_id);
         if (!product) return res.status(404).json({ status: false, message: "Product not found." });
 
-        // SKU duplicate check
         if (sku) {
             const existingSKU = await Product.findOne({ sku: sku.trim().toLowerCase() });
             if (existingSKU && existingSKU._id.toString() !== product_id) {
-                // Safe cleanup for local dev
                 if (process.env.NODE_ENV === "development") {
                     req.files?.forEach(f => deleteUploadedFile(f.path));
                 }
@@ -196,12 +190,9 @@ export const updateProductById = async (req, res) => {
             }
         }
 
-        // --- Handle new images if uploaded ---
         if (req.files && req.files.length > 0) {
-            // 1. Delete Old Images from Cloudinary or local disk
             for (const url of product.images) {
                 if (process.env.NODE_ENV === "production") {
-                    // Extract publicId: "products/image_name"
                     const publicId = url.split("/").slice(-2).join("/").split(".")[0];
                     await cloudinary.uploader.destroy(publicId).catch(err => console.error("Cloudinary Delete Error:", err));
                 } else {
@@ -210,15 +201,12 @@ export const updateProductById = async (req, res) => {
                 }
             }
 
-            // 2. Upload New Images
             const newUrls = [];
             if (process.env.NODE_ENV === "production") {
-                // Use Promise.all for faster parallel uploads
                 const uploadPromises = req.files.map(file => streamUpload(file.buffer));
                 const results = await Promise.all(uploadPromises);
                 results.forEach(result => newUrls.push(result.secure_url));
             } else {
-                // Local development logic
                 const baseUrl = `${req.protocol}://${req.get("host")}`;
                 req.files.forEach(file => {
                     newUrls.push(`${baseUrl}/uploads/products/${file.filename}`);
@@ -228,7 +216,6 @@ export const updateProductById = async (req, res) => {
             product.images = newUrls;
         }
 
-        // Update other fields
         Object.assign(product, {
             ...parsedBody,
             sku: sku ? sku.trim().toLowerCase() : product.sku
@@ -244,7 +231,6 @@ export const updateProductById = async (req, res) => {
 
     } catch (error) {
         console.error("Update Product Error:", error);
-        // Safe cleanup for local dev
         if (process.env.NODE_ENV === "development") {
             req.files?.forEach(f => fs.existsSync(f.path) && fs.unlinkSync(f.path));
         }

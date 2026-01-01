@@ -3,7 +3,6 @@ import path from "path";
 import fs from "fs";
 
 /* ================= CATEGORY UPLOAD ================= */
-
 const categoryStorage = process.env.NODE_ENV === "production"
     ? multer.memoryStorage()
     : multer.diskStorage({
@@ -20,7 +19,6 @@ const categoryStorage = process.env.NODE_ENV === "production"
 export const upload = multer({ storage: categoryStorage });
 
 /* ================= PRODUCT UPLOAD ================= */
-
 const productStorage = process.env.NODE_ENV === "production"
     ? multer.memoryStorage()
     : multer.diskStorage({
