@@ -21,16 +21,23 @@ const ShopSection = () => {
     const current = 1;
 
     useEffect(() => {
-        const timer = setTimeout(() => {
-            if (categoryId) {
-                getProductsByCategory(categoryId);
-            } else if (selectedSortBy === "default") {
-                getAllProducts();
-            } else {
-                getSortedProducts(selectedSortBy);
-            }
-        }, 2000);
-        return () => clearTimeout(timer);
+        if (categoryId) {
+            getProductsByCategory(categoryId);
+        } else if (selectedSortBy === "default") {
+            getAllProducts();
+        } else {
+            getSortedProducts(selectedSortBy);
+        }
+        // const timer = setTimeout(() => {
+        //     if (categoryId) {
+        //         getProductsByCategory(categoryId);
+        //     } else if (selectedSortBy === "default") {
+        //         getAllProducts();
+        //     } else {
+        //         getSortedProducts(selectedSortBy);
+        //     }
+        // }, 2000);
+        // return () => clearTimeout(timer);
     }, [selectedSortBy, categoryId]);
 
     // get all products

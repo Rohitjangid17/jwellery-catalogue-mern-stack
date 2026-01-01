@@ -12,10 +12,10 @@ const Categories = () => {
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-        // getCategoryList();
+        getCategoryList();
 
-        const timer = setTimeout(() => getCategoryList(), 2000);
-        return () => clearTimeout(timer);
+        // const timer = setTimeout(() => getCategoryList(), 2000);
+        // return () => clearTimeout(timer);
     }, []);
 
     // Fetch category list
