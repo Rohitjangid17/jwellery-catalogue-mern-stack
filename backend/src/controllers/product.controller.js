@@ -4,6 +4,7 @@ import { deleteUploadedFile } from "../utils/file/deleteFile.js";
 import fs from "fs";
 import path from "path";
 import { parseFormData } from "../utils/parser/parseFormData.js";
+import connectDatabase from "../config/database.config.js";
 
 const streamUpload = (fileBuffer) => {
     return new Promise((resolve, reject) => {
@@ -100,6 +101,7 @@ export const createProduct = async (req, res) => {
 // Get all or single product
 export const getProducts = async (req, res) => {
     try {
+        await connectDatabase();
         const { product_id, sort_by, category_id } = req.query;
 
         // get by product id
@@ -170,9 +172,10 @@ export const getProducts = async (req, res) => {
 // Update Product
 export const updateProductById = async (req, res) => {
     try {
+        await connectDatabase();
         const { product_id } = req.query;
         const parsedBody = parseFormData ? parseFormData(req.body) : req.body;
-        
+
         const { sku } = parsedBody;
 
         if (!product_id) return res.status(400).json({ status: false, message: "Product ID is required." });
@@ -241,6 +244,7 @@ export const updateProductById = async (req, res) => {
 // Delete Product
 export const deleteProductById = async (req, res) => {
     try {
+        await connectDatabase();
         const { product_id } = req.query;
         if (!product_id) return res.status(400).json({ status: false, message: "Product ID is required." });
 
