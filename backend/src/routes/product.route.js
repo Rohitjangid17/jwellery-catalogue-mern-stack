@@ -5,7 +5,7 @@ import {
   updateProductById,
   deleteProductById,
 } from "../controllers/product.controller.js";
-import upload from "../middlewares/multer.middleware.js";
+import { productUpload } from "../middlewares/upload.middleware.js";
 
 const router = express.Router();
 
@@ -150,7 +150,7 @@ const router = express.Router();
  *       400:
  *         description: Bad request
  */
-router.post("/", upload.array("images", 5), createProduct);
+router.post("/", productUpload.array("images", 5), createProduct);
 
 /**
  * @swagger
@@ -386,7 +386,7 @@ router.get("/", getProducts);
  *       400:
  *         description: Bad request
  */
-router.put("/", upload.array("images", 5), updateProductById);
+router.put("/", productUpload.array("images", 5), updateProductById);
 
 /**
  * @swagger
