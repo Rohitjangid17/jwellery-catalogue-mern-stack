@@ -20,9 +20,9 @@ const CategoryList = ({ onCategorySelect }) => {
             console.error("Error fetching categories:", error);
             setCategories([]);
         } finally {
-            setTimeout(() => {
+            // setTimeout(() => {
                 setIsLoader(false);
-            }, 5000);
+            // }, 5000);
         }
     }
 

@@ -2,9 +2,9 @@ import Category from "../models/category.model.js";
 import Product from "../models/product.model.js";
 import cloudinary from "../config/cloudinary.config.js";
 import { deleteUploadedFile } from "../utils/file/deleteFile.js";
-// import connectDatabase from "../config/database.config.js";
 import fs from "fs";
 import path from "path";
+import connectDatabase from "../config/database.config.js";
 
 const streamUpload = (fileBuffer) => {
     return new Promise((resolve, reject) => {
@@ -22,7 +22,7 @@ const streamUpload = (fileBuffer) => {
 // create category
 export const createCategory = async (req, res) => {
     try {
-        // await connectDatabase();
+        await connectDatabase();
         const { title, description } = req.body;
 
         // check title
@@ -74,19 +74,15 @@ export const createCategory = async (req, res) => {
         let imagePath = "";
 
         if (process.env.NODE_ENV === "production") {
-            // PRODUCTION: Use Cloudinary Buffer Stream
             const result = await streamUpload(req.file.buffer);
             imagePath = result.secure_url;
         } else {
-            // DEVELOPMENT: Use Local File System path
             const baseUrl = `${req.protocol}://${req.get("host")}`;
             imagePath = `${baseUrl}/uploads/categories/${req.file.filename}`;
         }
 
         const category = new Category({ title, description, image: imagePath });
         await category.save();
-
-        // fs.unlinkSync(req.file.path);
 
         res.status(201).json({ status: true, message: "Category created successfully!" });
     } catch (error) {
@@ -103,7 +99,7 @@ export const createCategory = async (req, res) => {
 // get category list or single category
 export const getCategories = async (req, res) => {
     try {
-        // await connectDatabase();
+        await connectDatabase();
         const { category_id } = req.query;
 
         if (category_id) {
@@ -150,7 +146,7 @@ export const getCategories = async (req, res) => {
 // delete category by id
 export const deleteCategoryById = async (req, res) => {
     try {
-        // await connectDatabase();
+        await connectDatabase();
         const { category_id } = req.query;
 
         if (!category_id) {
@@ -162,14 +158,12 @@ export const deleteCategoryById = async (req, res) => {
             return res.status(404).json({ status: false, message: "Category not found" });
         }
 
-        // delete image from local uploads or Cloudinary
         if (process.env.NODE_ENV === "development") {
             const imagePath = path.join("uploads", "categories", path.basename(category.image));
             if (fs.existsSync(imagePath)) {
                 fs.unlinkSync(imagePath);
             }
         } else {
-            // extract public_id from the image URL
             const publicId = category.image.split("/").slice(-2).join("/").split(".")[0];
             await cloudinary.uploader.destroy(publicId);
         }
@@ -185,13 +179,12 @@ export const deleteCategoryById = async (req, res) => {
 // update category by id
 export const updateCategoryById = async (req, res) => {
     try {
-        // await connectDatabase();
+        await connectDatabase();
         const { category_id } = req.query;
         const { title, description } = req.body;
 
         const category = await Category.findById(category_id);
         if (!category) {
-            // If user uploaded a file but category doesn't exist, clean up
             if (process.env.NODE_ENV !== "production" && req.file) {
                 fs.unlinkSync(req.file.path);
             }

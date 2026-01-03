@@ -9,9 +9,9 @@ const BestSellers = () => {
     const [isLoader, setIsLoader] = useState(true);
 
     useEffect(() => {
-        // getBestSellingProducts();
-        const timer = setTimeout(() => getBestSellingProducts(), 2000);
-        return () => clearTimeout(timer);
+        getBestSellingProducts();
+        // const timer = setTimeout(() => getBestSellingProducts(), 2000);
+        // return () => clearTimeout(timer);
     }, []);
 
 

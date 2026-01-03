@@ -1,67 +1,14 @@
 import express from "express";
-import { registerUser, loginUser } from "../controllers/auth.controller.js";
+import { loginAdmin, loginCustomer, registerAdmin, registerCustomer } from "../controllers/auth.controller.js";
 
 const router = express.Router();
 
-/**
- * @swagger
- * tags:
- *   name: Auth
- *   description: Authentication routes
- */
+// Customer Routes
+router.post("/register/customer", registerCustomer);
+router.post("/login/customer", loginCustomer);
 
-/**
- * @swagger
- * /auth/register:
- *   post:
- *     summary: Register a new user
- *     tags: [Auth]
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             $ref: '#/components/schemas/RegisterInput'
- *     responses:
- *       201:
- *         description: User registered successfully
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/User'
- *       400:
- *         description: Bad request
- */
-router.post("/register", registerUser);
-
-/**
- * @swagger
- * /auth/login:
- *   post:
- *     summary: Login a user
- *     tags: [Auth]
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             $ref: '#/components/schemas/LoginInput'
- *     responses:
- *       200:
- *         description: Login successful
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 token:
- *                   type: string
- *                   example: eyJhbGciOiJIUzI1NiIsInR...
- *                 user:
- *                   $ref: '#/components/schemas/User'
- *       401:
- *         description: Invalid credentials
- */
-router.post("/login", loginUser);
+// Admin Routes
+router.post("/register/admin", registerAdmin); // requires ADMIN_SECRET in body
+router.post("/login/admin", loginAdmin);
 
 export default router;

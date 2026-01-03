@@ -8,9 +8,9 @@ const Product = () => {
     const [isLoader, setIsLoader] = useState(true);
 
     useEffect(() => {
-        // getProducts();
-        const timer = setTimeout(() => getProducts(), 2000);
-        return () => clearTimeout(timer);
+        getProducts();
+        // const timer = setTimeout(() => getProducts(), 2000);
+        // return () => clearTimeout(timer);
     }, []);
 
     // get product
