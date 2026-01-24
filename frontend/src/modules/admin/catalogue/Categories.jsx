@@ -277,7 +277,7 @@ const Categories = () => {
                         pageSize: paginationData.pageSize,
                     });
                 }}
-                scroll={{ y: 49 * 5 }}
+                scroll={{ y: 'calc(100vh - 363px)' }}
             />
 
             <CategoryModel
