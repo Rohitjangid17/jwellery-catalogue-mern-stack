@@ -1,45 +1,23 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import AdminPageHeader from "../../../../shared/components/admin/PageHeader";
 import { DeleteOutlined, EditOutlined, EllipsisOutlined, PlusOutlined, SearchOutlined } from "@ant-design/icons";
-import { Button, Dropdown, Input, Table } from "antd";
-import { Link } from "react-router-dom";
+import { Button, Dropdown, Input, Table, notification } from "antd";
+import { productService } from "../../../../services/productService";
 
-const products = [
-    {
-        key: '1',
-        image: 'http://localhost:5000/uploads/products/il_1140xN.3873329088_g9o6-1757833873747.webp',
-        title: 'Gold Ring',
-        price: 1200,
-        category: 'Rings',
-        description: 'Elegant 18K gold ring with diamond accent',
-        status: 'active',
-        createdAt: '2025-10-01T10:30:00Z',
-        variants: [
-            { key: '1-1', size: 'S', color: 'Gold', stock: 5 },
-            { key: '1-2', size: 'M', color: 'Gold', stock: 2 },
-        ],
-    },
-    {
-        key: '2',
-        image: 'http://localhost:5000/uploads/products/il_1140xN.3873329088_g9o6-1757833873747.webp',
-        title: 'Silver Necklace',
-        price: 2200,
-        category: 'Necklaces',
-        description: 'Sterling silver necklace with pendant',
-        status: 'inactive',
-        createdAt: '2025-09-28T12:15:00Z',
-        variants: [
-            { key: '2-1', size: 'One Size', color: 'Silver', stock: 10 },
-        ],
-    },
-];
-
-const ActionsColumn = ({ record }) => {
+const ActionsColumn = ({ record, onDelete }) => {
     const menu = {
         items: [
-            { key: 'edit', label: 'Edit', icon: <EditOutlined />, onClick: () => console.log('Edit', record.key) },
-            { key: 'delete', label: 'Delete', icon: <DeleteOutlined />, onClick: () => console.log('Delete', record.key) },
+            { key: 'edit', label: 'Edit', icon: <EditOutlined />, onClick: () => console.log('Edit', record._id) },
+            {
+                key: 'delete',
+                label: 'Delete',
+                icon: <DeleteOutlined />,
+                onClick: () => {
+                    onDelete(record._id);
+                },
+            },
         ],
+        
     };
 
     return (
@@ -56,12 +34,87 @@ const ActionsColumn = ({ record }) => {
     );
 };
 
-const columns = [
+
+
+const Products = () => {
+    const [searchText, setSearchText] = useState("");
+    const [selectedRowKeys, setSelectedRowKeys] = useState([]);
+    const [isLoader, setIsLoader] = useState(false);
+    const [products, setProducts] = useState([]);
+    const [messageApi, contextHolder] = notification.useNotification();
+
+
+    // Fetch Products
+    const getProducts = async () => {
+        setIsLoader(true);
+        try {
+            const response = await productService.getAllProducts();
+
+            if (!response?.products) {
+            setProducts([]);
+            return;
+            }
+
+        const formattedProducts = response.products.map(product => {
+            const sizes = product.sizes || [];
+            const colors = product.colors || [];
+
+            // create variants
+            const variants = [];
+
+            sizes.forEach(sizeObj => {
+                colors.forEach(color => {
+                variants.push({
+                    size: sizeObj.size || "-",
+                    color,
+                    stockStatus: product.stockStatus || "-"
+                });
+                });
+            });
+
+            return {
+                ...product,
+                variants
+            };
+            });
+
+            setProducts(formattedProducts);
+        } catch (error) {
+            console.error("Error fetching products:", error);
+            setProducts([]);
+        } finally {
+            setIsLoader(false);
+        }
+        };
+
+    // Delete Product
+    const deleteProduct = async (productId) => {
+        try {
+            const response = await productService.deleteProduct(productId);
+
+               if (response?.status) {
+                messageApi.success({
+                    message: "Success",
+                    description: response?.message ?? "Product deleted successfully!",
+                    placement: "topRight",
+                });
+            }
+
+            // remove deleted product from UI
+            setProducts(prev =>
+                prev.filter(product => product._id !== productId)
+            );
+        } catch (error) {
+            console.error("Delete failed:", error);
+        }
+    };
+
+    const columns = [
     {
         title: 'Image',
         dataIndex: 'image',
         width: 80,
-        render: (text, record) => <img src={record.image} alt={record.title} style={{ width: 50, height: 50, borderRadius: 4 }} />,
+        render: (text, record) => <img src={record.images?.[0] || "/assets/images/product/placeholder.png"} alt={record.title} style={{ width: 50, height: 50, borderRadius: 4 }} />,
     },
     {
         title: 'Product Name',
@@ -69,20 +122,23 @@ const columns = [
     },
     {
         title: 'Price',
-        dataIndex: 'price',
+        render: (_, record) => `₹${record.finalPrice}`,
     },
     {
         title: 'Category',
-        dataIndex: 'category',
+        render: (_, record) => record.category?.title || "—",
     },
     {
         title: 'Description',
-        dataIndex: 'description',
+        render: (_, record) => {
+            const words = record.description?.split(' ') || [];
+            return words.slice(0, 6).join(' ') + (words.length > 6 ? '...' : '');
+        },
         width: 200,
     },
     {
         title: 'Status',
-        dataIndex: 'status',
+        dataIndex: 'stockStatus',
     },
     {
         title: 'Date',
@@ -97,13 +153,9 @@ const columns = [
         title: 'Action',
         key: 'action',
         width: 120,
-        render: (_, record) => <ActionsColumn record={record} />,
+        render: (_, record) => <ActionsColumn record={record} onDelete={deleteProduct} />,
     },
 ];
-
-const Products = () => {
-    const [searchText, setSearchText] = useState("");
-    const [selectedRowKeys, setSelectedRowKeys] = useState([]);
 
     const rowSelection = {
         selectedRowKeys,
@@ -112,8 +164,14 @@ const Products = () => {
         },
     };
 
+
+      useEffect(() => {
+            getProducts();
+        }, []);
+
     return (
         <>
+         {contextHolder}
             <AdminPageHeader />
 
             <div className="flex justify-between items-center flex-wrap gap-3 mb-4">
@@ -193,9 +251,11 @@ const Products = () => {
 
             <Table
                 columns={columns}
+                loading={isLoader}
                 dataSource={products}
                 rowSelection={{ type: 'checkbox', ...rowSelection }}
                 pagination={{ pageSize: 50 }}
+                rowKey="_id"
                 scroll={{ y: 'calc(100vh - 383px)' }}
                 expandable={{
                     expandedRowRender: (record) => (
@@ -203,11 +263,11 @@ const Products = () => {
                             columns={[
                                 { title: 'Size', dataIndex: 'size', key: 'size' },
                                 { title: 'Color', dataIndex: 'color', key: 'color' },
-                                { title: 'Stock', dataIndex: 'stock', key: 'stock' },
+                                { title: 'Stock Status', dataIndex: 'stockStatus', key: 'stockStatus' },
                             ]}
                             dataSource={record.variants}
                             pagination={false}
-                            rowKey="key"
+                            rowKey={(variant, index) => `${record._id}-${index}`}
                         />
                     ),
                     rowExpandable: (record) => record.variants && record.variants.length > 0,
