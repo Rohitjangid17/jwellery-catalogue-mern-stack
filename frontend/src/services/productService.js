@@ -9,6 +9,11 @@ export const productService = {
     //     const response = await api.get("")
     // }
 
+    deleteProduct: async (product_id) => {
+        const response = await api.delete(`/product?product_id=${product_id}`);
+        return response.data;
+    },
+
     getProductById: async (product_id) => {
         const response = await api.get(`/product?product_id=${product_id}`);
         return response.data;
