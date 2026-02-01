@@ -268,13 +268,82 @@ body {
 }
 
 @keyframes slideUp {
-  from { transform: translateY(100%); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
+
 .animate-slideUp {
   animation: slideUp 0.4s ease-in-out;
 }
 
-/* .custom-swiper-button-next{
-  background-color: white !important;
-} */
+/* Parent: no border */
+.product-collapse {
+  border: none;
+}
+
+/* Each accordion item = card */
+.product-collapse .ant-collapse-item {
+  margin-bottom: 16px;
+  border: 1px solid #d1d5db;
+  /* gray border */
+  border-radius: 12px;
+  overflow: hidden;
+  background-color: #ffffff;
+}
+
+/* ================= CLOSED STATE ================= */
+
+/* Closed header */
+.product-collapse .ant-collapse-item:not(.ant-collapse-item-active) .ant-collapse-header {
+  background-color: #f3f4f6;
+  /* light gray */
+  color: #000000;
+  font-weight: 500;
+  padding: 12px 16px;
+  border-radius: 12px;
+  /* full round when closed */
+}
+
+.product-collapse .ant-collapse-item:not(.ant-collapse-item-active) .ant-collapse-expand-icon {
+  color: #000000;
+}
+
+/* ================= OPEN STATE ================= */
+
+/* Open header */
+.product-collapse .ant-collapse-item-active .ant-collapse-header {
+  background-color: #000000;
+  color: #ffffff;
+  font-weight: 500;
+  padding: 12px 16px;
+
+  /* ONLY top corners rounded */
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.product-collapse .ant-collapse-item-active .ant-collapse-expand-icon {
+  color: #ffffff;
+}
+
+/* Content wrapper */
+.product-collapse .ant-collapse-content {
+  background-color: #ffffff;
+  border-top: 1px solid #e5e7eb;
+}
+
+/* Content box with bottom rounding */
+.product-collapse .ant-collapse-content-box {
+  padding: 16px;
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
+}
