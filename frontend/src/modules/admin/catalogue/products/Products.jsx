@@ -3,6 +3,8 @@ import AdminPageHeader from "../../../../shared/components/admin/PageHeader";
 import { DeleteOutlined, EditOutlined, EllipsisOutlined, PlusOutlined, SearchOutlined } from "@ant-design/icons";
 import { Button, Dropdown, Input, Table, notification } from "antd";
 import { productService } from "../../../../services/productService";
+import { Link } from "react-router-dom";
+import { SOMETHING_WENT_WRONG } from "../../../../shared/constants";
 
 const ActionsColumn = ({ record, onDelete }) => {
     const menu = {
@@ -17,7 +19,7 @@ const ActionsColumn = ({ record, onDelete }) => {
                 },
             },
         ],
-        
+
     };
 
     return (
@@ -43,6 +45,9 @@ const Products = () => {
     const [products, setProducts] = useState([]);
     const [messageApi, contextHolder] = notification.useNotification();
 
+    useEffect(() => {
+        getProducts();
+    }, []);
 
     // Fetch Products
     const getProducts = async () => {
@@ -51,111 +56,120 @@ const Products = () => {
             const response = await productService.getAllProducts();
 
             if (!response?.products) {
-            setProducts([]);
-            return;
+                setProducts([]);
+                return;
             }
 
-        const formattedProducts = response.products.map(product => {
-            const sizes = product.sizes || [];
-            const colors = product.colors || [];
+            const formattedProducts = response.products.map(product => {
+                const sizes = product.sizes || [];
+                const colors = product.colors || [];
 
-            // create variants
-            const variants = [];
+                // create variants
+                const variants = [];
 
-            sizes.forEach(sizeObj => {
-                colors.forEach(color => {
-                variants.push({
-                    size: sizeObj.size || "-",
-                    color,
-                    stockStatus: product.stockStatus || "-"
+                sizes.forEach(sizeObj => {
+                    colors.forEach(color => {
+                        variants.push({
+                            size: sizeObj.size || "-",
+                            color,
+                            stockStatus: product.stockStatus || "-"
+                        });
+                    });
                 });
-                });
-            });
 
-            return {
-                ...product,
-                variants
-            };
+                return {
+                    ...product,
+                    variants
+                };
             });
 
             setProducts(formattedProducts);
         } catch (error) {
-            console.error("Error fetching products:", error);
+            messageApi.error({
+                message: "Server Error",
+                description: error?.response?.data?.message ?? SOMETHING_WENT_WRONG,
+                placement: "topRight",
+            });
             setProducts([]);
         } finally {
             setIsLoader(false);
         }
-        };
+    };
 
     // Delete Product
-    const deleteProduct = async (productId) => {
+    const deleteProduct = async (product_id) => {
         try {
-            const response = await productService.deleteProduct(productId);
+            setIsLoader(true);
+            const response = await productService.deleteProduct(product_id);
 
-               if (response?.status) {
+            if (response?.status) {
                 messageApi.success({
                     message: "Success",
                     description: response?.message ?? "Product deleted successfully!",
                     placement: "topRight",
                 });
+                getProducts();
             }
 
-            // remove deleted product from UI
-            setProducts(prev =>
-                prev.filter(product => product._id !== productId)
-            );
         } catch (error) {
-            console.error("Delete failed:", error);
+            console.error(error);
+            messageApi.error({
+                message: "Server Error",
+                description: error?.response?.data?.message ?? SOMETHING_WENT_WRONG,
+                placement: "topRight",
+            });
+        } finally {
+            setIsLoader(false);
         }
     };
 
     const columns = [
-    {
-        title: 'Image',
-        dataIndex: 'image',
-        width: 80,
-        render: (text, record) => <img src={record.images?.[0] || "/assets/images/product/placeholder.png"} alt={record.title} style={{ width: 50, height: 50, borderRadius: 4 }} />,
-    },
-    {
-        title: 'Product Name',
-        dataIndex: 'title',
-    },
-    {
-        title: 'Price',
-        render: (_, record) => `₹${record.finalPrice}`,
-    },
-    {
-        title: 'Category',
-        render: (_, record) => record.category?.title || "—",
-    },
-    {
-        title: 'Description',
-        render: (_, record) => {
-            const words = record.description?.split(' ') || [];
-            return words.slice(0, 6).join(' ') + (words.length > 6 ? '...' : '');
+        {
+            title: 'Image',
+            dataIndex: 'image',
+            width: 80,
+            render: (text, record) => <img src={record.images?.[0] || "/assets/images/product/placeholder.png"} alt={record.title} style={{ width: 50, height: 50, borderRadius: 4 }} />,
         },
-        width: 200,
-    },
-    {
-        title: 'Status',
-        dataIndex: 'stockStatus',
-    },
-    {
-        title: 'Date',
-        dataIndex: 'createdAt',
-        width: 120,
-        render: (text) => {
-            const options = { day: '2-digit', month: 'short', year: 'numeric' };
-            return new Date(text).toLocaleDateString('en-US', options);
-        }
-    },
-    {
-        title: 'Action',
-        key: 'action',
-        width: 120,
-        render: (_, record) => <ActionsColumn record={record} onDelete={deleteProduct} />,
-    },
-];
+        {
+            title: 'Product Name',
+            dataIndex: 'title',
+        },
+        {
+            title: 'Price',
+            render: (_, record) => `₹${record.finalPrice}`,
+        },
+        {
+            title: 'Category',
+            render: (_, record) => record.category?.title || "—",
+        },
+        {
+            title: 'Description',
+            render: (_, record) => {
+                const words = record.description?.split(' ') || [];
+                return words.slice(0, 6).join(' ') + (words.length > 6 ? '...' : '');
+            },
+            width: 200,
+        },
+        {
+            title: 'Status',
+            dataIndex: 'stockStatus',
+        },
+        {
+            title: 'Date',
+            dataIndex: 'createdAt',
+            width: 120,
+            render: (text) => {
+                const options = { day: '2-digit', month: 'short', year: 'numeric' };
+                return new Date(text).toLocaleDateString('en-US', options);
+            }
+        },
+        {
+            title: 'Action',
+            key: 'action',
+            width: 120,
+            render: (_, record) => <ActionsColumn record={record} onDelete={deleteProduct} />,
+        },
+    ];
 
     const rowSelection = {
         selectedRowKeys,
@@ -164,14 +178,10 @@ const Products = () => {
         },
     };
 
-
-      useEffect(() => {
-            getProducts();
-        }, []);
-
     return (
         <>
-         {contextHolder}
+            {contextHolder}
+
             <AdminPageHeader />
 
             <div className="flex justify-between items-center flex-wrap gap-3 mb-4">
