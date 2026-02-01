@@ -9,6 +9,7 @@ import Wishlist from '../modules/admin/catalogue/Wishlist';
 import GeneralSettings from '../modules/admin/settings/GeneralSettings';
 import WhatsAppSettings from '../modules/admin/settings/WhatsAppSettings';
 import SocialMediaSettings from '../modules/admin/settings/SocialMediaSettings';
+import AddProduct from '../modules/admin/catalogue/products/AddProduct';
 
 const adminRoutes = (
     <Route path="/admin" element={<AdminLayout />}>
@@ -18,6 +19,8 @@ const adminRoutes = (
         <Route path="catalogue">
             <Route path="categories" element={<Categories />} />
             <Route path="products" element={<Products />} />
+            <Route path="add-product" element={<AddProduct />} />
+            <Route path="update-product/:id" element={<AddProduct />} />
             <Route path="product-reviews" element={<ProductReview />} />
             <Route path="wishlist" element={<Wishlist />} />
         </Route>
