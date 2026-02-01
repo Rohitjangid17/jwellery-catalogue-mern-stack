@@ -7,12 +7,13 @@ export const SUPPORT_PHONE = "+91-9876543210";
 export const COMPANY_NAME = "Vineta Jewels Pvt. Ltd.";
 export const COMPANY_ADDRESS = "123, MG Road, Jaipur, Rajasthan, India - 302001";
 export const COMPANY_GSTIN = "08ABCDE1234F1Z5";
+export const SOMETHING_WENT_WRONG = "An unexpected error occurred. Please try again later.";
 
 // API base URL
 // export const API_BASE_URL = "https://jwellery-catalogue-api.vercel.app/api/v1";
-export const API_BASE_URL = "http://localhost:5000/api/v1";
+// export const API_BASE_URL = "http://localhost:5000/api/v1";
 // export const API_BASE_URL = "https://rjs-api.vercel.app/api/v1";
-// export const API_BASE_URL = "https://dev-rjs-api.vercel.app/api/v1";
+export const API_BASE_URL = "https://dev-rjs-api.vercel.app/api/v1";
 
 // Route Paths
 export const ROUTES = {

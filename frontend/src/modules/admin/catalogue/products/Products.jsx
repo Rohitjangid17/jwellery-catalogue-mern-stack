@@ -2,6 +2,7 @@ import { useState } from "react";
 import AdminPageHeader from "../../../../shared/components/admin/PageHeader";
 import { DeleteOutlined, EditOutlined, EllipsisOutlined, PlusOutlined, SearchOutlined } from "@ant-design/icons";
 import { Button, Dropdown, Input, Table } from "antd";
+import { Link } from "react-router-dom";
 
 const products = [
     {
@@ -179,12 +180,14 @@ const Products = () => {
                     /> */}
 
                     {/* Add Product Button */}
-                    <Button
-                        className="!bg-[#ff6f61] hover:!bg-[#e55d51] !text-white border-none shadow-none font-medium rounded"
-                        icon={<PlusOutlined />}
-                    >
-                        Add Product
-                    </Button>
+                    <Link to="/admin/catalogue/add-product">
+                        <Button
+                            className="!bg-[#ff6f61] hover:!bg-[#e55d51] !text-white border-none shadow-none font-medium rounded"
+                            icon={<PlusOutlined />}
+                        >
+                            Add Product
+                        </Button>
+                    </Link>
                 </div>
             </div>
 
