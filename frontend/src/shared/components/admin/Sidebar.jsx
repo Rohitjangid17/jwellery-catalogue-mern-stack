@@ -13,6 +13,7 @@ import {
     WhatsAppOutlined,
 } from '@ant-design/icons';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { COMPANY_LOGO } from '../../constants';
 
 const AdminSidebar = ({ onItemClick }) => {
     const navigate = useNavigate();
@@ -50,7 +51,7 @@ const AdminSidebar = ({ onItemClick }) => {
     return (
         <div className="flex flex-col h-full bg-black text-white">
             <div className="flex justify-center items-center py-6 sticky top-0 bg-black z-20">
-                <img src="/assets/images/logo.svg" alt="Logo" className="invert" />
+                <img src={COMPANY_LOGO} alt="Logo" className="invert" />
             </div>
             <div className="flex-1 overflow-y-auto">
                 <Menu

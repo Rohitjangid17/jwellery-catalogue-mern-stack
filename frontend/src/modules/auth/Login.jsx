@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Form, Input, Button } from "antd";
 import { MailOutlined, LockOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
+import { COMPANY_LOGO } from "../../shared/constants";
 
 const Login = () => {
     const [loading, setLoading] = useState(false);
@@ -20,7 +21,7 @@ const Login = () => {
                 {/* Logo */}
                 <div className="flex justify-center mb-4">
                     <img
-                        src="/assets/images/logo.svg"
+                        src={COMPANY_LOGO}
                         alt="Logo"
                         width={100}
                         height={100}

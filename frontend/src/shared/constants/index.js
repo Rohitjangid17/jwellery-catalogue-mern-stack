@@ -1,5 +1,5 @@
 // Site Info
-export const COMPANY_LOGO = "./public/assets/images/logo.svg";
+export const COMPANY_LOGO = "/assets/images/logo.svg";
 export const SITE_NAME = "RJS Fine Jewels";
 export const SITE_TAGLINE = "Elegance That Speaks!";
 export const SITE_CURRENCY = "$";
