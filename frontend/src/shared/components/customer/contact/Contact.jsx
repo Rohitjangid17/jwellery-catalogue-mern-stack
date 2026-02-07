@@ -2,6 +2,7 @@ import { Button } from "antd";
 import CommonInput from "../CommonInput";
 import ContactInfo from "./ContactInfo";
 import SocialInfo from "./SocialInfo";
+import { COMPANY_ADDRESS, SUPPORT_EMAIL, SUPPORT_PHONE } from "../../../constants";
 
 const Contact = () => {
     const handleChange = (e) => {
@@ -17,9 +18,9 @@ const Contact = () => {
                         <h2 className="text-[32px] text-black font-medium">Contact Us</h2>
                         <p className="text-[#545454] text-base">Have a question? Please contact us using the customer support channels below.</p>
                         <ul className="list-none flex flex-col gap-[10px]">
-                            <ContactInfo label="Address:" value="15 Yarran St, Punchbowl, NSW, Australia" />
-                            <ContactInfo label="Phone number:" value="+1 234 567" />
-                            <ContactInfo label="Email:" value="contact@vineta.com" />
+                            <ContactInfo label="Address:" value={COMPANY_ADDRESS} />
+                            <ContactInfo label="Phone number:" value={SUPPORT_PHONE} />
+                            <ContactInfo label="Email:" value={SUPPORT_EMAIL} />
                             <ContactInfo label="Open:" value="8am - 7pm, Mon - Sat" />
                         </ul>
 

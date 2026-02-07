@@ -4,6 +4,7 @@ import { FiSearch, FiUser, FiHeart, FiShoppingBag, FiMenu, FiX, } from "react-ic
 import { AiOutlineHome } from "react-icons/ai";
 import { MdOutlineStorefront } from "react-icons/md";
 import { Drawer, Button, Form, Input, Badge } from "antd";
+import { COMPANY_LOGO } from "../../constants";
 
 // nav links 
 const navLinks = [
@@ -63,7 +64,7 @@ const CustomerHeader = () => {
 
                     {/* Center: Logo */}
                     <div className="grow flex justify-center md:inline">
-                        <img src="/assets/images/logo.svg" className="object-cover" alt="logo" />
+                        <img src={COMPANY_LOGO} className="object-cover" alt="logo" />
                     </div>
 
                     {/* Right: Icons */}

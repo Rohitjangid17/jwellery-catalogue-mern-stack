@@ -5,6 +5,7 @@ import { LuArrowUpRight } from "react-icons/lu";
 import SocialInfo from "./contact/SocialInfo";
 import CommonInput from "./CommonInput";
 import { Link } from "react-router-dom";
+import { COMPANY_ADDRESS, COMPANY_LOGO, SITE_NAME, SUPPORT_EMAIL, SUPPORT_PHONE } from "../../constants";
 
 const CustomerFooter = () => {
     return (
@@ -13,26 +14,26 @@ const CustomerFooter = () => {
                 <div className="container mx-auto">
                     <div className="grid grid-cols-12 gap-10">
                         <div className="col-span-12 md:col-span-4 lg:col-span-4">
-                            <img src="/assets/images/logo.svg" className="object-cover" alt="logo" />
+                            <img src={COMPANY_LOGO} className="object-cover" alt="logo" />
 
                             <ul className="mt-8 flex flex-col gap-4">
                                 <li className="flex items-center gap-[10px]">
                                     <span className="group bg-white hover:bg-[#ff6f61] border border-[#ebebeb] rounded-full p-2">
                                         <IoLocationOutline className="text-black group-hover:text-white" />
                                     </span>
-                                    <span className="text-[#0d0d0d] text-base font-normal">123 Yarran st, Punchbowl, NSW 2196, Australia</span>
+                                    <span className="text-[#0d0d0d] text-base font-normal">{COMPANY_ADDRESS}</span>
                                 </li>
                                 <li className="flex items-center gap-[10px]">
                                     <span className="group bg-white hover:bg-[#ff6f61] border border-[#ebebeb] rounded-full p-2">
                                         <FiPhone className="text-black group-hover:text-white" />
                                     </span>
-                                    <span className="text-[#0d0d0d] text-base font-normal">(+91) 9587683849</span>
+                                    <span className="text-[#0d0d0d] text-base font-normal">{SUPPORT_PHONE}</span>
                                 </li>
                                 <li className="flex items-center gap-[10px]">
                                     <span className="group bg-white hover:bg-[#ff6f61] border border-[#ebebeb] rounded-full p-2">
                                         <MdOutlineEmail className="text-black group-hover:text-white" />
                                     </span>
-                                    <span className="text-[#0d0d0d] text-base font-normal">support@example.com</span>
+                                    <span className="text-[#0d0d0d] text-base font-normal">{SUPPORT_EMAIL}</span>
                                 </li>
                             </ul>
 
@@ -104,7 +105,7 @@ const CustomerFooter = () => {
             <div className="border-t border-[#ebebeb] mt-14 px-4 py-8">
                 <div className="container mx-auto">
                     <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-                        <p>Copyright © 2025 by Vineta. All Rights Reserved.</p>
+                        <p>Copyright © 2025 by <b>{SITE_NAME}</b>. All Rights Reserved.</p>
                         <ul className="flex items-center gap-2">
                             <li>
                                 <img src="/assets/images/gpay.png" className="object-cover w-12 h-auto" alt="gpay" />
