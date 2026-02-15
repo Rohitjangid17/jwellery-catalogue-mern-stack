@@ -186,16 +186,16 @@ const AddProduct = () => {
           {/* BASIC INFO */}
           <Card title="Basic Information">
             <div className="grid md:grid-cols-3 gap-4">
-              <Form.Item name="title" label="Product Title" rules={[{ required: true }]}>
-                <Input />
+              <Form.Item name="title" label="Product Title" className="!mb-4" rules={[{ required: true }]}>
+                <Input className="py-[6px] hover:!border-[#ff6f61]" />
               </Form.Item>
 
-              <Form.Item name="sku" label="SKU" rules={[{ required: true }]}>
-                <Input />
+              <Form.Item name="sku" label="SKU" className="!mb-4" rules={[{ required: true }]}>
+                <Input className="py-[6px] hover:!border-[#ff6f61]" />
               </Form.Item>
 
-              <Form.Item name="category" label="Category" rules={[{ required: true }]}>
-                <Select loading={loading}>
+              <Form.Item name="category" label="Category" className="!mb-4" rules={[{ required: true }]}>
+                <Select loading={loading} className="select-dropdown">
                   {categories.map((cat) => (
                     <Select.Option key={cat._id} value={cat._id}>
                       {cat.title}
@@ -205,40 +205,40 @@ const AddProduct = () => {
               </Form.Item>
             </div>
 
-            <Form.Item name="description" label="Description" rules={[{ required: true }]}>
-              <TextArea rows={4} />
+            <Form.Item name="description" label="Description" className="!mb-3" rules={[{ required: true }]}>
+              <TextArea rows={4} className="py-[6px] hover:!border-[#ff6f61]" />
             </Form.Item>
           </Card>
 
           {/* PRICING */}
           <Card title="Pricing">
-            <div className="grid md:grid-cols-4 gap-4">
-              <Form.Item name="basePrice" label="Base Price" rules={[{ required: true }]}>
-                <InputNumber className="w-full" />
+            <div className="grid md:grid-cols-3 gap-x-4">
+              <Form.Item name="basePrice" label="Base Price" className="!mb-3" rules={[{ required: true }]}>
+                <Input className="py-[6px] hover:!border-[#ff6f61]" />
               </Form.Item>
 
-              <Form.Item name={["discount", "type"]} label="Discount Type">
-                <Select>
+              <Form.Item name={["discount", "type"]} className="!mb-3" label="Discount Type">
+                <Select className="select-dropdown">
                   <Select.Option value="flat">Flat</Select.Option>
                   <Select.Option value="percent">Percent</Select.Option>
                 </Select>
               </Form.Item>
 
-              <Form.Item name={["discount", "amount"]} label="Discount Amount">
-                <InputNumber className="w-full" />
+              <Form.Item name={["discount", "amount"]} className="!mb-3" label="Discount Amount">
+                <Input className="py-[6px] hover:!border-[#ff6f61]" />
               </Form.Item>
 
-              <Form.Item name="weightInGrams" label="Weight (g)" rules={[{ required: true }]}>
-                <InputNumber className="w-full" />
+              <Form.Item name="weightInGrams" label="Weight (g)" className="!mb-3" rules={[{ required: true }]}>
+                <Input className="py-[6px] hover:!border-[#ff6f61]" />
               </Form.Item>
             </div>
           </Card>
 
           {/* METAL & TAGS */}
           <Card title="Metal & Classification">
-            <div className="grid md:grid-cols-3 gap-4">
-              <Form.Item name="metalType" label="Metal Type" rules={[{ required: true }]}>
-                <Select>
+            <div className="grid md:grid-cols-3 gap-x-4">
+              <Form.Item name="metalType" label="Metal Type" className="!mb-3" rules={[{ required: true }]}>
+                <Select className="select-dropdown">
                   <Select.Option value="Gold">Gold</Select.Option>
                   <Select.Option value="Silver">Silver</Select.Option>
                   <Select.Option value="Platinum">Platinum</Select.Option>
@@ -247,12 +247,12 @@ const AddProduct = () => {
                 </Select>
               </Form.Item>
 
-              <Form.Item name="colors" label="Colors" rules={[{ required: true }]}>
-                <Select mode="tags" />
+              <Form.Item name="colors" label="Colors" className="!mb-3" rules={[{ required: true }]}>
+                <Select mode="tags" className="select-dropdown" />
               </Form.Item>
 
-              <Form.Item name="tags" label="Tags" rules={[{ required: true }]}>
-                <Select mode="tags" />
+              <Form.Item name="tags" label="Tags" className="!mb-3" rules={[{ required: true }]}>
+                <Select mode="tags" className="select-dropdown" />
               </Form.Item>
             </div>
           </Card>
@@ -263,23 +263,30 @@ const AddProduct = () => {
               {(fields, { add, remove }) => (
                 <>
                   {fields.map(({ key, name }) => (
-                    <Space key={key} align="baseline">
-                      <Form.Item name={[name, "type"]} rules={[{ required: true }]}>
-                        <Input placeholder="Type" />
-                      </Form.Item>
+                    <div className="flex items-start gap-4" key={key}>
+                      <div className="grid md:grid-cols-3 gap-4 w-full">
+                        <Form.Item name={[name, "type"]} className="!mb-3" rules={[{ required: true }]}>
+                          <Input placeholder="Type" className="py-[6px] hover:!border-[#ff6f61]" />
+                        </Form.Item>
 
-                      <Form.Item name={[name, "name"]} rules={[{ required: true }]}>
-                        <Input placeholder="Name" />
-                      </Form.Item>
+                        <Form.Item name={[name, "name"]} className="!mb-3" rules={[{ required: true }]}>
+                          <Input placeholder="Name" className="py-[6px] hover:!border-[#ff6f61]" />
+                        </Form.Item>
 
-                      <Form.Item name={[name, "percentage"]} rules={[{ required: true }]}>
-                        <InputNumber placeholder="%" />
-                      </Form.Item>
+                        <Form.Item name={[name, "percentage"]} className="!mb-3" rules={[{ required: true }]}>
+                          <Input placeholder="%" className="py-[6px] hover:!border-[#ff6f61]" />
+                        </Form.Item>
+                      </div>
 
-                      <DeleteOutlined onClick={() => remove(name)} style={{ color: "red" }} />
-                    </Space>
+                      <Button
+                        danger
+                        type="default"
+                        icon={<DeleteOutlined />}
+                        onClick={() => remove(name)}
+                      />
+                    </div>
                   ))}
-                  <Button type="dashed" onClick={() => add()} block>
+                  <Button type="dashed" className={`${fields.length ? 'mt-3' : 'mt-0'}`} onClick={() => add()} block>
                     Add Material
                   </Button>
                 </>
@@ -293,24 +300,82 @@ const AddProduct = () => {
               {(fields, { add, remove }) => (
                 <>
                   {fields.map(({ key, name }) => (
-                    <Space key={key} align="baseline">
-                      <Form.Item name={[name, "name"]} rules={[{ required: true }]}>
-                        <Input placeholder="Name" />
-                      </Form.Item>
+                    <div className="flex items-start gap-4" key={key}>
+                      <div className="grid md:grid-cols-3 gap-4 w-full">
+                        <Form.Item name={[name, "name"]} className="!mb-3" rules={[{ required: true }]}>
+                          <Input placeholder="Name" className="py-[6px] hover:!border-[#ff6f61]" />
+                        </Form.Item>
 
-                      <Form.Item name={[name, "caratWeight"]} rules={[{ required: true }]}>
-                        <InputNumber placeholder="Carat" />
-                      </Form.Item>
+                        <Form.Item name={[name, "caratWeight"]} className="!mb-3" rules={[{ required: true }]}>
+                          <Input placeholder="Carat" className="py-[6px] hover:!border-[#ff6f61]" />
+                        </Form.Item>
 
-                      <Form.Item name={[name, "clarity"]} rules={[{ required: true }]}>
-                        <Input placeholder="Clarity" />
-                      </Form.Item>
-
-                      <DeleteOutlined onClick={() => remove(name)} style={{ color: "red" }} />
-                    </Space>
+                        <Form.Item name={[name, "clarity"]} className="!mb-3" rules={[{ required: true }]}>
+                          <Input placeholder="Clarity" className="py-[6px] hover:!border-[#ff6f61]" />
+                        </Form.Item>
+                      </div>
+                      <Button
+                        danger
+                        type="default"
+                        icon={<DeleteOutlined />}
+                        onClick={() => remove(name)}
+                      />
+                    </div>
                   ))}
-                  <Button type="dashed" onClick={() => add()} block>
+                  <Button type="dashed" className={`${fields.length ? 'mt-3' : 'mt-0'}`} onClick={() => add()} block>
                     Add Gemstone
+                  </Button>
+                </>
+              )}
+            </Form.List>
+          </Card>
+
+          {/* SIZES */}
+          <Card title="Sizes & Stock">
+            <Form.List name="sizes">
+              {(fields, { add, remove }) => (
+                <>
+                  {fields.map(({ key, name }) => (
+                    <div className="flex items-start gap-4" key={key}>
+                      <div className="grid md:grid-cols-3 gap-4 w-full">
+                        <Form.Item
+                          name={[name, "size"]} className="!mb-3"
+                          rules={[{ required: true, message: "Size required" }]}
+                        >
+                          <Input placeholder="Size (e.g. 6, 7, M, L)" className="py-[6px] hover:!border-[#ff6f61]" />
+                        </Form.Item>
+
+                        <Form.Item
+                          name={[name, "stockQuantity"]} className="!mb-3"
+                          rules={[{ required: true, message: "Stock required" }]}
+                        >
+                          <Input placeholder="Stock Qty" min={0} className="py-[6px] hover:!border-[#ff6f61]" />
+                        </Form.Item>
+
+                        <Form.Item
+                          name={[name, "priceModifier"]} className="!mb-3"
+                        >
+                          <Input placeholder="Price Modifier (+/-)" className="py-[6px] hover:!border-[#ff6f61]" />
+                        </Form.Item>
+                      </div>
+
+                      <Button
+                        danger
+                        type="default"
+                        icon={<DeleteOutlined />}
+                        onClick={() => remove(name)}
+                      />
+                    </div>
+                  ))}
+
+                  <Button
+                    type="dashed"
+                    className={`${fields.length ? 'mt-3' : 'mt-0'}`}
+                    onClick={() => add()}
+                    block
+                    icon={<PlusOutlined />}
+                  >
+                    Add Size
                   </Button>
                 </>
               )}
@@ -330,14 +395,23 @@ const AddProduct = () => {
             </Upload>
           </Card>
 
-          <div className="flex justify-end pb-6">
-            <Button type="primary" htmlType="submit" loading={loading}>
+          {/* FOOTER */}
+          <div className="flex gap-3 justify-end pb-6">
+            <Button
+              type="default"
+              htmlType="button"
+              onClick={() => navigate("/admin/catalogue/products")}
+              className="hover:!text-black hover:!border-black shadow-none font-medium rounded"
+            >
+              Back to Products
+            </Button>
+
+            <Button className="!bg-[#ff6f61] hover:!bg-[#e55d51] !text-white border-none shadow-none font-medium rounded" htmlType="submit" loading={loading}>
               Save Product
             </Button>
           </div>
-
         </Space>
-      </Form>
+      </Form >
     </>
   );
 };
