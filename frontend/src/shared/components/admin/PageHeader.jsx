@@ -13,7 +13,7 @@ const AdminPageHeader = () => {
 
     // Update document title
     useEffect(() => {
-        document.title = `${pageTitle} | Vineta Admin Panel`;
+        document.title = `${pageTitle} | RJS Fine Jewels Admin Panel`;
     }, [pageTitle]);
 
     const breadcrumbItems = pathSnippets.map((_, index) => {

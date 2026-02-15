@@ -1,42 +1,51 @@
 import { useState, useEffect } from "react";
 import AdminPageHeader from "../../../../shared/components/admin/PageHeader";
-import { DeleteOutlined, EditOutlined, EllipsisOutlined, PlusOutlined, SearchOutlined } from "@ant-design/icons";
-import { Button, Dropdown, Input, Table, notification } from "antd";
+import {
+    DeleteOutlined,
+    EditOutlined,
+    EllipsisOutlined,
+    PlusOutlined,
+    SearchOutlined,
+} from "@ant-design/icons";
+import { Button, Dropdown, Input, Table, notification, Tag } from "antd";
 import { productService } from "../../../../services/productService";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { SOMETHING_WENT_WRONG } from "../../../../shared/constants";
 
 const ActionsColumn = ({ record, onDelete }) => {
+    const navigate = useNavigate();
+
     const menu = {
         items: [
-            { key: 'edit', label: 'Edit', icon: <EditOutlined />, onClick: () => console.log('Edit', record._id) },
             {
-                key: 'delete',
-                label: 'Delete',
+                key: "edit",
+                label: "Edit",
+                icon: <EditOutlined />,
+                onClick: () =>
+                    navigate(`/admin/catalogue/edit-product/${record._id}`),
+            },
+            {
+                key: "delete",
+                label: "Delete",
                 icon: <DeleteOutlined />,
-                onClick: () => {
-                    onDelete(record._id);
-                },
+                onClick: () => onDelete(record._id),
             },
         ],
-
     };
 
     return (
-        <Dropdown menu={menu} trigger={['click']} placement="bottomRight">
+        <Dropdown menu={menu} trigger={["click"]} placement="bottomRight">
             <Button
                 type="text"
                 icon={
                     <EllipsisOutlined
-                        style={{ fontSize: 20, transform: 'rotate(90deg)' }}
+                        style={{ fontSize: 20, transform: "rotate(90deg)" }}
                     />
                 }
             />
         </Dropdown>
     );
 };
-
-
 
 const Products = () => {
     const [searchText, setSearchText] = useState("");
@@ -49,6 +58,12 @@ const Products = () => {
         getProducts();
     }, []);
 
+    const getStockTag = (stock) => {
+        if (stock > 10) return <Tag color="green">In Stock</Tag>;
+        if (stock > 0) return <Tag color="orange">Low Stock</Tag>;
+        return <Tag color="red">Out of Stock</Tag>;
+    };
+
     // Fetch Products
     const getProducts = async () => {
         setIsLoader(true);
@@ -60,26 +75,34 @@ const Products = () => {
                 return;
             }
 
-            const formattedProducts = response.products.map(product => {
-                const sizes = product.sizes || [];
-                const colors = product.colors || [];
+            const formattedProducts = response.products.map((product) => {
+                const sizes = product.sizes?.length
+                    ? product.sizes
+                    : [{ size: "-", stockQuantity: 0 }];
 
-                // create variants
+                const colors = product.colors?.length
+                    ? product.colors
+                    : ["-"];
+
                 const variants = [];
+                let totalStock = 0;
 
-                sizes.forEach(sizeObj => {
-                    colors.forEach(color => {
+                sizes.forEach((sizeObj) => {
+                    totalStock += sizeObj?.stockQuantity || 0;
+
+                    colors.forEach((color) => {
                         variants.push({
-                            size: sizeObj.size || "-",
-                            color,
-                            stockStatus: product.stockStatus || "-"
+                            size: sizeObj?.size || "-",
+                            color: color || "-",
+                            stockQuantity: sizeObj?.stockQuantity || 0,
                         });
                     });
                 });
 
                 return {
                     ...product,
-                    variants
+                    variants,
+                    totalStock,
                 };
             });
 
@@ -87,7 +110,8 @@ const Products = () => {
         } catch (error) {
             messageApi.error({
                 message: "Server Error",
-                description: error?.response?.data?.message ?? SOMETHING_WENT_WRONG,
+                description:
+                    error?.response?.data?.message ?? SOMETHING_WENT_WRONG,
                 placement: "topRight",
             });
             setProducts([]);
@@ -105,17 +129,18 @@ const Products = () => {
             if (response?.status) {
                 messageApi.success({
                     message: "Success",
-                    description: response?.message ?? "Product deleted successfully!",
+                    description:
+                        response?.message ??
+                        "Product deleted successfully!",
                     placement: "topRight",
                 });
                 getProducts();
             }
-
         } catch (error) {
-            console.error(error);
             messageApi.error({
                 message: "Server Error",
-                description: error?.response?.data?.message ?? SOMETHING_WENT_WRONG,
+                description:
+                    error?.response?.data?.message ?? SOMETHING_WENT_WRONG,
                 placement: "topRight",
             });
         } finally {
@@ -125,49 +150,78 @@ const Products = () => {
 
     const columns = [
         {
-            title: 'Image',
-            dataIndex: 'image',
+            title: "Image",
             width: 80,
-            render: (text, record) => <img src={record.images?.[0] || "/assets/images/product/placeholder.png"} alt={record.title} style={{ width: 50, height: 50, borderRadius: 4 }} />,
+            render: (_, record) => (
+                <img
+                    src={
+                        record.images?.[0] ||
+                        "https://via.placeholder.com/50"
+                    }
+                    alt={record.title}
+                    style={{
+                        width: 50,
+                        height: 50,
+                        objectFit: "cover",
+                        borderRadius: 6,
+                    }}
+                />
+            ),
         },
         {
-            title: 'Product Name',
-            dataIndex: 'title',
+            title: "Product Name",
+            dataIndex: "title",
         },
         {
-            title: 'Price',
+            title: "Price",
             render: (_, record) => `₹${record.finalPrice}`,
         },
         {
-            title: 'Category',
-            render: (_, record) => record.category?.title || "—",
+            title: "Category",
+            render: (_, record) =>
+                record.category?.title || "—",
         },
         {
-            title: 'Description',
+            title: "Description",
             render: (_, record) => {
-                const words = record.description?.split(' ') || [];
-                return words.slice(0, 6).join(' ') + (words.length > 6 ? '...' : '');
+                const words = record.description?.split(" ") || [];
+                return (
+                    words.slice(0, 6).join(" ") +
+                    (words.length > 6 ? "..." : "")
+                );
             },
             width: 200,
         },
         {
-            title: 'Status',
-            dataIndex: 'stockStatus',
+            title: "Status",
+            render: (_, record) => getStockTag(record.totalStock),
         },
         {
-            title: 'Date',
-            dataIndex: 'createdAt',
+            title: "Date",
+            dataIndex: "createdAt",
             width: 120,
             render: (text) => {
-                const options = { day: '2-digit', month: 'short', year: 'numeric' };
-                return new Date(text).toLocaleDateString('en-US', options);
-            }
+                const options = {
+                    day: "2-digit",
+                    month: "short",
+                    year: "numeric",
+                };
+                return new Date(text).toLocaleDateString(
+                    "en-US",
+                    options
+                );
+            },
         },
         {
-            title: 'Action',
-            key: 'action',
+            title: "Action",
+            key: "action",
             width: 120,
-            render: (_, record) => <ActionsColumn record={record} onDelete={deleteProduct} />,
+            render: (_, record) => (
+                <ActionsColumn
+                    record={record}
+                    onDelete={deleteProduct}
+                />
+            ),
         },
     ];
 
@@ -181,7 +235,6 @@ const Products = () => {
     return (
         <>
             {contextHolder}
-
             <AdminPageHeader />
 
             <div className="flex justify-between items-center flex-wrap gap-3 mb-4">
@@ -197,57 +250,8 @@ const Products = () => {
 
                 <div className="flex items-center gap-3">
                     {/* Category Filter */}
-                    {/* <Select
-                        placeholder="Filter by Category"
-                        style={{ width: 120 }}
-                        className="!rounded !border-gray-300"
-                        options={[
-                            { value: 'all', label: 'All Categories' },
-                            { value: 'rings', label: 'Rings' },
-                            { value: 'necklaces', label: 'Necklaces' },
-                            { value: 'bracelets', label: 'Bracelets' },
-                        ]}
-                    /> */}
+                    {/* Old commented filters remain untouched */}
 
-                    {/* Status Filter */}
-                    {/* <Select
-                        placeholder="Status"
-                        style={{ width: 90 }}
-                        className="!rounded !border-gray-300"
-                        options={[
-                            { value: 'all', label: 'All' },
-                            { value: 'active', label: 'Active' },
-                            { value: 'inactive', label: 'Inactive' },
-                        ]}
-                    /> */}
-
-                    {/* Stock Filter */}
-                    {/* <Select
-                        placeholder="Stock"
-                        style={{ width: 130 }}
-                        className="!rounded !border-gray-300"
-                        options={[
-                            { value: 'all', label: 'All' },
-                            { value: 'in-stock', label: 'In Stock' },
-                            { value: 'out-of-stock', label: 'Out of Stock' },
-                            { value: 'low-stock', label: 'Low Stock (<10)' },
-                        ]}
-                    /> */}
-
-                    {/* Sort Dropdown */}
-                    {/* <Select
-                        placeholder="Sort by"
-                        style={{ width: 160 }}
-                        className="!rounded !border-gray-300"
-                        options={[
-                            { value: 'newest', label: 'Newest First' },
-                            { value: 'oldest', label: 'Oldest First' },
-                            { value: 'price-asc', label: 'Price: Low to High' },
-                            { value: 'price-desc', label: 'Price: High to Low' },
-                        ]}
-                    /> */}
-
-                    {/* Add Product Button */}
                     <Link to="/admin/catalogue/add-product">
                         <Button
                             className="!bg-[#ff6f61] hover:!bg-[#e55d51] !text-white border-none shadow-none font-medium rounded"
@@ -263,28 +267,73 @@ const Products = () => {
                 columns={columns}
                 loading={isLoader}
                 dataSource={products}
-                rowSelection={{ type: 'checkbox', ...rowSelection }}
+                rowSelection={{ type: "checkbox", ...rowSelection }}
                 pagination={{ pageSize: 50 }}
                 rowKey="_id"
-                scroll={{ y: 'calc(100vh - 383px)' }}
+                scroll={{ y: "calc(100vh - 383px)" }}
                 expandable={{
                     expandedRowRender: (record) => (
                         <Table
                             columns={[
-                                { title: 'Size', dataIndex: 'size', key: 'size' },
-                                { title: 'Color', dataIndex: 'color', key: 'color' },
-                                { title: 'Stock Status', dataIndex: 'stockStatus', key: 'stockStatus' },
+                                {
+                                    title: "Size",
+                                    dataIndex: "size",
+                                },
+                                {
+                                    title: "Color",
+                                    dataIndex: "color",
+                                },
+                                {
+                                    title: "SKU",
+                                    dataIndex: "sku",
+                                },
+                                {
+                                    title: "Variant Price",
+                                    dataIndex: "variantPrice",
+                                    render: (price) => price ? `₹${price}` : "-",
+                                },
+                                {
+                                    title: "Stock",
+                                    dataIndex: "stockQuantity",
+                                },
+                                {
+                                    title: "Weight (g)",
+                                    dataIndex: "weight",
+                                },
+                                {
+                                    title: "Materials",
+                                    dataIndex: "materials",
+                                },
+                                {
+                                    title: "Gemstones",
+                                    dataIndex: "gemstones",
+                                },
+                                {
+                                    title: "Making Charges",
+                                    dataIndex: "makingCharges",
+                                    render: (value) => value ? `₹${value}` : "-",
+                                },
+                                {
+                                    title: "Discount (%)",
+                                    dataIndex: "discount",
+                                },
                             ]}
                             dataSource={record.variants}
                             pagination={false}
-                            rowKey={(variant, index) => `${record._id}-${index}`}
+                            rowKey={(variant, index) =>
+                                `${record._id}-${index}`
+                            }
+                            size="small"
+                            scroll={{ x: "max-content" }}
                         />
                     ),
-                    rowExpandable: (record) => record.variants && record.variants.length > 0,
+                    rowExpandable: (record) =>
+                        record.variants &&
+                        record.variants.length > 0,
                 }}
             />
         </>
-    )
-}
+    );
+};
 
 export default Products;
