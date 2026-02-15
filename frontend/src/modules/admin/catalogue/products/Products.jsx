@@ -22,7 +22,7 @@ const ActionsColumn = ({ record, onDelete }) => {
                 label: "Edit",
                 icon: <EditOutlined />,
                 onClick: () =>
-                    navigate(`/admin/catalogue/edit-product/${record._id}`),
+                    navigate(`/admin/catalogue/update-product/${record._id}`),
             },
             {
                 key: "delete",
@@ -154,17 +154,9 @@ const Products = () => {
             width: 80,
             render: (_, record) => (
                 <img
-                    src={
-                        record.images?.[0] ||
-                        "https://via.placeholder.com/50"
-                    }
+                    src={record.images?.[0]}
                     alt={record.title}
-                    style={{
-                        width: 50,
-                        height: 50,
-                        objectFit: "cover",
-                        borderRadius: 6,
-                    }}
+                    className="w-[50px] h-[50px] object-cover rounded-md"
                 />
             ),
         },
