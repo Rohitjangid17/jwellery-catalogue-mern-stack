@@ -42,7 +42,7 @@ const CustomerHeader = () => {
     }
 
     return (
-        <header className="relative z-50 px-4">
+        <header className="sticky top-0 z-50 bg-white px-4 shadow-sm">
             <div className="container mx-auto">
                 {/* Desktop Header */}
                 <nav className="flex items-center justify-between py-6 bg-white">
@@ -335,7 +335,7 @@ const CustomerHeader = () => {
                 </Drawer>
                 {/* search model end here */}
             </div >
-        </header >
+        </header>
     );
 };
 
