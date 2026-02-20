@@ -9,7 +9,20 @@ import { COMPANY_ADDRESS, COMPANY_LOGO, SITE_NAME, SUPPORT_EMAIL, SUPPORT_PHONE 
 
 const CustomerFooter = () => {
     const isAuthenticated = localStorage.getItem("admin_token");
-    
+
+    const paymentMethodList = [
+        { id: 1, title: "EximBank", path: "/assets/images/EximBank.png" },
+        { id: 2, title: "ApplePay", path: "/assets/images/ApplePay.png" },
+        { id: 3, title: "DinersClub", path: "/assets/images/DinersClub.png" },
+        { id: 4, title: "Discover", path: "/assets/images/Discover.png" },
+        { id: 5, title: "GooglePay", path: "/assets/images/GooglePay.png" },
+        { id: 6, title: "Mastercard-2", path: "/assets/images/Mastercard-2.png" },
+        { id: 7, title: "Mastercard", path: "/assets/images/Mastercard.png" },
+        { id: 8, title: "Shop", path: "/assets/images/Shop.png" },
+        { id: 9, title: "UnionPay", path: "/assets/images/UnionPay.png" },
+        { id: 10, title: "Visa", path: "/assets/images/Visa.png" },
+    ]
+
     return (
         <footer className="bg-white pt-14">
             <div className="px-4">
@@ -112,21 +125,11 @@ const CustomerFooter = () => {
                     <div className="flex flex-col md:flex-row items-center justify-between gap-6">
                         <p>Copyright © 2025 by <b>{SITE_NAME}</b>. All Rights Reserved.</p>
                         <ul className="flex items-center gap-2">
-                            <li>
-                                <img src="/assets/images/gpay.png" className="object-cover w-12 h-auto" alt="gpay" />
-                            </li>
-                            <li>
-                                <img src="/assets/images/gpay.png" className="object-cover w-12 h-auto" alt="gpay" />
-                            </li>
-                            <li>
-                                <img src="/assets/images/gpay.png" className="object-cover w-12 h-auto" alt="gpay" />
-                            </li>
-                            <li>
-                                <img src="/assets/images/gpay.png" className="object-cover w-12 h-auto" alt="gpay" />
-                            </li>
-                            <li>
-                                <img src="/assets/images/gpay.png" className="object-cover w-12 h-auto" alt="gpay" />
-                            </li>
+                            {paymentMethodList.map(paymentMethod => (
+                                <li className="max-w-[40px]" key={paymentMethod.id}>
+                                    <img src={paymentMethod.path} loading="lazy" width="80" height="50" className="object-cover max-w-full h-auto" alt={paymentMethod.title} />
+                                </li>
+                            ))}
                         </ul>
                     </div>
                 </div>
