@@ -61,7 +61,7 @@ const CustomerFooter = () => {
                                     <Link to="/contact" className="text-[#545454] hover:text-[#ff6f61] text-base font-normal transition-all duration-300 ease-in-out">Contact Us</Link>
                                 </li>
                                 <li>
-                                    <Link to="/about" className="text-[#545454] hover:text-[#ff6f61] text-base font-normal transition-all duration-300 ease-in-out">Our Story</Link>
+                                    <Link to="/our-story" className="text-[#545454] hover:text-[#ff6f61] text-base font-normal transition-all duration-300 ease-in-out">Our Story</Link>
                                 </li>
                             </ul>
                         </div>
