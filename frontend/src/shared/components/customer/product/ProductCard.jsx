@@ -33,7 +33,7 @@ const ProductCard = ({ product = {}, loading = false, isWishlist = false }) => {
     return (
         <div className="relative group">
             {/* Image Area */}
-            <div className="relative overflow-hidden h-[400px] w-full">
+            <div className="relative overflow-hidden aspect-[3/4] w-full">
                 {loading ? (
                     <Skeleton height={250} />
                 ) : (

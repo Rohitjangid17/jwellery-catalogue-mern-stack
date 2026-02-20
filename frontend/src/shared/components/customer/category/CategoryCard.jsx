@@ -10,7 +10,7 @@ const CategoryCard = ({ category = {}, loading = false }) => {
             {loading ? (
                 <Skeleton height={250} />
             ) :
-                <div className="overflow-hidden h-[400px] w-full">
+                <div className="overflow-hidden aspect-[3/4] w-full">
                     <img
                         src={image}
                         alt={title}
