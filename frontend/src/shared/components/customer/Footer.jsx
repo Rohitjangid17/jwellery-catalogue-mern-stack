@@ -8,6 +8,8 @@ import { Link } from "react-router-dom";
 import { COMPANY_ADDRESS, COMPANY_LOGO, SITE_NAME, SUPPORT_EMAIL, SUPPORT_PHONE } from "../../constants";
 
 const CustomerFooter = () => {
+    const isAuthenticated = localStorage.getItem("admin_token");
+    
     return (
         <footer className="bg-white pt-14">
             <div className="px-4">
@@ -83,6 +85,9 @@ const CustomerFooter = () => {
                                 </li>
                                 <li>
                                     <Link to="/shipping" className="text-[#545454] hover:text-[#ff6f61] text-base font-normal transition-all duration-300 ease-in-out">Shipping</Link>
+                                </li>
+                                <li>
+                                    <Link to={isAuthenticated ? '/admin/dashboard' : '/auth/login'} className="text-[#545454] hover:text-[#ff6f61] text-base font-normal transition-all duration-300 ease-in-out">Go to Dashboard</Link>
                                 </li>
                             </ul>
                         </div>
