@@ -4,6 +4,7 @@ import Products from '../modules/customer/products/Products';
 import Home from '../modules/customer/Home';
 import About from '../modules/customer/About';
 import Shop from '../modules/customer/Shop';
+import OurStory from '../modules/customer/OurStory';
 import ProductDetails from '../modules/customer/products/ProductDetails';
 import ContactUs from '../modules/customer/ContactUs';
 import PrivacyPolicy from '../modules/customer/PrivacyPolicy';
@@ -22,6 +23,7 @@ const customerRoutes = (
         <Route path="/products" element={<Products />} />
         <Route path="/product-details/:id" element={<ProductDetails />} />
         <Route path="/about" element={<About />} />
+        <Route path="/our-story" element={<OurStory />} />
         <Route path="/contact" element={<ContactUs />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/term-and-condition" element={<TermCondition />} />
