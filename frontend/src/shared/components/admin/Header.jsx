@@ -1,17 +1,27 @@
 import { Layout, Avatar, Dropdown, Badge } from 'antd';
 import { UserOutlined, BellOutlined, LogoutOutlined, MenuOutlined } from '@ant-design/icons';
+import { authService } from '../../../services/authService';
+import { useNavigate } from 'react-router-dom';
 
 const { Header } = Layout;
 
 const AdminHeader = ({ collapsed, setCollapsed, isMobile, drawerVisible, setDrawerVisible }) => {
+    const navigate = useNavigate();
+
+    // logout user
+    const logoutUser = () => {
+        authService.logout();
+        navigate("/auth/login");
+    }
+
     const dropdownMenuItems = [
         {
             key: 'logout',
             icon: <LogoutOutlined />,
             label: 'Logout',
+            onClick: logoutUser,
         },
     ];
-
     return (
         <Header className="bg-white shadow-sm px-6 flex items-center justify-between sticky top-0 z-50">
             <div className="flex items-center gap-4">

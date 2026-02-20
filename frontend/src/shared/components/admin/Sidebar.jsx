@@ -14,10 +14,17 @@ import {
 } from '@ant-design/icons';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { COMPANY_LOGO } from '../../constants';
+import { authService } from '../../../services/authService';
 
 const AdminSidebar = ({ onItemClick }) => {
     const navigate = useNavigate();
     const location = useLocation();
+
+    // logout user
+    const logoutUser = () => {
+        authService.logout();
+        navigate("/auth/login");
+    }
 
     const menuItems = [
         { key: 'dashboard', icon: <DashboardOutlined />, label: 'Dashboard' },
@@ -72,7 +79,7 @@ const AdminSidebar = ({ onItemClick }) => {
             <div className="p-4 sticky bottom-0 z-20 border-t border-zinc-400/20">
                 <div
                     className="flex items-center justify-center gap-2 text-white hover:text-[#ff6f61] cursor-pointer transition-colors duration-300"
-                    onClick={() => console.log('Logout clicked')}
+                    onClick={logoutUser}
                 >
                     <LogoutOutlined className="text-sm" />
                     <span>Logout</span>
