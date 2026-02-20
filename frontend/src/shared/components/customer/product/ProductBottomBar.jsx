@@ -1,6 +1,8 @@
 import { MinusOutlined, PlusOutlined } from "@ant-design/icons";
 import { Button, Input, Select } from "antd";
 import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { productService } from "../../../../services/productService";
 
 const { Option } = Select;
 
@@ -8,6 +10,10 @@ const ProductBottomBar = () => {
     const [showBar, setShowBar] = useState(false);
     const [lastScrollY, setLastScrollY] = useState(0);
     const [selectedOption, setSelectedOption] = useState("default");
+
+    const [product, setProduct] = useState(null);
+
+    const { id } = useParams();
 
     useEffect(() => {
         const handleScroll = () => {
@@ -27,6 +33,22 @@ const ProductBottomBar = () => {
         return () => window.removeEventListener("scroll", handleScroll);
     }, [lastScrollY]);
 
+    useEffect(() => {
+        getProductById(id);
+    }, [id])
+
+    // get product by id
+    const getProductById = async (product_id) => {
+        console.log("product id", product_id)
+        try {
+            const response = await productService.getProductById(product_id);
+            setProduct(response.product);
+        } catch (error) {
+            console.error("Error fetching product by id:", error);
+            setProduct(null);
+        }
+    }
+
     return (
         <section className={`fixed bottom-0 left-0 w-full px-4 py-[14px] bg-white shadow-[4px_-4px_5px_rgba(0,0,0,0.03)] z-50 transition-all duration-500 ease-in-out ${showBar ? "translate-y-0 opacity-100" : "translate-y-full opacity-0"
             }`}>
@@ -34,9 +56,9 @@ const ProductBottomBar = () => {
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-[5px]">
                     <div className="hidden sm:flex gap-4 items-center justify-center sm:justify-start">
                         <div className="w-[72px] h-[72px]">
-                            <img src="http://localhost:5000/uploads/products/5-1761994829551.webp" className="w-full h-full object-cover rounded-full" alt="Product image" />
+                            <img src={product?.images[0]} className="w-full h-full object-cover rounded-full" alt="Product image" />
                         </div>
-                        <p className="text-base text-black font-normal">Elegant Gold Necklace</p>
+                        <p className="text-base text-black font-normal">{product?.title}</p>
                     </div>
                     <div className="flex gap-3 items-center flex-wrap sm:flex-nowrap justify-center lg:justify-end">
                         <div className="min-w-[249px]">
