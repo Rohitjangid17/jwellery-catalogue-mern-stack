@@ -33,7 +33,7 @@ const ProductCard = ({ product = {}, loading = false, isWishlist = false }) => {
     return (
         <div className="relative group">
             {/* Image Area */}
-            <div className="relative overflow-hidden w-full">
+            <div className="relative overflow-hidden h-[400px] w-full">
                 {loading ? (
                     <Skeleton height={250} />
                 ) : (
@@ -42,7 +42,8 @@ const ProductCard = ({ product = {}, loading = false, isWishlist = false }) => {
                             <img
                                 src={defaultImage}
                                 alt={title}
-                                className="w-full h-auto transition-opacity ease-in-out duration-500 group-hover:opacity-0"
+                                loading="lazy" width="684" height="848"
+                                className="w-full h-full object-cover transition-opacity ease-in-out duration-500 group-hover:opacity-0"
                             />
                         </Link>
 
@@ -50,7 +51,8 @@ const ProductCard = ({ product = {}, loading = false, isWishlist = false }) => {
                             <img
                                 src={hoverImage}
                                 alt={title}
-                                className="absolute top-0 left-0 w-full h-auto opacity-0 transition-opacity ease-in-out duration-500 group-hover:opacity-100"
+                                loading="lazy" width="684" height="848"
+                                className="absolute top-0 left-0 w-full h-full object-cover opacity-0 transition-opacity ease-in-out duration-500 group-hover:opacity-100"
                             />
                         </Link>
 

@@ -10,11 +10,12 @@ const CategoryCard = ({ category = {}, loading = false }) => {
             {loading ? (
                 <Skeleton height={250} />
             ) :
-                <div className="overflow-hidden">
+                <div className="overflow-hidden h-[400px] w-full">
                     <img
                         src={image}
                         alt={title}
-                        className="mx-auto scale-100 group-hover:scale-105 transition-opacity duration-500 ease-in-out [transition:opacity_0.5s_ease,transform_2s_cubic-bezier(0,0,.44,1.18)]"
+                        loading="lazy" width="687" height="938"
+                        className="w-full h-full object-cover scale-100 group-hover:scale-105 transition-opacity duration-500 ease-in-out [transition:opacity_0.5s_ease,transform_2s_cubic-bezier(0,0,.44,1.18)]"
                     />
                 </div>}
 
