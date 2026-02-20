@@ -31,7 +31,7 @@ const Login = () => {
                     description: "Admin login successfully!",
                     placement: "topRight",
                 });
-                navigate("/admin/dashboard");
+                navigate("/admin/dashboard", { replace: true });
             }
         } catch (error) {
             messageApi.error({

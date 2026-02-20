@@ -1,19 +1,28 @@
-import { Navigate, Route } from 'react-router-dom';
-import AdminLayout from '../shared/components/layout/AdminLayout';
-import Dashboard from '../modules/admin/Dashboard';
-import Categories from '../modules/admin/catalogue/Categories';
-import Products from '../modules/admin/catalogue/products/Products';
-import ContactQueries from '../modules/admin/ContactQueries';
-import ProductReview from '../modules/admin/catalogue/ProductReview';
-import Wishlist from '../modules/admin/catalogue/Wishlist';
-import GeneralSettings from '../modules/admin/settings/GeneralSettings';
-import WhatsAppSettings from '../modules/admin/settings/WhatsAppSettings';
-import SocialMediaSettings from '../modules/admin/settings/SocialMediaSettings';
-import AddProduct from '../modules/admin/catalogue/products/AddProduct';
+import { Route } from "react-router-dom";
+import ProtectedRoute from "./ProtectedRoute";
 
-const adminRoutes = (
-    <Route path="/admin" element={<AdminLayout />}>
-        <Route index element={<Navigate to="/admin/dashboard" replace />} />
+import AdminLayout from "../shared/components/layout/AdminLayout";
+import Dashboard from "../modules/admin/Dashboard";
+import Categories from "../modules/admin/catalogue/Categories";
+import Products from "../modules/admin/catalogue/products/Products";
+import AddProduct from "../modules/admin/catalogue/products/AddProduct";
+import ContactQueries from "../modules/admin/ContactQueries";
+import ProductReview from "../modules/admin/catalogue/ProductReview";
+import Wishlist from "../modules/admin/catalogue/Wishlist";
+import GeneralSettings from "../modules/admin/settings/GeneralSettings";
+import WhatsAppSettings from "../modules/admin/settings/WhatsAppSettings";
+import SocialMediaSettings from "../modules/admin/settings/SocialMediaSettings";
+
+const AdminRoutes = (
+    <Route
+        path="/admin"
+        element={
+            <ProtectedRoute>
+                <AdminLayout />
+            </ProtectedRoute>
+        }
+    >
+        <Route index element={<Dashboard />} />
         <Route path="dashboard" element={<Dashboard />} />
 
         <Route path="catalogue">
@@ -35,4 +44,4 @@ const adminRoutes = (
     </Route>
 );
 
-export default adminRoutes;
+export default AdminRoutes;
