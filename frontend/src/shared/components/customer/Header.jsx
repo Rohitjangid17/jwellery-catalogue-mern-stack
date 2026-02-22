@@ -33,18 +33,53 @@ const CustomerHeader = () => {
     const [userDrawerOpen, setUserDrawerOpen] = useState(false);
     const [isLogin, setIsLogin] = useState(true);
     const [searchOpen, setSearchOpen] = useState(false);
+    const [isLoader, setIsLoader] = useState(false);
 
     const location = useLocation();
     const [form] = Form.useForm();
 
-    const handleLogin = () => {
-        console.log("handle login")
+    // customer login
+    const customerLogin = async (payload) => {
+        try {
+            setIsLoader(true);
+            console.log("login payload ", payload);
+            const response = await authService.customerLogin(payload);
+            console.log("login response ", response);
+
+            if (response.success) {
+                localStorage.setItem("customer_token", response?.user?.token);
+                localStorage.setItem("customer_user", JSON.stringify({
+                    name: response.user.name,
+                    email: response.user.email,
+                    role: response.user.role
+                }));
+                messageApi.success({
+                    message: "Success",
+                    description: "Customer register successfully!",
+                    placement: "topRight",
+                });
+                setUserDrawerOpen(false);
+                setIsLogin(true);
+                form.resetFields();
+            }
+
+        } catch (error) {
+            messageApi.error({
+                message: "Server Error",
+                description:
+                    error?.response?.data?.message ?? SOMETHING_WENT_WRONG,
+                placement: "topRight",
+            });
+        } finally {
+            setIsLoader(false);
+        }
     }
 
     // customer register
     const customerRegister = async (payload) => {
         try {
-            console.log("customer register ", payload)
+            console.log("customer register ", payload);
+            setIsLoader(true);
 
             const response = await authService.customerRegister(payload);
             console.log("register response ", response);
@@ -71,6 +106,8 @@ const CustomerHeader = () => {
                     error?.response?.data?.message ?? SOMETHING_WENT_WRONG,
                 placement: "topRight",
             });
+        } finally {
+            setIsLoader(false);
         }
     }
 
@@ -226,8 +263,9 @@ const CustomerHeader = () => {
                         onClose={() => setUserDrawerOpen(false)}
                         isLogin={isLogin}
                         setIsLogin={setIsLogin}
-                        handleLogin={handleLogin}
+                        handleLogin={customerLogin}
                         handleRegister={customerRegister}
+                        isLoader={isLoader}
                         form={form}
                     />
                     {/* login & register model end here */}

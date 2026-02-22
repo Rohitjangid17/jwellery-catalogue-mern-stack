@@ -9,7 +9,8 @@ const CustomerAuthModel = ({
     setIsLogin,
     handleLogin,
     handleRegister,
-    form
+    form,
+    isLoader
 }) => {
 
     return (
@@ -84,6 +85,7 @@ const CustomerAuthModel = ({
                                 block
                                 size="large"
                                 className="!bg-black text-white rounded-full"
+                                loading={isLoader}
                             >
                                 Sign in
                             </Button>
@@ -151,6 +153,7 @@ const CustomerAuthModel = ({
                                 block
                                 size="large"
                                 className="!bg-black text-white rounded-full"
+                                loading={isLoader}  
                             >
                                 Register
                             </Button>
