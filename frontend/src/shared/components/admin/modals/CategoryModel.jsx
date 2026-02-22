@@ -46,7 +46,10 @@ const CategoryModel = ({ open, onCancel, onSubmit, loading, initialValues }) => 
                     {initialValues ? "Edit Category" : "Add Category"}
                 </h2>
 
-                <button onClick={onCancel} className="text-[#545454] hover:text-[#ff6f61] text-xl">
+                <button onClick={() => {
+                    form.resetFields();
+                    onCancel();
+                }} className="text-[#545454] hover:text-[#ff6f61] text-xl">
                     <FiX size={24} />
                 </button>
             </div>

@@ -15,6 +15,13 @@ const CustomerAuthModel = ({
 }) => {
     const screens = useBreakpoint();
 
+    // model close 
+    const modelClose = () => {
+        form.resetFields();
+        onClose();
+        setIsLogin(true);
+    }
+
     return (
         <Drawer
             placement="right"
@@ -31,7 +38,7 @@ const CustomerAuthModel = ({
                 <Button
                     type="default"
                     icon={<FiX size={24} />}
-                    onClick={onClose}
+                    onClick={modelClose}
                     className="!border-none text-black hover:!text-[#ff6f61]"
                 />
             </div>
@@ -55,7 +62,7 @@ const CustomerAuthModel = ({
                             <Input
                                 placeholder="Email*"
                                 size="large"
-                                className="rounded !border border-[#ebebeb] px-4 py-2 !shadow-none"
+                                className="rounded !border border-[#ebebeb] px-4 py-2 !shadow-none hover:!border-black"
                             />
                         </Form.Item>
 
@@ -67,7 +74,7 @@ const CustomerAuthModel = ({
                             <Input.Password
                                 placeholder="Password*"
                                 size="large"
-                                className="rounded !border border-[#ebebeb] px-4 py-2 !shadow-none"
+                                className="rounded !border border-[#ebebeb] px-4 py-2 !shadow-none hover:!border-black"
                             />
                         </Form.Item>
 
@@ -86,7 +93,7 @@ const CustomerAuthModel = ({
                                 htmlType="submit"
                                 block
                                 size="large"
-                                className="!bg-black text-white rounded-full"
+                                className="!bg-black text-white rounded-full !shadow-none"
                                 loading={isLoader}
                             >
                                 Sign in
@@ -97,7 +104,7 @@ const CustomerAuthModel = ({
                                 size="large"
                                 block
                                 onClick={() => setIsLogin(false)}
-                                className="border border-black text-black hover:!bg-black hover:!text-white rounded-full"
+                                className="border border-black text-black hover:!bg-black hover:!text-white rounded-full !shadow-none"
                             >
                                 Create Account
                             </Button>
@@ -117,7 +124,7 @@ const CustomerAuthModel = ({
                             <Input
                                 placeholder="Full Name*"
                                 size="large"
-                                className="rounded !border border-[#ebebeb] px-4 py-2 !shadow-none"
+                                className="rounded !border border-[#ebebeb] px-4 py-2 !shadow-none hover:!border-black"
                             />
                         </Form.Item>
 
@@ -132,7 +139,7 @@ const CustomerAuthModel = ({
                             <Input
                                 placeholder="Email*"
                                 size="large"
-                                className="rounded !border border-[#ebebeb] px-4 py-2 !shadow-none"
+                                className="rounded !border border-[#ebebeb] px-4 py-2 !shadow-none hover:!border-black"
                             />
                         </Form.Item>
 
@@ -144,7 +151,7 @@ const CustomerAuthModel = ({
                             <Input.Password
                                 placeholder="Password*"
                                 size="large"
-                                className="rounded !border border-[#ebebeb] px-4 py-2 !shadow-none"
+                                className="rounded !border border-[#ebebeb] px-4 py-2 !shadow-none hover:!border-black"
                             />
                         </Form.Item>
 
@@ -154,7 +161,7 @@ const CustomerAuthModel = ({
                                 htmlType="submit"
                                 block
                                 size="large"
-                                className="!bg-black text-white rounded-full"
+                                className="!bg-black text-white rounded-full !shadow-none"
                                 loading={isLoader}
                             >
                                 Register
@@ -165,7 +172,7 @@ const CustomerAuthModel = ({
                                 size="large"
                                 block
                                 onClick={() => setIsLogin(true)}
-                                className="border border-black text-black hover:!bg-black hover:!text-white rounded-full"
+                                className="border border-black text-black hover:!bg-black hover:!text-white rounded-full !shadow-none"
                             >
                                 Back to Login
                             </Button>
