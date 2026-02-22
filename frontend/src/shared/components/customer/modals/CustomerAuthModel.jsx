@@ -1,6 +1,7 @@
-import { Drawer, Form, Input, Button } from "antd";
+import { Drawer, Form, Input, Button, Grid } from "antd";
 import { Link } from "react-router-dom";
 import { FiX } from "react-icons/fi";
+const { useBreakpoint } = Grid;
 
 const CustomerAuthModel = ({
     open,
@@ -12,13 +13,14 @@ const CustomerAuthModel = ({
     form,
     isLoader
 }) => {
+    const screens = useBreakpoint();
 
     return (
         <Drawer
             placement="right"
             onClose={onClose}
             open={open}
-            width={520}
+            width={screens.md ? 520 : "85%"}
             closable={false}
         >
             {/* Header */}
@@ -153,7 +155,7 @@ const CustomerAuthModel = ({
                                 block
                                 size="large"
                                 className="!bg-black text-white rounded-full"
-                                loading={isLoader}  
+                                loading={isLoader}
                             >
                                 Register
                             </Button>

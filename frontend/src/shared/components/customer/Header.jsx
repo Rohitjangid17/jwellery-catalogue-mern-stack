@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { FiSearch, FiUser, FiHeart, FiShoppingBag, FiMenu, FiX, } from "react-icons/fi";
 import { AiOutlineHome } from "react-icons/ai";
@@ -37,6 +37,13 @@ const CustomerHeader = () => {
 
     const location = useLocation();
     const [form] = Form.useForm();
+
+    const isAuthenticated = localStorage.getItem("customer_token");
+
+    // model close after the page change
+    useEffect(() => {
+        setMenuOpen(false);
+    }, [location.pathname]);
 
     // customer login
     const customerLogin = async (payload) => {
@@ -144,35 +151,46 @@ const CustomerHeader = () => {
                             <div className="flex gap-4 items-center justify-end">
                                 <FiSearch size={20} className="cursor-pointer" onClick={() => setSearchOpen(true)} />
 
-                                <FiUser size={20} className="cursor-pointer hidden md:block" onClick={() => setUserDrawerOpen(true)} />
+                                {isAuthenticated ? (
+                                    <Link to="/account">
+                                        <FiUser size={20} className="cursor-pointer hidden md:block" />
+                                    </Link>
+                                ) : (
+                                    <FiUser size={20} className="cursor-pointer hidden md:block" onClick={() => setUserDrawerOpen(true)} />
+                                )}
 
-                                <div className="relative hidden md:block">
-                                    <Link to="/wishlist">
-                                        <FiHeart size={20}
-                                            className={`cursor-pointer transition ${location.pathname === "/wishlist"
-                                                ? "text-[#ff6f61]"
-                                                : "text-gray-800 hover:text-[#ff6f61]"
-                                                }`}
-                                        />
-                                        <span className="absolute -top-2 -right-2 bg-[#ff6f61] text-white text-xs rounded-full px-1">
-                                            3
-                                        </span>
-                                    </Link>
-                                </div>
-                                <div className="relative">
-                                    <Link to="/cart">
-                                        <FiShoppingBag
-                                            size={20}
-                                            className={`cursor-pointer transition ${location.pathname === "/cart"
-                                                ? "text-[#ff6f61]"
-                                                : "text-gray-800 hover:text-[#ff6f61]"
-                                                }`}
-                                        />
-                                        <span className="absolute -top-2 -right-2 bg-[#ff6f61] text-white text-xs rounded-full px-1">
-                                            1
-                                        </span>
-                                    </Link>
-                                </div>
+                                {isAuthenticated && (
+                                    <div className="relative hidden md:block">
+                                        <Link to="/wishlist">
+                                            <FiHeart size={20}
+                                                className={`cursor-pointer transition ${location.pathname === "/wishlist"
+                                                    ? "text-[#ff6f61]"
+                                                    : "text-gray-800 hover:text-[#ff6f61]"
+                                                    }`}
+                                            />
+                                            <span className="absolute -top-2 -right-2 bg-[#ff6f61] text-white text-xs rounded-full px-1">
+                                                3
+                                            </span>
+                                        </Link>
+                                    </div>
+                                )}
+
+                                {isAuthenticated && (
+                                    <div className="relative">
+                                        <Link to="/cart">
+                                            <FiShoppingBag
+                                                size={20}
+                                                className={`cursor-pointer transition ${location.pathname === "/cart"
+                                                    ? "text-[#ff6f61]"
+                                                    : "text-gray-800 hover:text-[#ff6f61]"
+                                                    }`}
+                                            />
+                                            <span className="absolute -top-2 -right-2 bg-[#ff6f61] text-white text-xs rounded-full px-1">
+                                                1
+                                            </span>
+                                        </Link>
+                                    </div>
+                                )}
                             </div>
                         </div>
                     </nav>
