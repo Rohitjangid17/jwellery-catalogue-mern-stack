@@ -4,11 +4,11 @@ import { Link } from "react-router-dom";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 
-const ProductCard = ({ product = {}, loading = false, isWishlist = false }) => {
+const ProductCard = ({ product = {}, loading = false, isWishlist = false, onAddToCart = () => { } }) => {
     const actions = isWishlist ? [
         { icon: <FiTrash size={18} />, label: "Remove from Wishlist", },
     ] : [
-        { icon: <FiShoppingBag size={18} />, label: "Add to Cart" },
+        { icon: <FiShoppingBag size={18} />, label: "Add to Cart", onClick: () => onAddToCart(product) },
         { icon: <FiHeart size={18} />, label: "Add to Wishlist" },
         { icon: <FiEye size={18} />, label: "Quick View" },
         { icon: <FiShuffle mpareArrows size={18} />, label: "Add to Compare" },
@@ -33,7 +33,7 @@ const ProductCard = ({ product = {}, loading = false, isWishlist = false }) => {
     return (
         <div className="relative group">
             {/* Image Area */}
-            <div className="relative overflow-hidden aspect-[3/4] w-full">
+            <div className="relative overflow-hidden aspect-[4/4] w-full">
                 {loading ? (
                     <Skeleton height={250} />
                 ) : (
@@ -68,7 +68,11 @@ const ProductCard = ({ product = {}, loading = false, isWishlist = false }) => {
                                     }
                                     placement="left"
                                 >
-                                    <button className="p-2 bg-white shadow-md rounded-full hover:bg-black hover:text-white transition duration-300">
+                                    <button className="p-2 bg-white shadow-md rounded-full hover:bg-black hover:text-white transition duration-300" onClick={(e) => {
+                                        e.preventDefault();
+                                        e.stopPropagation();
+                                        action.onClick?.();
+                                    }}>
                                         {action.icon}
                                     </button>
                                 </Tooltip>
@@ -88,7 +92,7 @@ const ProductCard = ({ product = {}, loading = false, isWishlist = false }) => {
                     <>
                         <Link
                             to={`/product-details/${product?._id}`}
-                            className="text-base leading-[24px] font-normal text-black hover:text-[#ff6f61] transition-colors duration-300"
+                            className="capitalize text-base leading-[24px] font-normal text-black hover:text-[#ff6f61] transition-colors duration-300"
                         >
                             {title}
                         </Link>
