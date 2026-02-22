@@ -7,7 +7,7 @@ import GiftCard from "./GiftCard";
 
 const Gifts = () => {
     return (
-        <section className="py-16 px-4">
+        <section className="py-8 sm:py-12 md:py-16 px-4">
             <div className="container mx-auto">
                 <Swiper
                     spaceBetween={24}

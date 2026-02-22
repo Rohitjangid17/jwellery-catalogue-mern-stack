@@ -11,11 +11,11 @@ const Contact = () => {
     };
 
     return (
-        <section className="py-16 px-4">
+        <section className="py-8 sm:py-12 px-4">
             <div className="container mx-auto">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-10">
-                    <div className="flex flex-col gap-8">
-                        <h2 className="text-[32px] text-black font-medium">Contact Us</h2>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 md:gap-10">
+                    <div className="flex flex-col gap-4 md:gap-8">
+                        <h2 className="text-2xl md:text-3xl lg:text-[32px] text-black font-medium leading-snug">Contact Us</h2>
                         <p className="text-[#545454] text-base">Have a question? Please contact us using the customer support channels below.</p>
                         <ul className="list-none flex flex-col gap-[10px]">
                             <ContactInfo label="Address:" value={COMPANY_ADDRESS} />
@@ -24,52 +24,52 @@ const Contact = () => {
                             <ContactInfo label="Open:" value="8am - 7pm, Mon - Sat" />
                         </ul>
 
-                        <ul className="flex items-center gap-4">
+                        {/* <ul className="flex items-center gap-4">
                             <SocialInfo />
                             <SocialInfo />
                             <SocialInfo />
                             <SocialInfo />
-                        </ul>
+                        </ul> */}
                     </div>
 
-                    <div className="flex flex-col gap-8">
-                        <h2 className="text-[32px] text-black font-medium">Get In Touch</h2>
+                    <div className="flex flex-col gap-4 md:gap-8">
+                        <h2 className="text-2xl md:text-3xl lg:text-[32px] text-black font-medium leading-snug">Get In Touch</h2>
                         <p className="text-[#545454] text-base">Please submit all general enquiries in the contact form below and we look forward to hearing from you soon.</p>
-                        <form className="grid grid-cols-12 gap-6" action="">
-                            <div className="col-span-6">
+                        <form className="grid grid-cols-12 gap-4" action="">
+                            <div className="col-span-12 md:col-span-6">
                                 <label className="text-black text-base font-normal mb-[10px] block" htmlFor="name">Name *</label>
                                 <CommonInput
                                     name="name"
                                     id="name"
-                                    value={""}
+                                    placeholder="Enter name"
                                     onChange={handleChange}
                                 />
                             </div>
-                            <div className="col-span-6">
+                            <div className="col-span-12 md:col-span-6">
                                 <label className="text-black text-base font-normal mb-[10px] block" htmlFor="email">Email *</label>
                                 <CommonInput
                                     name="email"
                                     id="email"
-                                    value={""}
+                                    placeholder="Enter email"
                                     onChange={handleChange}
                                 />
                             </div>
-                            <div className="col-span-6">
+                            <div className="col-span-12 md:col-span-6">
                                 <label className="text-black text-base font-normal mb-[10px] block" htmlFor="phone">Phone Number *</label>
                                 <CommonInput
                                     name="phone"
                                     id="phone"
-                                    value={""}
+                                    placeholder="Enter phone number"
                                     type="tel"
                                     onChange={handleChange}
                                 />
                             </div>
-                            <div className="col-span-6">
+                            <div className="col-span-12 md:col-span-6">
                                 <label className="text-black text-base font-normal mb-[10px] block" htmlFor="subject">Subject *</label>
                                 <CommonInput
                                     name="subject"
                                     id="subject"
-                                    value={""}
+                                    placeholder="Enter subject"
                                     onChange={handleChange}
                                 />
                             </div>
@@ -78,14 +78,14 @@ const Contact = () => {
                                 <textarea
                                     name="message"
                                     id="message"
-                                    rows="5"
-                                    value={""}
+                                    rows="4"
+                                    placeholder="Enter message"
                                     onChange={handleChange}
-                                    className="w-full border border-[#ebebeb] px-4 py-3 rounded-2xl text-base font-normal text-[#545454] outline-none focus:border-[#000c] transition-all duration-300 resize-none"
+                                    className="w-full border border-[#ebebeb] px-4 py-3 rounded-lg text-base font-normal text-[#545454] outline-none focus:border-[#000c] transition-all duration-300 resize-none"
                                 />
                             </div>
-                            <div className="col-span-12 flex justify-center">
-                                <Button type="submit" size="large" className="bg-black text-white rounded-full min-w-28 text-center mx-auto">Send</Button>
+                            <div className="col-span-12">
+                                <Button type="submit" size="large" className="bg-black text-white rounded-lg w-full text-center">Send</Button>
                             </div>
                         </form>
                     </div>

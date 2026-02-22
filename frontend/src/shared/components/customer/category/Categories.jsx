@@ -39,7 +39,7 @@ const Categories = () => {
 
     return (
         <>
-            <section className="py-16 px-4 bg-white">
+            <section className="py-8 sm:py-12 px-4 bg-white">
                 <div className="container mx-auto">
                     <Swiper
                         spaceBetween={20}

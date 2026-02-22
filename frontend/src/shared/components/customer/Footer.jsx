@@ -27,7 +27,7 @@ const CustomerFooter = () => {
         <footer className="bg-white pt-14">
             <div className="px-4">
                 <div className="container mx-auto">
-                    <div className="grid grid-cols-12 gap-10">
+                    <div className="grid grid-cols-12 gap-5 md:gap-10">
                         <div className="col-span-12 md:col-span-4 lg:col-span-4">
                             <img src={COMPANY_LOGO} className="object-cover" alt="logo" />
 
@@ -52,7 +52,7 @@ const CustomerFooter = () => {
                                 </li>
                             </ul>
 
-                            <a href="#" className="group text-[#444] text-center mt-6 text-sm font-normal flex items-center transition-all duration-300 ease-in-out">
+                            {/* <a href="#" className="group text-[#444] text-center mt-6 text-sm font-normal flex items-center transition-all duration-300 ease-in-out">
                                 <span className="border-b border-[#444] flex items-center gap-1">
                                     Get Direction <LuArrowUpRight />
                                 </span>
@@ -63,11 +63,11 @@ const CustomerFooter = () => {
                                 <SocialInfo />
                                 <SocialInfo />
                                 <SocialInfo />
-                            </ul>
+                            </ul> */}
                         </div>
 
                         <div className="col-span-12 md:col-span-4 lg:col-span-2">
-                            <h2 className="mb-6 text-[#0d0d0d] text-xl leading-[30px] font-medium">About Us</h2>
+                            <h2 className="mb-4 md:mb-6 text-[#0d0d0d] text-xl leading-[30px] font-medium">About Us</h2>
                             <ul className="flex flex-col gap-4">
                                 <li>
                                     <Link to="/about" className="text-[#545454] hover:text-[#ff6f61] text-base font-normal transition-all duration-300 ease-in-out">About Us</Link>
@@ -82,7 +82,7 @@ const CustomerFooter = () => {
                         </div>
 
                         <div className="col-span-12 md:col-span-4 lg:col-span-2">
-                            <h2 className="mb-6 text-[#0d0d0d] text-xl leading-[30px] font-medium">Resource</h2>
+                            <h2 className="mb-4 md:mb-6 text-[#0d0d0d] text-xl leading-[30px] font-medium">Resource</h2>
                             <ul className="flex flex-col gap-4">
                                 <li>
                                     <Link to="/privacy-policy" className="text-[#545454] hover:text-[#ff6f61] text-base font-normal transition-all duration-300 ease-in-out">Privacy Policies</Link>
@@ -105,7 +105,7 @@ const CustomerFooter = () => {
                             </ul>
                         </div>
                         <div className="col-span-12 lg:col-span-4">
-                            <h2 className="mb-6 text-[#0d0d0d] text-xl leading-[30px] font-medium">Subscribe Newsletter</h2>
+                            <h2 className="mb-4 md:mb-6 text-[#0d0d0d] text-xl leading-[30px] font-medium">Subscribe Newsletter</h2>
                             <p className="text-[#545454] text-base font-normal mb-6">Subscribe to our newsletter to get the latest updates and offers.</p>
                             <form className="flex items-center gap-4">
                                 <div className="flex-1 relative">
@@ -120,7 +120,7 @@ const CustomerFooter = () => {
                 </div>
             </div>
 
-            <div className="border-t border-[#ebebeb] mt-14 px-4 py-8">
+            <div className="border-t border-[#ebebeb] mt-7 md:mt-14 px-4 pb-20 md:py-8">
                 <div className="container mx-auto">
                     <div className="flex flex-col md:flex-row items-center justify-between gap-6">
                         <p>Copyright © 2025 by <b>{SITE_NAME}</b>. All Rights Reserved.</p>

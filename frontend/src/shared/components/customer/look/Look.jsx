@@ -7,7 +7,7 @@ import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 
 const Look = () => {
     return (
-        <section className="py-16 bg-white">
+        <section className="py-8 sm:py-12 bg-white">
             <div className="container mx-auto px-4">
                 <div className="grid grid-cols-1 md:grid-cols-2 items-center gap-8">
                     <img
@@ -15,8 +15,8 @@ const Look = () => {
                         alt="look"
                         className="w-full h-auto object-cover"
                     />
-                    <div>
-                        <h2 className="mb-16 text-4xl font-medium text-black text-center">
+                    <div className="px-4">
+                        <h2 className="mb-8 md:mb-16 text-2xl md:text-4xl font-medium text-black text-center">
                             Shop The Look
                         </h2>
 

@@ -100,15 +100,15 @@ const ShopSection = () => {
     };
 
     return (
-        <section className="py-16 px-4">
+        <section className="py-8 sm:py-12 px-4">
             <div className="container mx-auto">
-                <div className="grid grid-cols-12 gap-10">
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10">
                     <div className="col-span-3 hidden lg:block">
                         <SidebarFilters onCategorySelect={(id) => setCategoryId(id)} />
                     </div>
 
                     <div className="col-span-12 lg:col-span-9">
-                        <div className="flex items-center gap-1.5 mb-10">
+                        <div className="flex items-center gap-1.5 mb-6 md:mb-10">
                             <Button type="default" size="large" onClick={() => setIsDrawerOpen(true)} className="lg:hidden flex items-center gap-2 transition-all duration-300 ease-in-out !text-black rounded-full !border !border-[#EBEBEE] hover:!border-black">
                                 <FiList size={18} />
                                 Filter

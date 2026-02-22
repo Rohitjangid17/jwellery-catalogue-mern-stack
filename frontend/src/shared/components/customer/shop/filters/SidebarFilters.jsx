@@ -5,11 +5,12 @@ import CheckboxGroup from "./CheckboxGroup";
 import ColorSelector from "./ColorSelector";
 import SizeSelector from "./SizeSelector";
 import { Slider } from "antd";
+import { SITE_CURRENCY } from "../../../../constants";
 
 const SidebarFilters = ({ onCategorySelect }) => {
     const [priceRange, setPriceRange] = useState([20, 1200]);
 
-    const colors = ["#e2d2ab", "#dcc8ba", "#d6d6d6"];
+    const colors = ["#E1B768", "#E3A177", "#BEC7C7"];
     const sizes = ["XS", "S", "M", "L", "XL"];
 
     return (
@@ -26,6 +27,7 @@ const SidebarFilters = ({ onCategorySelect }) => {
                         options={[
                             { label: "In Stock", count: 20 },
                             { label: "Out of Stock", count: 3 },
+                            { label: "Made to Order", count: 5 },
                         ]}
                     />
                 </FilterDropdown>
@@ -43,7 +45,7 @@ const SidebarFilters = ({ onCategorySelect }) => {
                         handleStyle={{ borderColor: "#ff6f61" }}
                     />
                     <div className="flex items-center gap-1">
-                        <span className="!font-semibold text-black text-sm">Price:</span> <span className="text-sm text-[#ff6f61]">₹{priceRange[0]} - ₹{priceRange[1]}</span>
+                        <span className="!font-semibold text-black text-sm">Price:</span> <span className="text-sm text-[#ff6f61]">{SITE_CURRENCY}{priceRange[0]} - {SITE_CURRENCY}{priceRange[1]}</span>
                     </div>
                 </FilterDropdown>
             </div>
@@ -60,7 +62,7 @@ const SidebarFilters = ({ onCategorySelect }) => {
                 </FilterDropdown>
             </div>
 
-            <div className="border-b border-[#ebebeb] pb-4">
+            {/* <div className="border-b border-[#ebebeb] pb-4">
                 <FilterDropdown title="Brand" defaultActive>
                     <CheckboxGroup
                         options={[
@@ -69,7 +71,7 @@ const SidebarFilters = ({ onCategorySelect }) => {
                         ]}
                     />
                 </FilterDropdown>
-            </div>
+            </div> */}
         </div >
     );
 };

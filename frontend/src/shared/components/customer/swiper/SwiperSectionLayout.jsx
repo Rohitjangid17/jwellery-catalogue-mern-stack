@@ -34,10 +34,10 @@ const SwiperSectionLayout = ({ title, children, breakpoints = {}, spaceBetween =
     }, [swiper]);
 
     return (
-        <section className={`py-16 px-4 ${bgColor}`}>
+        <section className={`py-8 sm:py-12 px-4 ${bgColor}`}>
             <div className="container mx-auto">
-                <div className="flex items-center justify-between mb-12">
-                    <h2 className="text-5xl leading-[60px] font-normal">{title}</h2>
+                <div className="flex items-center justify-between mb-8 md:mb-12">
+                    <h2 className="text-3xl md:text-4xl lg:text-5xl leading-snug md:leading-[50px] lg:leading-[60px] font-normal">{title}</h2>
                     <div className="flex items-center gap-4">
                         <button ref={prevRef} disabled={isBeginning} className={`text-xl text-black hover:text-[#ff6f61] transition-opacity ${isBeginning ? 'opacity-30 cursor-not-allowed' : ''}`}>
                             <IoChevronBack />
