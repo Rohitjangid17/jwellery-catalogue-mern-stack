@@ -42,6 +42,7 @@ const Contact = () => {
                                     name="name"
                                     id="name"
                                     placeholder="Enter name"
+                                    className="border border-[#ebebeb] text-[#000c] w-full py-[6px] rounded-lg text-base leading-[25px] font-normal hover:border-[#000c] outline-none focus:outline-none focus:border-[#000c] transition-all duration-300 ease-in-out !shadow-none placeholder:[#6b7280] placeholder:text-base"
                                     onChange={handleChange}
                                 />
                             </div>
@@ -51,6 +52,7 @@ const Contact = () => {
                                     name="email"
                                     id="email"
                                     placeholder="Enter email"
+                                    className="border border-[#ebebeb] text-[#000c] w-full py-[6px] rounded-lg text-base leading-[25px] font-normal hover:border-[#000c] outline-none focus:outline-none focus:border-[#000c] transition-all duration-300 ease-in-out !shadow-none placeholder:[#6b7280] placeholder:text-base"
                                     onChange={handleChange}
                                 />
                             </div>
@@ -61,6 +63,7 @@ const Contact = () => {
                                     id="phone"
                                     placeholder="Enter phone number"
                                     type="tel"
+                                    className="border border-[#ebebeb] text-[#000c] w-full py-[6px] rounded-lg text-base leading-[25px] font-normal hover:border-[#000c] outline-none focus:outline-none focus:border-[#000c] transition-all duration-300 ease-in-out !shadow-none placeholder:[#6b7280] placeholder:text-base"
                                     onChange={handleChange}
                                 />
                             </div>
@@ -70,6 +73,7 @@ const Contact = () => {
                                     name="subject"
                                     id="subject"
                                     placeholder="Enter subject"
+                                    className="border border-[#ebebeb] text-[#000c] w-full py-[6px] rounded-lg text-base leading-[25px] font-normal hover:border-[#000c] outline-none focus:outline-none focus:border-[#000c] transition-all duration-300 ease-in-out !shadow-none placeholder:[#6b7280] placeholder:text-base"
                                     onChange={handleChange}
                                 />
                             </div>
@@ -85,7 +89,7 @@ const Contact = () => {
                                 />
                             </div>
                             <div className="col-span-12">
-                                <Button type="submit" size="large" className="bg-black text-white rounded-lg w-full text-center">Send</Button>
+                                <Button type="submit" size="large" className="bg-black !text-white rounded-lg w-full text-center font-medium">Submit</Button>
                             </div>
                         </form>
                     </div>

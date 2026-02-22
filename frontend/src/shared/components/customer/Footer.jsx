@@ -109,7 +109,7 @@ const CustomerFooter = () => {
                             <p className="text-[#545454] text-base font-normal mb-6">Subscribe to our newsletter to get the latest updates and offers.</p>
                             <form className="flex items-center gap-4">
                                 <div className="flex-1 relative">
-                                    <CommonInput type="email" placeholder="Email address" />
+                                    <CommonInput type="email" placeholder="Email address" className="h-14 border border-[#ebebeb] text-[#000c] w-full px-4 py-2 rounded-full text-base leading-[25px] font-normal hover:border-[#000c] outline-none focus:outline-none focus:border-[#000c] transition-all duration-300 ease-in-out !shadow-none placeholder:[#6b7280] placeholder:font-medium placeholder:text-base" />
                                     <button className="absolute right-1 top-1/2 max-h-max bottom-0 transform -translate-y-1/2 bg-[#000000] text-white p-4 rounded-full text-base font-normal">
                                         <MdOutlineArrowRightAlt size={20} />
                                     </button>
