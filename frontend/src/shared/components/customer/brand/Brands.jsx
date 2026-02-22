@@ -22,7 +22,7 @@ const Brands = () => {
     return (
         <section className="py-8 sm:py-12 px-4 bg-white">
             <div className="container mx-auto">
-                <h2 className="text-3xl md:text-4xl lg:text-5xl leading-snug md:leading-[50px] lg:leading-[60px] font-normal text-center mb-6 md:mb-12">Follow @Vineta</h2>
+                <h2 className="text-3xl md:text-4xl lg:text-5xl leading-snug md:leading-[50px] lg:leading-[60px] font-normal text-center mb-6 md:mb-12">Follow @RJSFineJewels</h2>
 
                 <Swiper
                     key={swiperKey}

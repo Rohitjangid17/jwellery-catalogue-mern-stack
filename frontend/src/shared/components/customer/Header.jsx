@@ -4,7 +4,7 @@ import { FiSearch, FiUser, FiHeart, FiShoppingBag, FiMenu, FiX, } from "react-ic
 import { AiOutlineHome } from "react-icons/ai";
 import { MdOutlineStorefront } from "react-icons/md";
 import { Drawer, Button, Form, Input, Badge, notification } from "antd";
-import { COMPANY_LOGO, SOMETHING_WENT_WRONG } from "../../constants";
+import { COMPANY_ADDRESS, COMPANY_LOGO, SOMETHING_WENT_WRONG, SUPPORT_EMAIL, SUPPORT_PHONE } from "../../constants";
 import CustomerAuthModel from "./modals/CustomerAuthModel";
 import { authService } from "../../../services/authService";
 
@@ -149,11 +149,14 @@ const CustomerHeader = () => {
                         {/* Right: Icons */}
                         <div className="grow">
                             <div className="flex gap-4 items-center justify-end">
-                                <FiSearch size={20} className="cursor-pointer" onClick={() => setSearchOpen(true)} />
+                                <FiSearch size={20} className="cursor-pointer transition text-black hover:text-[#ff6f61]" onClick={() => setSearchOpen(true)} />
 
                                 {isAuthenticated ? (
                                     <Link to="/account">
-                                        <FiUser size={20} className="cursor-pointer hidden md:block" />
+                                        <FiUser size={20} className={`cursor-pointer hidden md:block transition ${location.pathname === "/account"
+                                            ? "text-[#ff6f61]"
+                                            : "text-black hover:text-[#ff6f61]"
+                                            }`} />
                                     </Link>
                                 ) : (
                                     <FiUser size={20} className="cursor-pointer hidden md:block" onClick={() => setUserDrawerOpen(true)} />
@@ -165,7 +168,7 @@ const CustomerHeader = () => {
                                             <FiHeart size={20}
                                                 className={`cursor-pointer transition ${location.pathname === "/wishlist"
                                                     ? "text-[#ff6f61]"
-                                                    : "text-gray-800 hover:text-[#ff6f61]"
+                                                    : "text-black hover:text-[#ff6f61]"
                                                     }`}
                                             />
                                             <span className="absolute -top-2 -right-2 bg-[#ff6f61] text-white text-xs rounded-full px-1">
@@ -182,7 +185,7 @@ const CustomerHeader = () => {
                                                 size={20}
                                                 className={`cursor-pointer transition ${location.pathname === "/cart"
                                                     ? "text-[#ff6f61]"
-                                                    : "text-gray-800 hover:text-[#ff6f61]"
+                                                    : "text-black hover:text-[#ff6f61]"
                                                     }`}
                                             />
                                             <span className="absolute -top-2 -right-2 bg-[#ff6f61] text-white text-xs rounded-full px-1">
@@ -234,9 +237,9 @@ const CustomerHeader = () => {
                             <div className="flex flex-col gap-y-3 mt-4">
                                 <Link to="/contact" className="text-sm font-medium !text-black">Need Help?</Link>
                                 <ul className="flex flex-col gap-y-3">
-                                    <li className="text-[#545454] text-sm">Address: 123 Yarran st, Punchbowl, NSW 2196, Australia</li>
-                                    <li className="text-[#545454] text-sm">Email: clientcare@ecom.com</li>
-                                    <li className="text-[#545454] text-sm">Phone: 1.888.838.3022</li>
+                                    <li className="text-[#545454] text-sm">Address: {COMPANY_ADDRESS}</li>
+                                    <li className="text-[#545454] text-sm">Email: {SUPPORT_EMAIL}</li>
+                                    <li className="text-[#545454] text-sm">Phone: {SUPPORT_PHONE}</li>
                                 </ul>
                             </div>
                         </div>

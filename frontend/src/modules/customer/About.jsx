@@ -8,14 +8,14 @@ const About = () => {
       <section class="md:p-6 p-4">
         <div className="mx-auto grid lg:grid-cols-2 lg:gap-20 md:gap-15 sm:gap-8 gap-5 items-center lg:py-14 md:py-10 py-8">
           <p class="md:text-base text-sm text-right order-2 md:order-1">
-            At Vineta, we bring you thoughtfully curated collections that blend
+            At RJS Fine Jewels, we bring you thoughtfully curated collections that blend
             contemporary designs with timeless elegance. With over 15 years of
             experience, we cater to fashion enthusiasts who appreciate quality,
             style, and versatility.
           </p>
           <div className="text-right order-1 md:order-2">
             <h4 class="md:text-[40px] text-3xl font-medium">
-              Welcome to Vineta
+              Welcome to RJS Fine Jewels
             </h4>
             <h2 class="md:text-xl text-base md:pt-6 pt-3">
               The Ultimate Fashion Destination
@@ -26,7 +26,7 @@ const About = () => {
         <div className="sm:h-auto h-[300px]">
           <img
             src="/assets/images/about/about.jpg"
-            alt="Vineta Fashion"
+            alt="RJS Fine Jewels Fashion"
             class="w-full h-full rounded-2xl object-cover"
           />
         </div>
@@ -36,7 +36,7 @@ const About = () => {
         <div class="">
           <div class="text-center flex flex-col items-center mx-auto py-5">
             <h2 class="text-3xl font-medium text-gray-900 mb-4">
-              Why Choose Vineta
+              Why Choose RJS Fine Jewels
             </h2>
             <p class="text-gray-600 text-base md:px-[20%] px-10">
               Our products are crafted with innovation and an eye for the latest
@@ -60,7 +60,7 @@ const About = () => {
                   Ethics & Responsibility
                 </h4>
                 <p class="text-gray-600 md:text-base text-sm md:pt-5 pt-3">
-                  At Vineta, we are dedicated to upholding the highest ethical
+                  At RJS Fine Jewels, we are dedicated to upholding the highest ethical
                   standards in production. We ensure mindful manufacturing
                   through regular audits, training, and responsible sourcing.
                 </p>
@@ -164,7 +164,7 @@ const About = () => {
               Effortless Elegance
             </h4>
             <p class="text-gray-600 text-sm leading-relaxed">
-              Our designs embrace simplicity at its finest. Vineta’s understated
+              Our designs embrace simplicity at its finest. RJS Fine Jewels understated
               yet refined style captures the essence of modern fashion, making a
               statement.
             </p>
@@ -194,7 +194,7 @@ const About = () => {
             </h4>
             <p class="text-gray-600 text-sm leading-relaxed">
               We celebrate individuality with a diverse range of sizes, offering
-              clothing that fits and flatters every body type. At Vineta,
+              clothing that fits and flatters every body type. At RJS Fine Jewels,
               fashion is for everyone.
             </p>
           </div>
@@ -272,7 +272,7 @@ const About = () => {
           </p>
           <div className="flex justify-center items-center gap-3">
             <h5 class="font-medium text-base tracking-wide text-black">
-              Vineta P
+              RJS Fine Jewels P
             </h5>
             <div className="w-8 h-8">
               <img

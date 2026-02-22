@@ -14,6 +14,7 @@ import Shipping from '../modules/customer/Shipping';
 import Faq from '../modules/customer/Faq';
 import Wishlist from '../modules/customer/Wishlist';
 import Cart from '../modules/customer/Cart';
+import Account from '../modules/customer/Account';
 
 const customerRoutes = (
     <Route element={<CustomerLayout />}>
@@ -32,6 +33,7 @@ const customerRoutes = (
         <Route path="/faq" element={<Faq />} />
         <Route path="/wishlist" element={<Wishlist />} />
         <Route path="/cart" element={<Cart />} />
+        <Route path="/account" element={<Account />} />
     </Route>
 );
 
