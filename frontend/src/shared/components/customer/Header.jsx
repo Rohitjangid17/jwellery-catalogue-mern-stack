@@ -143,7 +143,7 @@ const CustomerHeader = () => {
 
                         {/* Center: Logo */}
                         <div className="grow flex justify-center md:inline">
-                            <img src={COMPANY_LOGO} className="object-cover" alt="logo" />
+                            <img src={COMPANY_LOGO} className="object-cover w-[100px] h-[50px]" alt="logo" />
                         </div>
 
                         {/* Right: Icons */}
@@ -152,8 +152,8 @@ const CustomerHeader = () => {
                                 <FiSearch size={20} className="cursor-pointer transition text-black hover:text-[#ff6f61]" onClick={() => setSearchOpen(true)} />
 
                                 {isAuthenticated ? (
-                                    <Link to="/account">
-                                        <FiUser size={20} className={`cursor-pointer hidden md:block transition ${location.pathname === "/account"
+                                    <Link to="/account/dashboard">
+                                        <FiUser size={20} className={`cursor-pointer hidden md:block transition ${location.pathname === "/account/dashboard"
                                             ? "text-[#ff6f61]"
                                             : "text-black hover:text-[#ff6f61]"
                                             }`} />

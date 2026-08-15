@@ -58,7 +58,7 @@ const Login = () => {
                             alt="Logo"
                             width={100}
                             height={100}
-                            className="object-cover"
+                            className="object-cover w-[100px] h-[50px]"
                         />
                     </div>
 

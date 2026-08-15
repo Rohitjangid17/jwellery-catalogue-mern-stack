@@ -293,3 +293,48 @@ body {
   padding-top: 6px !important;
   padding-bottom: 6px !important;
 }
+
+/* account menu */
+/* wrapper */
+.account-menu {
+  border-radius: 8px;
+  border: 1px solid #ebebeb;
+  width: 100%;
+  height: max-content;
+  overflow: hidden;
+}
+
+/* menu item */
+.account-menu .ant-menu-item {
+  margin: 0 !important;
+  font-weight: 500;
+  font-size: 14px !important;
+  line-height: 20px !important;
+  width: 100% !important;
+  height: auto !important;
+  padding: 15px 12px !important;
+  border-bottom: 1px solid #ebebeb !important;
+  border-radius: 0 !important;
+}
+
+/* remove last border */
+.account-menu .ant-menu-item:last-child {
+  border-bottom: none;
+}
+
+/* hover */
+.account-menu .ant-menu-item:hover {
+  background: #fff1ef !important;
+  color: #ff6f61 !important;
+}
+
+/* selected */
+.account-menu .ant-menu-item-selected {
+  background: #fff1ef !important;
+  color: #ff6f61 !important;
+}
+
+/* remove blue active bar */
+.account-menu .ant-menu-item::after {
+  display: none !important;
+}

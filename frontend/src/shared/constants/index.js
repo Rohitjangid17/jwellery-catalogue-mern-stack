@@ -3,7 +3,7 @@ export const COMPANY_LOGO = "/assets/images/logo.svg";
 export const SITE_NAME = "RJS Fine Jewels";
 export const SITE_TAGLINE = "Elegance That Speaks!";
 export const SITE_CURRENCY = "$";
-export const SUPPORT_EMAIL = "support@rjsfinejewels.com";
+export const SUPPORT_EMAIL = "rjsfinejewels@gmail.com";
 export const SUPPORT_PHONE = "+91-6376015899";
 export const COMPANY_NAME = "RJS Fine Jewels Pvt. Ltd.";
 export const COMPANY_ADDRESS = "123, MG Road, Jaipur, Rajasthan, India - 303702";
@@ -13,8 +13,8 @@ export const SOMETHING_WENT_WRONG = "An unexpected error occurred. Please try ag
 // API base URL
 // export const API_BASE_URL = "https://jwellery-catalogue-api.vercel.app/api/v1";
 // export const API_BASE_URL = "http://localhost:5000/api/v1";
-export const API_BASE_URL = "https://rjs-api.vercel.app/api/v1";
-// export const API_BASE_URL = "https://dev-rjs-api.vercel.app/api/v1";
+// export const API_BASE_URL = "https://rjs-api.vercel.app/api/v1";
+export const API_BASE_URL = "https://dev-rjs-api.vercel.app/api/v1";
 
 // Theme
 export const DEFAULT_THEME = "light";

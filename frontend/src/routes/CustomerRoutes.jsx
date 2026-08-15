@@ -14,7 +14,11 @@ import Shipping from '../modules/customer/Shipping';
 import Faq from '../modules/customer/Faq';
 import Wishlist from '../modules/customer/Wishlist';
 import Cart from '../modules/customer/Cart';
-import Account from '../modules/customer/Account';
+import Account from '../modules/customer/account/Account';
+import AccountDashboard from '../modules/customer/account/AccountDashboard';
+import AccountOrders from '../modules/customer/account/AccountOrders';
+import AccountWishlist from '../modules/customer/account/AccountWishlist';
+import AccountAddress from '../modules/customer/account/AccountAddress';
 
 const customerRoutes = (
     <Route element={<CustomerLayout />}>
@@ -33,7 +37,13 @@ const customerRoutes = (
         <Route path="/faq" element={<Faq />} />
         <Route path="/wishlist" element={<Wishlist />} />
         <Route path="/cart" element={<Cart />} />
-        <Route path="/account" element={<Account />} />
+        <Route path="/account" element={<Account />}>
+            <Route index element={<AccountDashboard />} />
+            <Route path="dashboard" element={<AccountDashboard />} />
+            <Route path="orders" element={<AccountOrders />} />
+            <Route path="wishlist" element={<AccountWishlist />} />
+            <Route path="address" element={<AccountAddress />} />
+        </Route>
     </Route>
 );
 

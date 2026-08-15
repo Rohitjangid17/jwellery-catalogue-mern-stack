@@ -29,7 +29,7 @@ const CustomerFooter = () => {
                 <div className="container mx-auto">
                     <div className="grid grid-cols-12 gap-5 md:gap-10">
                         <div className="col-span-12 md:col-span-4 lg:col-span-4">
-                            <img src={COMPANY_LOGO} className="object-cover" alt="logo" />
+                            <img src={COMPANY_LOGO} className="object-cover w-[100px] h-[50px]" alt="logo" />
 
                             <ul className="mt-8 flex flex-col gap-4">
                                 <li className="flex items-center gap-[10px]">
